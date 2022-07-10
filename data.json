@@ -1,0 +1,40 @@
+{
+    "engine": "PyPMML",
+    "name": "XGBoostModel",
+    "type": "MiningModel",
+    "function": "classification",
+    "input": [
+        {
+            "name": "sepal length (cm)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "sepal width (cm)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "petal length (cm)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "petal width (cm)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        }
+    ],
+    "output": [
+        {
+            "name": "Species",
+            "optype": "nominal",
+            "dataType": "integer",
+            "valueRange": "0,1,2"
+        }
+    ]
+}
