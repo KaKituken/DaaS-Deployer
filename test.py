@@ -1,4 +1,3 @@
-from textwrap import indent
 import onnx
 import onnxruntime as rt
 import numpy as np
@@ -7,11 +6,16 @@ from pypmml import Model
 import pypmml
 import cv2
 import json
+from utils import parse_tensor, parse_fields
+
 
 class Request:
     def __init__(self, name, type) -> None:
         self.name = name
         self.type = type
+
+def store():
+    pass
 
 def getInfo(request: Request):
     name = request.name
@@ -28,23 +32,8 @@ def getInfo(request: Request):
         total['name'] = model.modelName
         total['type'] = model.modelElement
         total['function'] = model.functionName
-        total['input'] = shuru
-        for input in model.inputFields:
-            info = {}
-            info['name'] = input.name
-            info['optype'] = input.opType
-            info['dataType'] = input.dataType
-            info['valueRange'] = input.valuesAsString
-            shuru.append(info)
-        shuchu = []
-        total['output'] = shuchu
-        for output in model.targetFields:
-            info = {}
-            info['name'] = output.name
-            info['optype'] = output.opType
-            info['dataType'] = output.dataType
-            info['valueRange'] = output.valuesAsString
-            shuchu.append(info)
+        total['input'] = parse_fields(model.inputFields)
+        total['output'] = parse_fields(model.outputFields)
         
         return total
     elif request.type == 'onnx':
@@ -52,9 +41,16 @@ def getInfo(request: Request):
             model = onnx.load(name)
         except:
             return 'failure'
-        
+        total = {}
+        graph = model.graph
+        total['type'] = 'ONNX'
+        total['engine'] = 'ONNX Runtime'
+        total['input'] = parse_tensor(graph.input[0])
+        total['output'] = parse_tensor(graph.output[0])
 
-re = Request('model.pmml', 'pmml')
+        return total
+
+re = Request('./data/mnist-8.onnx', 'onnx')
 info = getInfo(re)
 with open("data.json", "w", encoding="utf-8") as f:
     json.dump(info, f, ensure_ascii=False, indent=4)
