@@ -1,22 +1,58 @@
 {
-    "type": "ONNX",
-    "engine": "ONNX Runtime",
-    "input": {
-        "name": "Input3",
-        "dataType": "float32",
-        "shape": [
-            1,
-            1,
-            28,
-            28
-        ]
-    },
-    "output": {
-        "name": "Plus214_Output_0",
-        "dataType": "float32",
-        "shape": [
-            1,
-            10
-        ]
-    }
+    "engine": "PyPMML",
+    "name": "XGBoostModel",
+    "type": "MiningModel",
+    "function": "classification",
+    "input": [
+        {
+            "name": "sepal length (cm)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "sepal width (cm)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "petal length (cm)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "petal width (cm)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        }
+    ],
+    "output": [
+        {
+            "name": "probability_0",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "probability_1",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "probability_2",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "predicted_Species",
+            "optype": "nominal",
+            "dataType": "integer",
+            "valueRange": ""
+        }
+    ]
 }
