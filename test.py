@@ -1,56 +1,73 @@
-import onnx
-import onnxruntime as rt
+
+from distutils.debug import DEBUG
 import numpy as np
 import pandas as pd
-from pypmml import Model
-import pypmml
+import os
 import cv2
 import json
-from utils import parse_tensor, parse_fields
+from manager import Manager
+from models import AbstractModel, PmmlModel, OnnxModel
+from flask import Flask, render_template, request
+from flask_cors import CORS
 
+DEBUG = True
+
+app = Flask(__name__)
+app.config.from_object(__name__)
+CORS(app, resources={r'/*': {'origins': '*'}})
 
 class Request:
-    def __init__(self, name, type) -> None:
+    def __init__(self, name, path, type, data=None) -> None:
         self.name = name
+        self.path = path
         self.type = type
+        self.data = data
 
-def store():
-    pass
+def predict(request: Request):
+    data = request.data
+    name = request.name
+    return manager.getModel(name).predict(data)
+
+
+manager = Manager()
+
+def add(name, path, type):
+    if type == 'pmml':
+        manager.addModel(PmmlModel(path, name))
+    elif type == 'onnx':
+        manager.addModel(OnnxModel(path, name))
+    else:
+        pass
 
 def getInfo(request: Request):
     name = request.name
-    if request.type == 'pmml':
-        try:
-        #todo: 绝对路径
-            model = Model.fromFile(name)
-        except:
-            return 'failure'
-        
-        total = {}
-        shuru = []
-        total['engine'] = 'PyPMML'
-        total['name'] = model.modelName
-        total['type'] = model.modelElement
-        total['function'] = model.functionName
-        total['input'] = parse_fields(model.inputFields)
-        total['output'] = parse_fields(model.outputFields)
-        
-        return total
-    elif request.type == 'onnx':
-        try:
-            model = onnx.load(name)
-        except:
-            return 'failure'
-        total = {}
-        graph = model.graph
-        total['type'] = 'ONNX'
-        total['engine'] = 'ONNX Runtime'
-        total['input'] = parse_tensor(graph.input[0])
-        total['output'] = parse_tensor(graph.output[0])
+    model = manager.getModel(name)
+    return model.getInfo()
 
-        return total
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('./index.html')
 
-re = Request('./data/mnist-8.onnx', 'onnx')
-info = getInfo(re)
-with open("data.json", "w", encoding="utf-8") as f:
-    json.dump(info, f, ensure_ascii=False, indent=4)
+@app.route('/', methods=['POST'])
+def upload():
+    file = request.files['file']
+    name = request.form.get('name')
+    type = request.form.get('type')
+    # 保存模型
+    path = os.path.join(os.path.join(os.getcwd(), 'data'), file.filename)
+    file.save(path)
+
+    # 加入manager
+    add(path, name, type)
+
+    return {'status': 'success'}
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+
+    # 测试
+    # re = Request('model.pmml', './data/model.pmml', 'pmml')
+    # add(re)
+    # info = getInfo(re)
+    # with open("data.json", "w", encoding="utf-8") as f:
+    #     json.dump(info, f, ensure_ascii=False, indent=4)
