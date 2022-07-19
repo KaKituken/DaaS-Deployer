@@ -1,0 +1,22 @@
+{
+    "type": "ONNX",
+    "engine": "ONNX Runtime",
+    "input": {
+        "name": "Input3",
+        "dataType": "float32",
+        "shape": [
+            1,
+            1,
+            28,
+            28
+        ]
+    },
+    "output": {
+        "name": "Plus214_Output_0",
+        "dataType": "float32",
+        "shape": [
+            1,
+            10
+        ]
+    }
+}

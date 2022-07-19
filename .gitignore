@@ -1,0 +1,5 @@
+*.ipynb
+.ipynb*
+.idea
+__pycache__
+runmodel.py

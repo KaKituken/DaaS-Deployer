@@ -56,6 +56,7 @@ def upload():
     # 保存模型
     path = os.path.join(os.path.join(os.getcwd(), 'data'), file.filename)
     file.save(path)
+    print(file)
 
     # 加入manager
     add(path, name, type)
@@ -63,11 +64,12 @@ def upload():
     return {'status': 'success'}
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    # app.run(host='0.0.0.0', port=5000)
+    # app.run()
 
     # 测试
-    # re = Request('model.pmml', './data/model.pmml', 'pmml')
-    # add(re)
-    # info = getInfo(re)
-    # with open("data.json", "w", encoding="utf-8") as f:
-    #     json.dump(info, f, ensure_ascii=False, indent=4)
+    re = Request('model.pmml', './data/mnist-8.onnx', 'onnx')
+    add(re.name, re.path, re.type)
+    info = getInfo(re)
+    with open("data1.json", "w", encoding="utf-8") as f:
+        json.dump(info, f, ensure_ascii=False, indent=4)
