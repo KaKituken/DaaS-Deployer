@@ -1,0 +1,12 @@
+{
+    "result": {
+        "probability_0": 0.7378033867133538,
+        "probability_1": 0.08184265041455008,
+        "probability_2": 0.18035396287209626,
+        "predicted_Species": 0.0
+    },
+    "stdout": [
+        "test output redirection"
+    ],
+    "stderr": []
+}

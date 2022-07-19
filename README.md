@@ -34,3 +34,16 @@ Flask
     - [ ]当前服务的状态
 - [ ]前端测试部署的接口
 - [ ]对外提供快速返回与等待返回两种API
+
+## 文件/接口说明
+- `test.py`中为Flask框架，“测试模型”功能需要从前端读取json格式的输入，见`./data/pmml_input_template.json`，之后返回给前端json格式的输出，见`./data/pmml_output_template.py`
+- `manager.py`保存当前加载的模型信息（路径）
+- `models.py`中实现模型的信息获取、预测等具体功能
+- 使用`./data/pmml_generator.py`可以更换算法生成`.pmml`文件
+
+*by助教：我们需要实现对分类、回归、聚类、降维任务的支持*
+### 后端数据生成格式
+- 分类: 返回概率分布、label
+- 回归: 返回预测值（+置信度）
+- 聚类: 等下
+- 降维: 也等下
