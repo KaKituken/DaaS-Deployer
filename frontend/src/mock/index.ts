@@ -2,6 +2,7 @@ import Mock from 'mockjs';
 
 import './user';
 import './message-box';
+import './modelOverview';
 
 import '@/views/dashboard/workplace/mock';
 
