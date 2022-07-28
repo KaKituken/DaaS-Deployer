@@ -12,6 +12,7 @@ export default {
   'menu.server.monitor': '实时监控-服务端',
   'menu.modelOverview': '模型管理',
   'menu.modelOverview.detail': '模型概览',
+  'menu.importModel': '导入模型',
   'menu.list': '列表页',
   'menu.result': '结果页',
   'menu.exception': '异常页',
