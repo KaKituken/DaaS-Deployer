@@ -57,7 +57,7 @@
             <div id="deploy">
               <div id="deployheader">
                 <p class="tag" style="margin-top: 0; padding-top: 15px">部署</p>
-                <button id="addService">+ 添加服务</button>
+                <button id="addService"><a href="/addService" style="text-decoration:none; color:#000">+ 添加服务</a></button>
                 <button id="addTask">+ 添加任务</button>
               </div>
               <a-divider style="margin-top: 0" />
