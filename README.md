@@ -36,7 +36,7 @@ Flask
 - [ ]对外提供快速返回与等待返回两种API
 
 ## 文件/接口说明
-- `test.py`中为Flask框架，“测试模型”功能需要从前端读取json格式的输入，见`./data/pmml_input_template.json`，之后返回给前端json格式的输出，见`./data/pmml_output_template.py`
+- `test.py`中为Flask框架，“测试模型”功能需要从前端读取json格式的输入，见`./data/pmml_input_template.json`，之后返回给前端json格式的输出，见`./data/pmml_output_template.json`
 - `manager.py`保存当前加载的模型信息（路径）
 - `models.py`中实现模型的信息获取、预测等具体功能
 - 使用`./data/pmml_generator.py`可以更换算法生成`.pmml`文件
@@ -47,3 +47,177 @@ Flask
 - 回归: 返回预测值（+置信度）
 - 聚类: 等下
 - 降维: 也等下
+
+
+
+## Restful API文档
+
+### 上传模型
+
+- Post: `/model-upload`
+
+- Param:
+
+  ```json
+  reqest{
+  	file,
+  	form{	// 使用表单，会自动存进去
+  		name,
+  		type,
+  	}
+  }
+  ```
+
+- Response:
+
+  ```json
+  response{
+      data{
+      	modelName,
+      	modelType,
+      	descript,
+      	updataTime,	// 上传上去的时间
+      	operation,
+      	status,		// 模型是否有效，无效搞一个报错
+  	}
+  }
+  ```
+
+### 获得模型概述
+
+- GET: `/model-descript`
+
+- Param:
+
+  ```json
+  let param = {
+      modelName
+  }
+  axios.GET('url', param)
+  ```
+
+- Response:
+
+  ```json
+  {
+      data{
+      	modelName,
+      	modelType,
+      	modelEngine,
+      	descript,
+      	algorithm,
+  	}
+  }
+  ```
+
+### 获得模型变量
+
+- GET: `/model-variable`
+
+- Param: modelName
+
+- Response:
+
+  ```json
+  {
+      data{
+      	inputVariables:[
+      
+      	],
+  		targetVariables:[
+              
+          ]
+  	}
+  }
+  ```
+
+
+
+### 测试模型
+
+- POST:`/model-test`
+- Param: 按照模板文件`./data/pmml_input_template.json`
+- Response: 前面的模板文件`./data/pmml_input_template.json`
+
+### 部署实时预测Web服务
+
+- GET:`/model-deploy`
+
+- Param:
+
+  ```json
+  {
+      modelName
+  }
+  ```
+
+- Response:（模型版本问一下）
+
+  ```json
+  {
+      data{
+      	restfulUrl,
+      	serverVersion:[	// 可以规定一下
+      
+      	]
+  	}
+  }
+  ```
+
+提交时
+
+- POST:`/model-deploy`
+
+- Param:
+
+  ```json
+  {
+      modelName,
+      serverVersion,
+      cpuReserve,
+      memoryReserve,
+      replicas,
+  }
+  ```
+
+- Response:
+
+  ```json
+  {
+      data{
+      	restfulUrl,
+  	}
+  }
+  ```
+
+### 生成curl代码
+
+前端来写吧，用上面的restfulUrl即可
+
+### 提交Web服务
+
+点击提交按钮，添加一个提交文件的按钮。（看看能不能根据后缀名改一下param中的type）
+
+有两种返回：快速返回只接受json格式的输入（图片，视频也以json输入）同时不返回任务id；
+
+等待返回发送一个文件包，先返回任务id。
+
+如果格式是json，默认调用快速返回，如果是其他数据（如csv），传入文件名，文件统一放某一文件夹下（后端确定）
+
+- POST: `restful url`
+
+- Param:
+
+  ```json
+  {
+      type:	// json or txt or csv...
+      args: ""
+  }
+  ```
+
+- Response:
+
+  快速返回：`{data{result}}`
+
+  等待返回: `{data{id}}`
+

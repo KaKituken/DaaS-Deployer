@@ -65,11 +65,11 @@ def upload():
 
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', port=5000)
-    # app.run()
+    app.run()
 
-    # 测试
-    re = Request('model.pmml', './data/mnist-8.onnx', 'onnx')
-    add(re.name, re.path, re.type)
-    info = getInfo(re)
-    with open("data1.json", "w", encoding="utf-8") as f:
-        json.dump(info, f, ensure_ascii=False, indent=4)
+    # # 测试
+    # re = Request('model.pmml', './data/mnist-8.onnx', 'onnx')
+    # add(re.name, re.path, re.type)
+    # info = getInfo(re)
+    # with open("data1.json", "w", encoding="utf-8") as f:
+    #     json.dump(info, f, ensure_ascii=False, indent=4)
