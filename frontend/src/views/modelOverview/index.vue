@@ -1,0 +1,285 @@
+<template>
+  <div class="layout-demo">
+    <a-layout style="min-height: 850px">
+      <a-layout-header>
+        <div>
+          <a-breadcrumb style="margin-left: 15px">
+            <a-breadcrumb-item>主页</a-breadcrumb-item>
+            <a-breadcrumb-item>模型</a-breadcrumb-item>
+            <a-breadcrumb-item>{{ modelName }}</a-breadcrumb-item>
+            <template #separator>
+              <icon-right />
+            </template>
+          </a-breadcrumb>
+          <div id="basicInfo">
+            <p style="font-weight: bold; font-size: 22px">{{ modelName }}</p>
+            <p style="color: grey">{{ modelDescription }}</p>
+          </div>
+        </div>
+        <div id="detailInfo">
+          <a-space direction="vertical" size="medium" fill>
+            <a-descriptions
+              :data="data"
+              size="small"
+              :align="{ label: 'right', value: 'right' }"
+              column="4"
+              layout="inline-vertical"
+            />
+          </a-space>
+        </div>
+      </a-layout-header>
+      <a-layout-content>
+        <a-tabs default-active-key="1" style="width: 100%; height: 100%">
+          <a-tab-pane id="overview" key="1" title="概述">
+            <div id="var">
+              <div id="inputVar">
+                <p class="tag">输入变量</p>
+                <a-divider />
+                <div class="table">
+                  <a-table :columns="inputColumns" :data="inputData" />
+                </div>
+              </div>
+              <div id="targetVar">
+                <p class="tag">目标变量</p>
+                <a-divider />
+                <div class="table">
+                  <a-table :columns="inputColumns" :data="targetData" />
+                </div>
+              </div>
+            </div>
+            <div id="result">
+              <p id="resultTag" class="tag">评估结果</p>
+              <a-divider />
+              <a-empty />
+            </div>
+          </a-tab-pane>
+          <a-tab-pane key="2" title="部署">
+            <div id="deploy">
+              <div id="deployheader">
+                <p class="tag" style="margin-top: 0; padding-top: 15px">部署</p>
+                <button id="addService"><a href="/addService" style="text-decoration:none; color:#000">+ 添加服务</a></button>
+                <button id="addTask">+ 添加任务</button>
+              </div>
+              <a-divider style="margin-top: 0" />
+              <div class="table">
+                <a-table :columns="deployColumns" :data="deployData" />
+              </div>
+              <a-divider />
+            </div>
+          </a-tab-pane>
+          <a-tab-pane key="3" title="测试">
+            <a-button>新建</a-button>
+          </a-tab-pane>
+          <a-tab-pane key="4" title="实时预测">
+            Content of Tab Panel 4
+          </a-tab-pane>
+          <a-tab-pane key="5" title="批量预测">
+            Content of Tab Panel 5
+          </a-tab-pane>
+          <a-tab-pane key="6" title="模型评估">
+            Content of Tab Panel 6
+          </a-tab-pane>
+          <a-tab-pane key="7" title="关联脚本">
+            Content of Tab Panel 7
+          </a-tab-pane>
+        </a-tabs>
+      </a-layout-content>
+      <a-layout-footer> </a-layout-footer>
+    </a-layout>
+  </div>
+</template>
+
+<script type="ts" setup>
+  import { ref,onMounted,reactive } from 'vue'
+  import axios from 'axios'
+
+  const modelName = ref('xgb-iris')
+  const modelDescription = ref('this is a simple introduction of the model...')
+  const data = reactive([{
+          label: '修改时间',
+          value: '',
+      }, {
+          label: '类型',
+          value: '',
+      }, {
+          label: '算法',
+          value: ''
+      }, {
+          label: '引擎',
+          value: '',
+      }
+  ]);
+  const inputColumns=[
+      {
+          title:'字段',
+          dataIndex:'field',
+      },
+      {
+          title:"类型",
+          dataIndex:'type',
+      },
+      {
+          title:"测量",
+          dataIndex:'measure',
+      },
+      {
+          title:"取值",
+          dataIndex:'value',
+      }
+  ];
+  const inputData = ref()
+  const targetData = ref()
+  const deployColumns=[
+      {
+          title:'名称',
+          dataIndex:'name',
+      },
+      {
+          title:"类型",
+          dataIndex:'type',
+      },
+      {
+          title:"开始时间",
+          dataIndex:'startTime',
+      },
+      {
+          title:"状态",
+          dataIndex:'status',
+      },
+      {
+          title:"操作",
+          dataIndex:'operation',
+      }
+  ];
+  const deployData = reactive([]);
+
+  onMounted(()=>{
+      axios.get('/api/modelOverview/info')
+      .then(response=>{
+          modelName.value = response.data.modelName;
+          modelDescription.value = response.data.modelDescription;
+          data[0].value = response.data.updateTime;
+          data[1].value = response.data.type;
+          data[2].value = response.data.algorithm;
+          data[3].value = response.data.engine;
+      })
+
+      axios.get('/api/modelOverview/var')
+      .then(response=>{
+          inputData.value = response.data.inputData;
+          targetData.value = response.data.targetData;
+      })
+  });
+</script>
+
+<style scoped>
+  .layout-demo {
+    min-width: 860px;
+  }
+
+  .layout-demo :deep(.arco-layout-header),
+  .layout-demo :deep(.arco-layout-content),
+  .layout-demo :deep(.arco-layout-footer) {
+    display: flex;
+    color: var(--color-black);
+    font-size: 16px;
+    font-stretch: condensed;
+  }
+
+  .layout-demo :deep(.arco-layout-header) {
+    height: 150px;
+    background-color: #fff;
+  }
+
+  .layout-demo :deep(.arco-layout-content) {
+    background-color: #f5f5f5;
+  }
+
+  .layout-demo :deep(.arco-layout-footer) {
+    height: 50px;
+    margin-top: 20px;
+    margin-right: 2%;
+    margin-left: 2%;
+    background-color: #f5f5f5;
+  }
+
+  #basicInfo {
+    width: 350px;
+    margin-left: 20px;
+  }
+
+  #detailInfo {
+    justify-content: flex-end;
+    width: 700px;
+    margin-top: 70px;
+    margin-right: 50px;
+    margin-left: auto;
+  }
+
+  #overview {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #var {
+    display: flex;
+  }
+
+  #inputVar,
+  #targetVar {
+    width: 47%;
+    height: 400px;
+    margin-left: 2%;
+    background-color: #fff;
+  }
+
+  .tag {
+    margin-top: 15px;
+    margin-left: 12px;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .table {
+    margin: 0 8px 0 8px;
+  }
+
+  #result {
+    height: 200px;
+    margin-top: 20px;
+    margin-right: 2%;
+    margin-left: 2%;
+    background-color: #fff;
+  }
+
+  #resultTag {
+    padding-top: 15px;
+  }
+
+  #deploy {
+    margin-right: 2%;
+    margin-left: 2%;
+    background-color: #fff;
+  }
+
+  #deployheader {
+    display: flex;
+    flex-direction: row;
+  }
+
+  #deployheader #addService {
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-right: 0;
+    margin-bottom: 15px;
+    margin-left: auto;
+  }
+
+  #deployheader #addTask {
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-right: 50px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+  }
+</style>
