@@ -13,6 +13,7 @@ export default {
   'menu.modelDeploy': '模型部署',
   'menu.modelDeploy.addService': '添加服务',
   'menu.modelList': '模型列表',
+  'menu.deploy': '详细部署页面',
   'menu.arcoWebsite': 'Arco Design',
   'menu.faq': '常见问题',
   'navbar.docs': '文档中心',

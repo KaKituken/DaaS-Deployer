@@ -57,7 +57,7 @@
             <div id="deploy">
               <div id="deployheader">
                 <p class="tag" style="margin-top: 0; padding-top: 15px">部署</p>
-                <button id="addService"><a href="/addService" style="text-decoration:none; color:#000">+ 添加服务</a></button>
+                <button id="addService">+ 添加服务</button>
                 <button id="addTask">+ 添加任务</button>
               </div>
               <a-divider style="margin-top: 0" />
@@ -68,7 +68,64 @@
             </div>
           </a-tab-pane>
           <a-tab-pane key="3" title="测试">
-            <a-button>新建</a-button>
+            <div id="test">
+              <div style="background-color: #f5f5f5;">
+                <a-split :style="{
+                    height: '600px',
+                    width: '100%',
+                    minWidth: '500px',
+                    border: '1px solid var(--color-border)',
+                  }"
+                  disabled="True"
+                >
+                  <template #first>
+                    <a-typography-paragraph>
+                      <div style="background-color: white; margin: 10px; border-radius:10px; ">
+                        <div class="testtitle" style="margin: 10px;">
+                          <span class="tag" style="margin: 10px;">输入</span>
+                          <span style="position: relative; left: 450px; color: #165dff;">JSON</span>
+                        </div>
+                          <a-list>
+                            <a-list-item>
+                              &nbsp;&nbsp;&nbsp;sepal-length (cm)<br>
+                              <a-input v-model="getData.slength" :style="{width:'520px', margin:'2px', 'background-color':'white', 'border-style':'solid', 'border-color': 'gray', 'border-radius': '5px'}" placeholder="" allow-clear />  
+                            </a-list-item>
+                            <a-list-item>
+                              &nbsp;&nbsp;&nbsp;sepal-width (cm)<br>
+                               <a-input v-model="getData.swidth" :style="{width:'520px', margin:'2px', 'background-color':'white', 'border-style':'solid', 'border-color': 'gray', 'border-radius': '5px'}" placeholder="" allow-clear />  
+                            </a-list-item>
+                            <a-list-item>
+                              &nbsp;&nbsp;&nbsp;petal-length (cm)<br>
+                               <a-input v-model="getData.plength" :style="{width:'520px', margin:'2px', 'background-color':'white', 'border-style':'solid', 'border-color': 'gray', 'border-radius': '5px'}" placeholder="" allow-clear />  
+                            </a-list-item>
+                            <a-list-item>
+                              &nbsp;&nbsp;&nbsp;petal-width (cm)<br>
+                               <a-input v-model="getData.pwidth" :style="{width:'520px', margin:'2px', 'background-color':'white', 'border-style':'solid', 'border-color': 'gray', 'border-radius': '5px'}" placeholder="" allow-clear />   
+                            </a-list-item>
+                          </a-list>
+                          <div style="text-align: right">
+                            <a-button type="outline" style="margin: 10px;" @click="clear">清除</a-button>
+                            <a-button type="primary" style="margin: 10px">提交</a-button>
+                          </div>
+                      </div>
+                    </a-typography-paragraph>
+                  </template>
+                  <template #second>
+                    <a-typography-paragraph>
+                      <div style="background-color: white; margin: 10px; border-radius: 10px;">
+                        <div class="testtitle" style="margin: 10px;">
+                          <span class="tag" style="margin: 10px;">输出</span>
+                        </div>
+                        <a-divider style="position: relative; top: -10px;"/>
+                        <div id="testout" style="height: 362px;">
+                          <a-textarea v-model="output" placeholder="Please enter something" allow-clear style="background-color: white; margin:20px; position: relative; top: -20px; width: 560px; border-style: solid; border-color: gray; height: 80%;"/>
+                        </div>
+                      </div>
+                    </a-typography-paragraph>
+                  </template>
+                </a-split>
+              </div>
+            </div>
           </a-tab-pane>
           <a-tab-pane key="4" title="实时预测">
             Content of Tab Panel 4
@@ -107,8 +164,28 @@
       }, {
           label: '引擎',
           value: '',
-      }
-  ]);
+      },
+  ],
+    );
+
+  const getData = reactive([{
+      label: 'slength',
+      value: ''
+    }, {
+      label: 'swidth',
+      value: ''
+    }, {
+      label: 'plength', 
+      value: ''
+    }, {
+      label: 'pwidth', 
+      value: ''
+    }, {
+      label: 'output', 
+      value: ''
+    }, 
+  ],);
+
   const inputColumns=[
       {
           title:'字段',
@@ -170,6 +247,7 @@
           targetData.value = response.data.targetData;
       })
   });
+
 </script>
 
 <style scoped>
@@ -281,5 +359,9 @@
     margin-right: 50px;
     margin-bottom: 15px;
     margin-left: 10px;
+  }
+
+  #test {
+    background-color: white;
   }
 </style>
