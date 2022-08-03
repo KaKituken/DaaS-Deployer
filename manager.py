@@ -4,9 +4,11 @@ class Manager():
         self.map = {}
     
     # 重名
-    def addModel(self, model: AbstractModel):
+    def addModel(self, model: AbstractModel) -> bool:
+        if model.name in self.map.keys():
+            return False
         self.map[model.name] = model
         return True
     
-    def getModel(self, name):
+    def getModel(self, name) -> AbstractModel:
         return self.map[name]

@@ -29,7 +29,7 @@ class MyStderr():
 
     errinfo = []    # 保存重定向信息
 
-    def __init__(self) -> None:
+    def __init__(self):
         self.stderrbak = sys.stderr
         sys.stderr = self
 

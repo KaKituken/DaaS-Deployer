@@ -60,10 +60,11 @@ Flask
 
   ```json
   reqest{
-  	file,
-  	form{	// 使用表单，会自动存进去
-  		name,
-  		type,
+  	"file": ,
+  	"form": {	// 使用表单，会自动存进去
+  		"name": ,
+  		"type": ,
+      "descript": ,
   	}
   }
   ```
@@ -72,13 +73,13 @@ Flask
 
   ```json
   response{
-      data{
-      	modelName,
-      	modelType,
-      	descript,
-      	updataTime,	// 上传上去的时间
-      	operation,
-      	status,		// 模型是否有效，无效搞一个报错
+      "data": {
+      	"modelName": ,
+      	"modelType": ,
+      	"descript": ,
+      	"updataTime": ,	// 上传上去的时间
+      	"operation": ,
+      	"status": ,		// 模型是否有效，无效搞一个报错
   	}
   }
   ```
@@ -91,7 +92,7 @@ Flask
 
   ```json
   let param = {
-      modelName
+      "modelName": 
   }
   axios.GET('url', param)
   ```
@@ -100,12 +101,12 @@ Flask
 
   ```json
   {
-      data{
-      	modelName,
-      	modelType,
-      	modelEngine,
-      	descript,
-      	algorithm,
+      "data": {
+      	"modelName": ,
+      	"modelType": ,
+      	"modelEngine": ,
+      	"descript": ,
+      	"algorithm": ,
   	}
   }
   ```
@@ -120,24 +121,33 @@ Flask
 
   ```json
   {
-      data{
-      	inputVariables:[
+      "data": {
+      	"inputVariables":[
       
       	],
-  		targetVariables:[
+  		"targetVariables":[
               
           ]
   	}
   }
   ```
 
-
-
 ### 测试模型
 
 - POST:`/model-test`
+
 - Param: 按照模板文件`./data/pmml_input_template.json`
-- Response: 前面的模板文件`./data/pmml_input_template.json`
+
+  ```json
+  {
+      "modelName": "",
+      "data": {
+          // 见./data/pmml_input_template.json
+      }
+  }
+  ```
+
+- Response: 前面的模板文件`./data/pmml_output_template.json`
 
 ### 部署实时预测Web服务
 
@@ -147,7 +157,7 @@ Flask
 
   ```json
   {
-      modelName
+      "modelName": 
   }
   ```
 
@@ -155,9 +165,9 @@ Flask
 
   ```json
   {
-      data{
-      	restfulUrl,
-      	serverVersion:[	// 可以规定一下
+      "data": {
+      	"restfulUrl": ,
+      	"serverVersion":[	// 可以规定一下
       
       	]
   	}
@@ -172,11 +182,11 @@ Flask
 
   ```json
   {
-      modelName,
-      serverVersion,
-      cpuReserve,
-      memoryReserve,
-      replicas,
+      "modelName": ,
+      "serverVersion": ,
+      "cpuReserve": ,
+      "memoryReserve": ,
+      "replicas": ,
   }
   ```
 
@@ -184,8 +194,8 @@ Flask
 
   ```json
   {
-      data{
-      	restfulUrl,
+      "data": {
+      	"restfulUrl": ,
   	}
   }
   ```
@@ -210,8 +220,8 @@ Flask
 
   ```json
   {
-      type:	// json or txt or csv...
-      args: ""
+      "type":	,// json or txt or csv...
+      "args": ""
   }
   ```
 
