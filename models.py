@@ -64,8 +64,8 @@ class PmmlModel(AbstractModel):
         outputs = dict(zip(output_keys, res))
         if not flg:
             outputs['predicted_label'] = label
-        stderr = MyStderr.errinfo
-        stdout = MyStdout.outinfo
+        stderr = myStderr.errinfo
+        stdout = myStdout.outinfo
         print("test output redirection")
 
         # 恢复标准输出

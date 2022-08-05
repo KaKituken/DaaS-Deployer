@@ -9,7 +9,7 @@ def load_data():
     iris = datasets.load_iris()
     X = iris.data
     y = iris.target 
-    """-------------------划分数据集---  -------------------"""
+    """-------------------划分数据集------------------------"""
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
     print("数据准备完毕！！")
     return X_train, X_test, y_train, y_test 

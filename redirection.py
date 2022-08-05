@@ -1,10 +1,9 @@
 import sys
 
 class MyStdout():
-    
-    outinfo = []    # 保存重定向信息
 
     def __init__(self):
+        self.outinfo = []   # 保存重定向信息
         self.stdoutbak = sys.stdout
         sys.stdout = self
         
@@ -16,7 +15,7 @@ class MyStdout():
     
     def processInfo(self, info):
         self.stdoutbak.write("标准输出接收到消息："+info+"\n") #可以将信息再输出到原有标准输出，在定位问题时比较有用
-        MyStdout.outinfo.append(info)
+        self.outinfo.append(info)
 	
     def restoreStd(self):
         sys.stdout = self.stdoutbak 
@@ -27,9 +26,10 @@ class MyStdout():
 
 class MyStderr():
 
-    errinfo = []    # 保存重定向信息
+    # errinfo = []    # 保存重定向信息
 
     def __init__(self):
+        self.errinfo = []
         self.stderrbak = sys.stderr
         sys.stderr = self
 
@@ -41,7 +41,7 @@ class MyStderr():
 
     def processInfo(self, info):
         self.stderrbak.write("标准错误收到消息: " + info + "\n")
-        MyStderr.errinfo.append(info)
+        self.errinfo.append(info)
 
     def restoreStd(self):
         sys.stderr = self.stderrbak
