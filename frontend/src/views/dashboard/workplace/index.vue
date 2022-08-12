@@ -41,6 +41,7 @@
   </div>
 </template>
 
+<!-- <script lang="ts" type="module" setup> -->
 <script lang="ts" setup>
   import Banner from './components/banner.vue';
   import DataPanel from './components/data-panel.vue';
@@ -54,6 +55,7 @@
   import Docs from './components/docs.vue';
 </script>
 
+<!-- <script lang="ts" type="module"> -->
 <script lang="ts">
   export default {
     name: 'Dashboard', // If you want the include property of keep-alive to take effect, you must name the component

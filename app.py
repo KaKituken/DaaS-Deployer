@@ -19,6 +19,7 @@ app.config.from_object(__name__)
 api = Api(app)
 CORS(app, resources={r'/*': {'origins': '*'}})
 
+
 class Request:
     def __init__(self, name, path, type, descript, data=None):
         self.name = name
@@ -35,7 +36,7 @@ class ModelRestfulAPI(Resource):
         return jsonify(model.predict(data))
 
 
-api.add_resource(ModelRestfulAPI, '/<string:model_name>')
+api.add_resource(ModelRestfulAPI, '/predict/<string:model_name>')
 
 
 manager = Manager()
@@ -50,7 +51,11 @@ def add(name, path, type, descript) -> bool:
 
 
 def getInfo(request) -> dict:
-    name = request.json['modelName']
+    print('after get')
+    print(request.json)
+    print('after json')
+    name = request.json.get('modelName')
+    print(name)
     model = manager.getModel(name)
     return model.getInfo()
 
@@ -129,10 +134,12 @@ def upload_file():
         ret = preprocess_csv(file)
     print(ret)
     # -------------------------------------------
+    return {'status': 'ok'}
         
 
-@app.route('/model-descript', methods=['GET'])
+@app.route('/model-descript', methods=['POST'])
 def get_descript():
+    print('prepare to get')
     total_info = getInfo(request)
     response_data = {}
     response_data['modelName'] = total_info['name']
@@ -140,10 +147,11 @@ def get_descript():
     response_data['modelEngine'] = total_info['engine']
     response_data['descript'] = total_info['descript']
     response_data['algorithm'] = total_info['function']
+    response_data['createTime'] = total_info['create_time']
     return jsonify(response_data)
 
     
-@app.route('/model-variable', methods=['GET'])
+@app.route('/model-variable', methods=['POST'])
 def get_variable():
     total_info = getInfo(request)
     response_data = {}
@@ -160,7 +168,7 @@ def predict():
 
 
 # 部署服务
-@app.route('/model-deploy/service', methods=['POST'])
+@app.route('/model-deploy-service', methods=['POST'])
 def get_model_deploy_data():
     # 需要在这步生成docker service，并得到端口号（run flask in docker）
     model = manager.getModel(request.name)
@@ -173,15 +181,21 @@ def get_model_deploy_data():
 
 
 # 部署job
-@app.route('./model-deploy/job', methods=['POST'])
+@app.route('/model-deploy-job', methods=['POST'])
 def deploy_job():
     # 创建一个job，但是不运行，返回端口号（待测试）
     pass
 
 
+# # 测试一下
+# @app.route('/model-deploy/run-job', methods=['POST'])
+# def run_job():
+#     pass
+
+
 if __name__ == '__main__':
-    # app.run(host='0.0.0.0', port=5000)
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
+    # app.run()
 
     # # test
     # re = Request('test_model', './data/digis.pmml', 'pmml', 'this is a test model')

@@ -151,7 +151,7 @@ Flask
 
 ### 部署实时预测Web服务
 
-- GET:`/model-deploy`
+- POST:`/model-deploy-service`
 
 - Param:
 
@@ -176,7 +176,7 @@ Flask
 
 提交时
 
-- POST:`/model-deploy`
+- POST:`/model-deploy-service`
 
 - Param:
 
@@ -199,6 +199,11 @@ Flask
   	}
   }
   ```
+
+### 部署job
+
+- POST: `/model-deploy-job`
+- 待讨论
 
 ### 生成curl代码
 
