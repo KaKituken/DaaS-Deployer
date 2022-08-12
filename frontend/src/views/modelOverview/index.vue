@@ -195,19 +195,19 @@
   const inputColumns=[
       {
           title:'字段',
-          dataIndex:'field',
+          dataIndex:'name',
       },
       {
           title:"类型",
-          dataIndex:'type',
+          dataIndex:'dataType',
       },
       {
           title:"测量",
-          dataIndex:'measure',
+          dataIndex:'optype',
       },
       {
           title:"取值",
-          dataIndex:'value',
+          dataIndex:'valueRange',
       }
   ];
   const inputData = ref()
@@ -250,7 +250,7 @@
 
       const res2 = await axios.post<modelVariable>('http://82.156.5.94:5000/model-variable',param)
       inputData.value = res2.data.inputVariables;
-      targetData.value = res2.data.targetVariables;
+      targetData.value = res2.data.outputVariables;
       
   });
 

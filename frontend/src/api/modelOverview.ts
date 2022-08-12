@@ -7,6 +7,6 @@ export interface modelDescript{
 }
 
 export interface modelVariable{
-    inputVariables:Array<string>;
-    targetVariables:Array<string>;
+    inputVariables:Array<JSON>;
+    outputVariables:Array<JSON>;
 }
