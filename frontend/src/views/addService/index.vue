@@ -4,8 +4,8 @@
             <a-layout-header>
                 <a-breadcrumb style="margin-left: 15px">
                     <a-breadcrumb-item>主页</a-breadcrumb-item>
-                    <a-breadcrumb-item>模型</a-breadcrumb-item>
-                    <a-breadcrumb-item>{{ modelName }}</a-breadcrumb-item>
+                    <a-breadcrumb-item><a href="/list">模型</a></a-breadcrumb-item>
+                    <a-breadcrumb-item><a :href="modelUrl">{{ modelName }}</a></a-breadcrumb-item>
                     <a-breadcrumb-item>添加服务</a-breadcrumb-item>
                     <template #separator>
                         <icon-right />
@@ -30,13 +30,6 @@
                           </a-option>
                         </a-select>
                       </a-form-item>
-                      <a-form-item field="environment" label="运行环境" :rules="[{ required: true }]">
-                        <a-select v-model="form.environment" placeholder="Please select...">
-                          <a-option v-for="(item, index) in environment" :key="index">
-                            {{ item }}
-                          </a-option>
-                        </a-select>
-                      </a-form-item>
                       <a-form-item field="cpu" label="预留cpu">
                         <a-slider v-model="form.cpu" :default-value=0 min=0 max=8 :style="{ width: '200px' }"/>
                         <a-input-number v-model="form.cpu" :default-value=0 min=0 max=8 precision="0" placeholder="0~8" :style="{width:'85px',margin:'0 0 0 50px'}" />
@@ -45,8 +38,8 @@
                         <a-slider v-model="form.memory" :default-value=0 min=0.0 max=32.0 step=0.1 :style="{ width: '200px' }" />
                         <a-input-number v-model="form.memory" :default-value=0 min=0.0 max=32.0 step=0.1 precision="1" placeholder="0~32.0" :style="{width:'85px',margin:'0 0 0 50px'}" />
                       </a-form-item>
-                      <a-form-item field="copyNum" label="副本">
-                        <a-input-number v-model="form.copyNum" :default-value="1"/>
+                      <a-form-item field="copyNum" label="副本" :rules="[{ required: true }]">
+                        <a-input-number v-model="form.copyNum" :default-value=1 />
                       </a-form-item>
                       <a-form-item>
                         <a-button type="primary" html-type="submit">添加模型</a-button>
@@ -60,43 +53,36 @@
     </div>
 </template>
 
-<script type="ts" setup>
+<script lang="ts" setup>
     import { ref,onMounted,reactive } from 'vue'
     import axios from 'axios'
+    import { useRoute } from 'vue-router'
+    import type { modelDeploy,addService } from '../../api/addService'
 
+    const route = useRoute()
     const serverURL = ref();
-    const modelName = ref('xgb-iris');
+    const modelName = ref('modelName');
+    modelName.value = route.params.modelname as string;
+    const modelUrl = ref(`/detail/${modelName.value}`)
     const form = reactive({
       name:'',
       modelVersion:'',
-      environment:'',
       cpu:'',
       memory:'',
       copyNum:'',
     });
     const modelVersion = ref();
-    const environment = ref();
-    
-    onMounted(()=>{
-        axios.get('/api/modelOverview/info')
-        .then(response=>{
-            modelName.value = response.data.modelName;
-        })
-
-        axios.get('/api/modelDeploy/info')
-        .then(response=>{
-            serverURL.value = response.data.serverURL;
-        })
-
-        axios.get('/api/modelDeploy/info')
-        .then(response=>{
-            modelVersion.value = response.data.modelVersion;
-            environment.value = response.data.environment;
-        })
+    const param = {
+      modelName: modelName.value
+    }
+    onMounted(async ()=>{
+        const res = await axios.post<modelDeploy>('http://82.156.5.94:5000/model-deploy-service',param)
+        serverURL.value = res.data.restfulUrl;
+        modelVersion.value = res.data.serverVersion;
     });
 
-    const handleSubmit = () => {
-      alert('没做');
+    const handleSubmit = async () => {
+      const res = await axios.post<addService>('http://82.156.5.94:5000/model-deploy-service',form)
     };
 </script>
 

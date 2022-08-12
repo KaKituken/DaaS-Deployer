@@ -5,7 +5,7 @@
         <div>
           <a-breadcrumb style="margin-left: 15px">
             <a-breadcrumb-item>主页</a-breadcrumb-item>
-            <a-breadcrumb-item>模型</a-breadcrumb-item>
+            <a-breadcrumb-item><a href="\list">模型</a></a-breadcrumb-item>
             <a-breadcrumb-item>{{ modelName }}</a-breadcrumb-item>
             <template #separator>
               <icon-right />
@@ -57,7 +57,7 @@
             <div id="deploy">
               <div id="deployheader">
                 <p class="tag" style="margin-top: 0; padding-top: 15px">部署</p>
-                <button id="addService">+ 添加服务</button>
+                <button id="addService"><a :href="addServiceUrl">+ 添加服务</a></button>
                 <button id="addTask">+ 添加任务</button>
               </div>
               <a-divider style="margin-top: 0" />
@@ -146,11 +146,17 @@
   </div>
 </template>
 
-<script type="ts" setup>
+<script lang="ts" setup>
   import { ref,onMounted,reactive } from 'vue'
   import axios from 'axios'
+  import { useRoute } from 'vue-router'
+  import type { modelDescript, modelVariable } from '../../api/modelOverview'
 
-  const modelName = ref('xgb-iris')
+  const route = useRoute();
+  const modelName = ref('modelName');
+  modelName.value = route.params.modelname as string ;
+  const addServiceUrl = ref(`/addService/${modelName.value}`)
+
   const modelDescription = ref('this is a simple introduction of the model...')
   const data = reactive([{
           label: '修改时间',
@@ -230,22 +236,22 @@
   ];
   const deployData = reactive([]);
 
-  onMounted(()=>{
-      axios.get('/api/modelOverview/info')
-      .then(response=>{
-          modelName.value = response.data.modelName;
-          modelDescription.value = response.data.modelDescription;
-          data[0].value = response.data.updateTime;
-          data[1].value = response.data.type;
-          data[2].value = response.data.algorithm;
-          data[3].value = response.data.engine;
-      })
+  const param = {
+    "modelName": modelName.value
+  }
 
-      axios.get('/api/modelOverview/var')
-      .then(response=>{
-          inputData.value = response.data.inputData;
-          targetData.value = response.data.targetData;
-      })
+
+  onMounted(async ()=>{
+      const res1 = await axios.post<modelDescript>('http://82.156.5.94:5000/model-descript',param)
+      modelDescription.value = res1.data.descript;
+      data[1].value = res1.data.modelType;
+      data[2].value = res1.data.algorithm;
+      data[3].value = res1.data.modelEngine;
+
+      const res2 = await axios.post<modelVariable>('http://82.156.5.94:5000/model-variable',param)
+      inputData.value = res2.data.inputVariables;
+      targetData.value = res2.data.targetVariables;
+      
   });
 
 </script>
