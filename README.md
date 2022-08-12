@@ -86,7 +86,7 @@ Flask
 
 ### 获得模型概述
 
-- GET: `/model-descript`
+- POST: `/model-descript`
 
 - Param:
 
@@ -113,7 +113,7 @@ Flask
 
 ### 获得模型变量
 
-- GET: `/model-variable`
+- POST: `/model-variable`
 
 - Param: modelName
 
