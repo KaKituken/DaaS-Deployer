@@ -11,7 +11,7 @@
     <a-divider />
     <a-table :columns="columns" :data="data">
       <template #operation="{ record }">
-        <a-button @click="onclickColumn(record)">测试点击</a-button>
+        <a-button @click="onclickColumn(record)">详情</a-button>
       </template>
     </a-table>
   </a-card>
@@ -72,6 +72,8 @@
     });
   };
   const onclickColumn = (record: any) => {
-    alert(record.name);
+    router.push({
+      path: `/detail/${record.name}`,
+    });
   };
 </script>
