@@ -13,7 +13,7 @@ const MODELOVERVIEW: AppRouteRecordRaw = {
   },
   children: [
     {
-      path: '/detail',
+      path: '/detail/:modelname',
       name: 'detail',
       component: () => import('@/views/modelOverview/index.vue'),
       meta: {

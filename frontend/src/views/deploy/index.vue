@@ -1,7 +1,7 @@
 <template>
   <div class="layout-demo">
-    <a-layout style="min-height: 950px;">
-      <a-layout-header style="height:180px;">
+    <a-layout style="min-height: 950px">
+      <a-layout-header style="height: 180px">
         <div>
           <a-breadcrumb style="margin-left: 15px">
             <a-breadcrumb-item>主页</a-breadcrumb-item>
@@ -11,12 +11,15 @@
               <icon-right />
             </template>
           </a-breadcrumb>
-          <div style="height:200px; margin-left:10px;">
+          <div style="height: 200px; margin-left: 10px">
             <p style="font-weight: bold; font-size: 22px">{{ modelName }}</p>
-            <p style="width:600px;"><span style="color:gray;">端点: </span><span style="colro:black; font-weight:bold;">POST </span><span style="color:purple;">{{ postmsg }}</span></p>
-            <p style="color: grey;">部署令牌:</p>
+            <p style="width: 600px"
+              ><span style="color: gray">端点: </span
+              ><span style="colro: black; font-weight: bold">POST </span
+              ><span style="color: purple">{{ postmsg }}</span></p
+            >
+            <p style="color: grey">部署令牌:</p>
           </div>
-
         </div>
         <div id="detailInfo">
           <a-space direction="vertical" size="medium" fill>
@@ -43,7 +46,7 @@
               </div>
               <a-divider />
               <!-- 灰色分隔块 -->
-              <div style="height:40px; background-color:#f5f5f5"></div>
+              <div style="height: 40px; background-color: #f5f5f5"></div>
 
               <div class="deployheader">
                 <p class="tag" style="margin-top: 0; padding-top: 15px">副本</p>
@@ -53,38 +56,71 @@
                 <a-table :columns="copyColumns" :data="copyData" />
               </div>
               <a-divider />
-
             </div>
-
           </a-tab-pane>
           <a-tab-pane id="overview" key="2" title="测试">
             <div id="var">
               <div id="inputVar">
-                <p class="tag" style="margin-left:10px;">请求</p>
+                <p class="tag" style="margin-left: 10px">请求</p>
                 <a-divider />
-                <p style="margin-left:10px;">* 函数名</p>
-                <a-input :style="{width:'570px', margin:'2px', 'background-color':'white', 'border-style':'solid', 'border-color': 'gray', 'border-radius': '5px', 'margin':'10px'}" placeholder="" allow-clear />  
-                <p style="margin-left:10px;">* 请求正文</p>
-                <a-textarea v-model="output" placeholder="Please enter something" allow-clear style="background-color: white; position: relative; top: -20px; width: 570px; border-style: solid; border-color: gray; height: 50%; margin-left:10px; margin-top:20px;"/>
-                <div style="position:relative; left:420px">
-                  <a-button type="outline" style="margin:10px">清除</a-button>
+                <p style="margin-left: 10px">* 函数名</p>
+                <a-input
+                  :style="{
+                    'width': '570px',
+                    'margin': '2px',
+                    'background-color': 'white',
+                    'border-style': 'solid',
+                    'border-color': 'gray',
+                    'border-radius': '5px',
+                    'margin': '10px',
+                  }"
+                  placeholder=""
+                  allow-clear
+                />
+                <p style="margin-left: 10px">* 请求正文</p>
+                <a-textarea
+                  v-model="output"
+                  placeholder="Please enter something"
+                  allow-clear
+                  style="
+                    background-color: white;
+                    position: relative;
+                    top: -20px;
+                    width: 570px;
+                    border-style: solid;
+                    border-color: gray;
+                    height: 50%;
+                    margin-left: 10px;
+                    margin-top: 20px;
+                  "
+                />
+                <div style="position: relative; left: 420px">
+                  <a-button type="outline" style="margin: 10px">清除</a-button>
                   <a-button type="primary" style="margin: 10px">提交</a-button>
                 </div>
               </div>
               <div id="targetVar">
                 <p class="tag">响应</p>
                 <a-divider />
-                <a-textarea v-model="output" placeholder="Please enter something" allow-clear style="background-color: white; position: relative; top: -20px; width: 570px; border-style: solid; border-color: gray; height: 71%; margin-left:10px; margin-top:20px;"/>
+                <a-textarea
+                  v-model="output"
+                  placeholder="Please enter something"
+                  allow-clear
+                  style="
+                    background-color: white;
+                    position: relative;
+                    top: -20px;
+                    width: 570px;
+                    border-style: solid;
+                    border-color: gray;
+                    height: 71%;
+                    margin-left: 10px;
+                    margin-top: 20px;
+                  "
+                />
               </div>
             </div>
           </a-tab-pane>
-
-          
-          
-          
-         
-          
-          
         </a-tabs>
       </a-layout-content>
       <a-layout-footer> </a-layout-footer>
@@ -167,7 +203,7 @@
   onMounted(()=>{
       axios.get('/api/modelOverview/info')
       .then(response=>{
-          
+
       })
 
       axios.get('/api/modelOverview/var')
@@ -226,7 +262,7 @@
       },
     },
     {
-      title: '最新访问时间', 
+      title: '最新访问时间',
       dataIndex: 'latestAccessTime',
       sortable: {
         sortDirections: ['ascend', 'descend'],
@@ -268,7 +304,6 @@
       operation: '默认'
     },
   ]);
-
 </script>
 
 <style scoped>
