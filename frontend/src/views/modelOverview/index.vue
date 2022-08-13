@@ -57,10 +57,10 @@
             <div id="deploy">
               <div id="deployheader">
                 <p class="tag" style="margin-top: 0; padding-top: 15px">部署</p>
-                <button id="addService"
-                  ><a :href="addServiceUrl">+ 添加服务</a></button
+                <a-button id="addService"
+                  ><a :href="addServiceUrl">+ 添加服务</a></a-button
                 >
-                <button id="addTask">+ 添加任务</button>
+                <a-button id="addTask">+ 添加任务</a-button>
               </div>
               <a-divider style="margin-top: 0" />
               <div class="table">
