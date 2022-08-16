@@ -57,10 +57,10 @@
             <div id="deploy">
               <div id="deployheader">
                 <p class="tag" style="margin-top: 0; padding-top: 15px">部署</p>
-                <a-button id="addService"
-                  ><a :href="addServiceUrl">+ 添加服务</a></a-button
+                <a-button type="primary" id="addService"
+                  ><a :href="addServiceUrl" style="text-decoration:none">+ 添加服务</a></a-button
                 >
-                <a-button id="addTask">+ 添加任务</a-button>
+                <a-button type="primary" id="addTask">+ 添加任务</a-button>
               </div>
               <a-divider style="margin-top: 0" />
               <div class="table">
@@ -218,10 +218,53 @@
               </div>
             </div>
           </a-tab-pane>
-          <a-tab-pane key="4" title="实时预测">
-            Content of Tab Panel 4
+          <a-tab-pane key="4" title="批量预测">
+            <div id="barchPred">
+              <div id="batchPredSettings">
+                  <a-card style="width: 100%; height: 100%" title="批预测脚本设置">
+                    <a-form
+                      :model="predForm"
+                      layout="vertical"
+                      @submit="BatchPredFunc"
+                      id="predForm"
+                    >
+                      <a-form-item
+                        field="inputDataset"
+                        label="输入数据集"
+                        placeholder="Please select..."
+                        :rules="[{ required: true }]"
+                      >
+                        <a-select v-model="predForm.inputDataset">
+                          <a-option v-for="(item, index) in Dataset" :key="index">
+                            {{ item.name }}
+                          </a-option>
+                        </a-select>
+                      </a-form-item>
+                      <a-form-item
+                        field="outputDataset"
+                        label="输出数据集"
+                        :rules="[{ required: true }]"
+                      >
+                        <a-input v-model="predForm.outputDataset"></a-input>
+                      </a-form-item>
+                      <a-form-item>
+                        <a-button type="primary" html-type="submit">生成批预测脚本</a-button>
+                      </a-form-item>
+                    </a-form>
+                  </a-card>
+              </div>
+              <div id="PredResult">
+                  <a-card style="width:100%; height: 100%" title="结果">
+                      <template #extra>
+                          <a-link :href="batchPredSettingsUrl">高级设置</a-link>
+                      </template>
+                      <a-textarea style="width:96%; height:270px" v-model="predScript" disabled />
+                      <a-button type="primary" onclick="runBatchPredFunc()" style="float:right; margin-top:10px;">立即执行</a-button>
+                  </a-card>
+              </div>
+            </div>
           </a-tab-pane>
-          <a-tab-pane key="5" title="批量预测">
+          <a-tab-pane key="5" title="实时预测">
             Content of Tab Panel 5
           </a-tab-pane>
           <a-tab-pane key="6" title="模型评估">
@@ -241,7 +284,7 @@
   import { ref, onMounted, reactive } from 'vue';
   import axios from 'axios';
   import { useRoute } from 'vue-router';
-  import type { modelDescript, modelVariable } from '../../api/modelOverview';
+  import type { modelDescript, modelVariable, DatasetInfo, DatasetList,PredictScript } from '../../api/modelOverview';
 
   const route = useRoute();
   const modelName = ref('modelName');
@@ -338,6 +381,22 @@
   const param = {
     modelName: modelName.value,
   };
+  
+  const datasetList = ref();
+  const predForm = reactive({
+    inputDataset:'',
+    outputDataset:'',
+  })
+  const predScript = ref();
+  const batchPredSettingsUrl = ref(`/batchPredictSettings/${modelName.value}`);
+  function runBatchPredFunc(){
+    alert("to do...")
+  }
+
+  const BatchPredFunc = async () => {
+    const res4 = await axios.post<PredictScript>('http://82.156.5.94:5000/generate-script',predForm)
+    predScript.value = res4.data.code;
+  }
 
   onMounted(async () => {
     const res1 = await axios.post<modelDescript>(
@@ -355,6 +414,9 @@
     );
     inputData.value = res2.data.inputVariables;
     targetData.value = res2.data.outputVariables;
+
+    const res3 = await axios.get<DatasetList>('http://82.156.5.94:5000');
+    datasetList.value = res3.data.datasetList;
   });
 </script>
 
@@ -471,5 +533,21 @@
 
   #test {
     background-color: white;
+  }
+
+  #barchPred{
+    display:flex;
+  }
+  #batchPredSettings{
+    width: 30%;
+    height: 400px;
+    margin-left: 2%;
+    background-color: #fff;
+  }
+  #PredResult{
+    width: 64%;
+    height: 400px;
+    margin-left: 2%;
+    background-color: #fff;
   }
 </style>
