@@ -13,8 +13,8 @@ const MODELOVERVIEW: AppRouteRecordRaw = {
   },
   children: [
     {
-      path: '/import',
-      name: 'import',
+      path: '/import/model',
+      name: 'importModel',
       component: () => import('@/views/importModel/index.vue'),
       meta: {
         locale: 'menu.importModel',

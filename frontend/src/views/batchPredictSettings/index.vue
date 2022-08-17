@@ -33,9 +33,9 @@
               </a-form-item>
               <a-form-item field="ext" label="扩展名">
                 <a-select v-model="form.ext">
-                    <a-option v-for="(item, index) in extList" :key="index">
-                        {{ item }}
-                    </a-option>
+                  <a-option v-for="(item, index) in extList" :key="index">
+                    {{ item }}
+                  </a-option>
                 </a-select>
               </a-form-item>
               <a-form-item
@@ -45,36 +45,47 @@
               >
                 <a-input v-model="form.jobName" />
               </a-form-item>
-              <a-form-item 
-                field="jobDescription" 
+              <a-form-item
+                field="jobDescription"
                 label="任务描述"
                 :rules="[{ required: true }]"
               >
-                <a-textarea placeholder="在这里进行任务描述..." allow-clear></a-textarea>
+                <a-textarea
+                  placeholder="在这里进行任务描述..."
+                  allow-clear
+                ></a-textarea>
               </a-form-item>
               <a-form-item field="environment" label="任务运行环境">
                 <a-select v-model="form.environment">
-                    <a-option v-for="(item, index) in environmentList" :key="index">
-                        {{ item }}
-                    </a-option>
-                </a-select>                
+                  <a-option
+                    v-for="(item, index) in environmentList"
+                    :key="index"
+                  >
+                    {{ item }}
+                  </a-option>
+                </a-select>
               </a-form-item>
-              <a-form-item
-                field="variables"
-                label="环境变量"
-              >
-                <a-input v-model="form.variables"/>
+              <a-form-item field="variables" label="环境变量">
+                <a-input v-model="form.variables" />
               </a-form-item>
               <a-form-item field="args" label="命令参数">
                 <a-input v-model="form.args"></a-input>
               </a-form-item>
-              <a-form-item field="dispatch" label="调度" :rules="[{ required: true }]">
+              <a-form-item
+                field="dispatch"
+                label="调度"
+                :rules="[{ required: true }]"
+              >
                 <a-radio-group>
-                    <a-radio value="demand">按需</a-radio>
-                    <a-radio value="schedule">按调度</a-radio>
+                  <a-radio value="demand">按需</a-radio>
+                  <a-radio value="schedule">按调度</a-radio>
                 </a-radio-group>
               </a-form-item>
-              <a-form-item field="runName" label="运行名称" :rules="[{ required: true }]">
+              <a-form-item
+                field="runName"
+                label="运行名称"
+                :rules="[{ required: true }]"
+              >
                 <a-input v-model="form.runName"></a-input>
               </a-form-item>
               <a-form-item>
@@ -103,14 +114,14 @@
   const environmentList = ref();
   const form = reactive({
     fileName: '',
-    ext:'',
-    jobName:'',
-    jobDescription:'',
+    ext: '',
+    jobName: '',
+    jobDescription: '',
     environment: '',
     variables: '',
     args: '',
     dispatch: '',
-    runName:''
+    runName: '',
   });
 
   const param = {
@@ -121,7 +132,6 @@
       'http://82.156.5.94:5000/model-deploy-service',
       param
     );
-
   });
 
   const handleSubmit = async () => {
