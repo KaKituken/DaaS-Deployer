@@ -73,7 +73,7 @@
                 <a-split :style="{
                     height: '600px',
                     width: '100%',
-                    minWidth: '500px',
+                    minWidth: '250px',
                     border: '1px solid var(--color-border)',
                   }"
                   disabled="True"
@@ -82,30 +82,34 @@
                     <a-typography-paragraph>
                       <div style="background-color: white; margin: 10px; border-radius:10px; ">
                         <div class="testtitle" style="margin: 10px;">
-                          <span class="tag" style="margin: 10px;">输入</span>
-                          <span style="position: relative; left: 450px; color: #165dff;">JSON</span>
+                          <span class="tag" style="margin: 10px; text-align:left;">输入</span>
+                          <a @click='changeJson' style="text-align:right; color: #165dff; text-decoration:none;" href="#">JSON</a>
                         </div>
-                          <a-list>
+                          <a-list v-if="!weatherJson" style="margin: 1%;">
                             <a-list-item>
                               &nbsp;&nbsp;&nbsp;sepal-length (cm)<br>
-                              <a-input v-model="getData.slength" :style="{width:'520px', margin:'2px', 'background-color':'white', 'border-style':'solid', 'border-color': 'gray', 'border-radius': '5px'}" placeholder="" allow-clear />  
+                              <a-input v-model="getData.slength" :style="{width:'96%', margin:'2%', 'background-color':'white', 'border-style':'solid', 'border-color': 'gray', 'border-radius': '5px'}" placeholder="" allow-clear />  
                             </a-list-item>
                             <a-list-item>
                               &nbsp;&nbsp;&nbsp;sepal-width (cm)<br>
-                               <a-input v-model="getData.swidth" :style="{width:'520px', margin:'2px', 'background-color':'white', 'border-style':'solid', 'border-color': 'gray', 'border-radius': '5px'}" placeholder="" allow-clear />  
+                               <a-input v-model="getData.swidth" :style="{width:'96%', margin:'2%', 'background-color':'white', 'border-style':'solid', 'border-color': 'gray', 'border-radius': '5px'}" placeholder="" allow-clear />  
                             </a-list-item>
                             <a-list-item>
                               &nbsp;&nbsp;&nbsp;petal-length (cm)<br>
-                               <a-input v-model="getData.plength" :style="{width:'520px', margin:'2px', 'background-color':'white', 'border-style':'solid', 'border-color': 'gray', 'border-radius': '5px'}" placeholder="" allow-clear />  
+                               <a-input v-model="getData.plength" :style="{width:'96%', margin:'2%', 'background-color':'white', 'border-style':'solid', 'border-color': 'gray', 'border-radius': '5px'}" placeholder="" allow-clear />  
                             </a-list-item>
                             <a-list-item>
                               &nbsp;&nbsp;&nbsp;petal-width (cm)<br>
-                               <a-input v-model="getData.pwidth" :style="{width:'520px', margin:'2px', 'background-color':'white', 'border-style':'solid', 'border-color': 'gray', 'border-radius': '5px'}" placeholder="" allow-clear />   
+                               <a-input v-model="getData.pwidth" :style="{width:'96%', margin:'2%', 'background-color':'white', 'border-style':'solid', 'border-color': 'gray', 'border-radius': '5px'}" placeholder="" allow-clear />   
                             </a-list-item>
                           </a-list>
+                          <div style="height: 362px;" v-if="weatherJson">
+                            <a-textarea v-model="userJson" allow-clear style="background-color: white; margin:5%; position: relative; width: 90%; border-style: solid; border-color: gray; height: 80%;"/>
+                          </div>
+
                           <div style="text-align: right">
                             <a-button type="outline" style="margin: 10px;" @click="clear">清除</a-button>
-                            <a-button type="primary" style="margin: 10px">提交</a-button>
+                            <a-button type="primary" style="margin: 10px" @click="testSubmit">提交</a-button>
                           </div>
                       </div>
                     </a-typography-paragraph>
@@ -114,11 +118,11 @@
                     <a-typography-paragraph>
                       <div style="background-color: white; margin: 10px; border-radius: 10px;">
                         <div class="testtitle" style="margin: 10px;">
-                          <span class="tag" style="margin: 10px;">输出</span>
+                          <span class="tag" style="margin: 10px; text-align:left;">输出</span>
                         </div>
                         <a-divider style="position: relative; top: -10px;"/>
-                        <div id="testout" style="height: 362px;">
-                          <a-textarea v-model="output" placeholder="Please enter something" allow-clear style="background-color: white; margin:20px; position: relative; top: -20px; width: 560px; border-style: solid; border-color: gray; height: 80%;"/>
+                        <div id="testout" style="height: 362px; margin:1%;">
+                          <a-textarea v-model="testOutput" allow-clear style="background-color: white; margin:2%; width: 95%; border-style: solid; border-color: gray; height: 80%;" disabled/>
                         </div>
                       </div>
                     </a-typography-paragraph>
@@ -150,7 +154,7 @@
   import { ref,onMounted,reactive } from 'vue'
   import axios from 'axios'
   import { useRoute } from 'vue-router'
-  import type { modelDescript, modelVariable } from '../../api/modelOverview'
+  import type { modelDescript, modelVariable, modelTestInfo } from '../../api/modelOverview'
 
   const route = useRoute();
   const modelName = ref('modelName');
@@ -174,23 +178,17 @@
   ],
     );
 
-  const getData = reactive([{
-      label: 'slength',
-      value: ''
-    }, {
-      label: 'swidth',
-      value: ''
-    }, {
-      label: 'plength', 
-      value: ''
-    }, {
-      label: 'pwidth', 
-      value: ''
-    }, {
-      label: 'output', 
-      value: ''
-    }, 
-  ],);
+  const getData = reactive({
+    slength: '',
+    swidth: '',
+    plength: '',
+    pwidth: '',
+  });
+
+  const testOutput = ref('');
+  const weatherJson = ref(false);
+  const userJson = ref('');  // json格式下用户输入
+
 
   const inputColumns=[
       {
@@ -253,6 +251,86 @@
       targetData.value = res2.data.outputVariables;
       
   });
+
+  const testSubmit = async () => {
+    let testInfo = {};
+    if (!weatherJson.value){
+      testInfo = {
+        'modelName': modelName.value,
+        'data': {
+          "inputs":[
+          {
+              "name": "sepal length (cm)",
+              "value": getData.slength
+          },
+          {
+              "name": "sepal width (cm)",
+              "value": getData.swidth
+          },
+          {
+              "name": "petal length (cm)",
+              "value": getData.plength
+          },
+          {
+              "name": "petal width (cm)",
+              "value": getData.pwidth
+          }
+      ]
+        }
+      };
+    }
+    else{
+      const userData = JSON.parse(userJson.value.replace(/[\r\n\s+]/g, ''));  // 从输入框获取用户输入的json字符串，然后解析
+      // 注意： 用户输入的json的属性名必须加""，目前可以解决json里面的回车字符串，但是不能解决属性名没有""产生的解析错误
+      testInfo = {
+        'modelName': modelName.value,
+        'data': {
+           "inputs":[
+          {
+              "name": "sepal length (cm)",
+              "value": userData.slength
+          },
+          {
+              "name": "sepal width (cm)",
+              "value": userData.swidth
+          },
+          {
+              "name": "petal length (cm)",
+              "value": userData.plength
+          },
+          {
+              "name": "petal width (cm)",
+              "value": userData.pwidth
+          }
+      ]
+        }
+      };
+    }
+    
+    const res1 = await axios.post<modelTestInfo>('http://82.156.5.94:5000/model-test',testInfo);
+    let returnData = JSON.stringify(res1.data);
+    returnData = returnData.replace(/{([^{}]*)}/g, "{\n$1\n    }");  // 在{}对前面加缩进，后面加换行
+    returnData = returnData.replace(/(\[)([a-zA-Z0-9'"])/g, "$1\n$2");  // 在[后面加换行
+    returnData = returnData.replace(/([a-zA-Z0-9'"])(\])/g, "$1\n$2");  // 在]后面加换行
+    returnData = returnData.replace(/,/g, ",\n");  // 在,后面加换行
+    testOutput.value = returnData;
+  };
+
+  const clear = () => {
+    if (!weatherJson.value){  // 输入框清空
+      getData.slength = '';
+      getData.swidth = '';
+      getData.plength = '';
+      getData.pwidth = '';
+    }
+    else{
+      userJson.value = '';  // 文本框清空
+    }
+  }
+
+  const changeJson = () => {
+    weatherJson.value = !weatherJson.value;
+  }
 
 </script>
 
