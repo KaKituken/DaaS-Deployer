@@ -1,0 +1,497 @@
+<template>
+  <div class="layout-demo">
+    <a-layout style="min-height: 950px">
+      <a-layout-header style="height: 240px; overflow:visible;">
+        <!-- 上面一行的样式稍作修改以容纳过多的内容 -->
+        <div>
+          <a-breadcrumb style="margin-left: 15px">
+            <a-breadcrumb-item>主页</a-breadcrumb-item>
+            <a-breadcrumb-item>模型</a-breadcrumb-item>
+            <a-breadcrumb-item>{{ modelName }}</a-breadcrumb-item>
+            <template #separator>
+              <icon-right />
+            </template>
+          </a-breadcrumb>
+          <div style="height: 200px; margin-left: 10px">
+            <p style="font-weight: bold; font-size: 22px">{{ modelName }}</p>
+            <p style="width: 600px"
+              ><span style="color: gray">端点: </span
+              ><span style="colro: black; font-weight: bold">POST </span
+              ><span style="color: purple">{{ postmsg }}</span></p
+            >
+            <p style="color: grey">部署令牌:</p>
+          </div>
+        </div>
+        <div id="detailInfo">
+          <a-space direction="vertical" size="medium" fill>
+            <a-descriptions
+              :data="basicData"
+              size="small"
+              :align="{ label: 'left', value: 'left' }"
+              column="6"
+              layout="inline-vertical"
+            />
+          </a-space>
+        </div>
+      </a-layout-header>
+      <a-layout-content>
+        <a-tabs default-active-key="1" style="width: 100%; height: 100%">
+          <a-tab-pane key="1" title="概述">
+             <div id="var">
+              <div id="inputVartest">
+                <p class="tag">默认环境变量</p>
+                <a-divider />
+                <div class="table">
+                  <a-table :columns="envVariableColumns" :data="inputData" />
+                </div>
+              </div>
+              <div id="targetVartest">
+                <p class="tag">默认命令参数</p>
+                <a-divider />
+                <div class="table">
+                  <a-table :columns="paramColumns" :data="targetData" />
+                </div>
+              </div>
+            </div>
+            <div id="result">
+              <p id="resultTag" class="tag">运行</p>
+              <a-divider />
+              <div class="table">
+                  <a-table :columns="userRunColumns" :data="userRunData" />
+              </div>
+            </div>
+          </a-tab-pane>
+          <a-tab-pane id="overview" key="2" title="测试">
+            <div id="var">
+              <div id="inputVar">
+                <p class="tag" style="margin: 2%">请求
+                <a @click='genCode' style="text-align:right; color: #165dff; text-decoration:none; font-weight:normal; margin-left: 5%;" href="#">生成代码</a>
+                </p>
+                <!-- 显示curl代码的悬浮窗 -->
+                <a-modal v-model:visible="visible" @ok="handleOk" hide-cancel>
+                  <template #title>
+                    生成的curl代码
+                  </template>
+                  <div style="white-space: pre-line;">{{showCode}}</div>
+                </a-modal>
+                <a-divider />
+                <p style="margin-left: 2%">* 操作</p>
+                <a-select v-model="userOperate" defaultValue="" style="width:94%; margin:2%; border-radius:5px; background-color:white; border-style:solid; border-color:gray;" placeholder="开始">
+                  <a-option>开始</a-option>
+                  <a-option>结束</a-option>
+                </a-select>
+                <p style="margin-left: 2%">环境变量</p>
+                <a-input
+                  v-model="envVariable"
+                  :style="{
+                    'width': '94%',
+                    'margin': '2%',
+                    'background-color': 'white',
+                    'border-style': 'solid',
+                    'border-color': 'gray',
+                    'border-radius': '5px',
+                  }"
+                  placeholder="VARIABLE_1=VALUE_1"
+                  allow-clear
+                />
+                <p style="margin-left: 2%">命令参数</p>
+                <a-input
+                  v-model="commandParam"
+                  :style="{
+                    'width': '94%',
+                    'margin': '2%',
+                    'background-color': 'white',
+                    'border-style': 'solid',
+                    'border-color': 'gray',
+                    'border-radius': '5px',
+                  }"
+                  placeholder="arg1"
+                  allow-clear
+                />
+                <div style="position: relative; left: 65%; top: 10%;">
+                  <a-button type="outline" style="margin: 10px" @click="clear">清除</a-button>
+                  <a-button type="primary" style="margin: 10px" @click="dataSubmit">提交</a-button>
+                </div>
+              </div>
+              <div id="targetVar">
+                <p class="tag">响应</p>
+                <a-divider />
+                <a-textarea
+                  v-model="responseData"
+                  placeholder="Please enter something"
+                  allow-clear
+                  style="
+                    background-color: white;
+                    position: relative;
+                    top: -20px;
+                    width: 94%;
+                    border-style: solid;
+                    border-color: gray;
+                    height: 71%;
+                    margin-left: 2%;
+                    margin-top: 20px;
+                  "
+                />
+              </div>
+            </div>
+          </a-tab-pane>
+        </a-tabs>
+      </a-layout-content>
+      <a-layout-footer> </a-layout-footer>
+    </a-layout>
+  </div>
+</template>
+
+<script type="ts" setup>
+  import { ref,onMounted,reactive} from 'vue'
+  import axios from 'axios'
+
+  const modelName = ref('xgbiris-1566999569759')
+  const postmsg = ref('https://192.168.64.3:30931/api/vt/svc/pmml/xgb-iris-svc/predict')
+  const basicData = reactive([{
+          label: '类别',
+          value: '网络服务',
+      }, {
+          label: '类型',
+          value: '默认实时预测',
+      }, {
+          label: '对象',
+          value: 'xgb-iris'
+      }, {
+          label: '创建时间',
+          value: '2019-7-9',
+      }, {
+          label: '运行环境',
+          value: 'Python3.7 - Script as a Service'
+      }, {
+          label: '调度',
+          value: 'On demand'
+      },
+      {
+          label: 'CPU核数',
+          value: '-'
+      }, {
+          label: '内存(GB)',
+          value: '-'
+      }
+  ],
+
+    );
+
+  
+  const envVariableColumns=[
+      {
+          title:'变量',
+          dataIndex:'userVarialbe',
+      },
+      {
+          title:"值",
+          dataIndex:'userNumber',
+      }
+  ];
+  const userRunColumns=[
+    {
+      title: 'ID',
+      dataIndex: 'runId'
+    },
+    {
+      title: '名称',
+      dataIndex: 'runName'
+    },
+    {
+      title: '开始时间',
+      dataIndex: 'runBeginTime'
+    },
+    {
+      title: '持续时间(秒)',
+      dataIndex: 'runSpanTime'
+    },
+    {
+      title: '状态',
+      dataIndex: 'runStatus'
+    },
+    {
+      title: '操作',
+      dataIndex: 'runOperation'
+    }
+  ];
+   const paramColumns=[
+      {
+          title:'顺序',
+          dataIndex:'userSequence',
+      },
+      {
+          title:"参数",
+          dataIndex:'userParam',
+      }
+  ];
+  const inputData = ref()  // 概述页面左边表格数据
+  const targetData = ref()  // 概述页面右边表格数据
+  const userRunData = ref()  // 概述页面最下面表格数据
+
+ 
+  const deployData = reactive([]);
+
+  // 测试页面获取的数据
+  const userOperate = ref();
+  const envVariable = ref();
+  const commandParam = ref();
+  const responseData = ref();  // 绑定响应框
+  const showCode = ref();  // 显示的curl代码
+  const visible = ref(false);  // 是否显示悬浮窗
+
+  onMounted(()=>{
+      axios.get('/api/modelOverview/info')
+      .then(response=>{
+
+      })
+
+      axios.get('/api/modelOverview/var')
+      .then(response=>{
+          inputData.value = response.data.inputData;
+          targetData.value = response.data.targetData;
+      })
+  });
+
+  // 概述界面表格相关：
+  const indexColumns = [
+    {
+      title: '函数名',
+      dataIndex: 'funcName',
+    },
+    {
+      title: '访问次数',
+      dataIndex: 'accessTimes',
+      sortable: {
+        sortDirections: ['ascend', 'descend'],
+      },
+    },
+    {
+      title: '平均响应时间(ms)',
+      dataIndex: 'avgResponseTime',
+      sortable: {
+        sortDirections: ['ascend', 'descend'],
+      },
+    },
+    {
+      title: '中间响应时间(ms)',
+      dataIndex: 'midResponseTime',
+      sortable: {
+        sortDirections: ['ascend', 'descend'],
+      },
+    },
+    {
+      title: '最小响应时间',
+      dataIndex: 'minResponseTime',
+      sortable: {
+        sortDirections: ['ascend', 'descend'],
+      },
+    },
+    {
+      title: '最大响应时间(ms)',
+      dataIndex: 'maxResponseTime',
+      sortable: {
+        sortDirections: ['ascend', 'descend'],
+      }
+    },
+    {
+      title: '首次访问时间',
+      dataIndex: 'firstAccessTime',
+      sortable: {
+        sortDirections: ['ascend', 'descend'],
+      },
+    },
+    {
+      title: '最新访问时间',
+      dataIndex: 'latestAccessTime',
+      sortable: {
+        sortDirections: ['ascend', 'descend'],
+      },
+    }
+  ];
+  const indexData = reactive([
+    {
+      funcName: 'predict',
+      accessTimes: 2,
+      avgResponseTime: 205.0,
+      midResponseTime: 205.0,
+      minResponseTime: 12.0,
+      maxResponseTime: 398.0,
+      firstAccessTime: '2019-09-28 17:30:59',
+      latestAccessTime: '2019-09-28 17:31:40',
+    },
+  ]);
+
+  const copyColumns = [
+    {
+      title: '名称',
+      dataIndex: 'copyName',
+    },
+    {
+      title: '状态',
+      dataIndex: 'copyStatus',
+    },
+    {
+      title: '操作',
+      dataIndex: 'operation'
+    }
+  ];
+
+  const copyData = reactive([
+    {
+      copyName: 'd-pmml-xgb-iris-svc-5854487d5b-zbsjn',
+      copyStatus: '运行中',
+      operation: '默认'
+    },
+  ]);
+
+  const clear = () => {
+    userOperate.value = '';
+    envVariable.value = '';
+    commandParam.value = '';
+  };
+
+  const dataSubmit = () => {
+    alert('提交成功');
+  }
+
+  /* const genCode = () => {
+    const urlCode = 'https://192.168.64.3:30931/api/vt/svc/pmml/'.concat(modelName.value);
+    alert('curl -k -X POST \\\n'.concat(urlCode , '\n', envVariable.value, '\n', commandParam.value));
+  } */
+
+  const genCode = () => {
+     const urlCode = 'https://192.168.64.3:30931/api/vt/svc/pmml/'.concat(modelName.value);
+    showCode.value = 'curl -k -X POST'.concat('\n' ,urlCode , '\n', envVariable.value, '\n', commandParam.value);
+    visible.value = true;
+  }
+  const handleOk = () => {
+    visible.value = false;
+  }
+
+
+
+</script>
+
+<style scoped>
+  .layout-demo {
+    min-width: 860px;
+  }
+
+  .layout-demo :deep(.arco-layout-header),
+  .layout-demo :deep(.arco-layout-content),
+  .layout-demo :deep(.arco-layout-footer) {
+    display: flex;
+    color: var(--color-black);
+    font-size: 16px;
+    font-stretch: condensed;
+  }
+
+  .layout-demo :deep(.arco-layout-header) {
+    height: 150px;
+    background-color: #fff;
+  }
+
+  .layout-demo :deep(.arco-layout-content) {
+    background-color: #f5f5f5;
+  }
+
+  .layout-demo :deep(.arco-layout-footer) {
+    height: 50px;
+    margin-top: 20px;
+    margin-right: 2%;
+    margin-left: 2%;
+    background-color: #f5f5f5;
+  }
+
+  #detailInfo {
+    justify-content: flex-end;
+    width: 700px;
+    margin-top: 70px;
+    margin-right: 50px;
+    margin-left: auto;
+  }
+
+  #overview {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #var {
+    display: flex;
+  }
+
+
+  #inputVar,
+  #targetVar {
+    width: 47%;
+    height: 500px;
+    margin-left: 2%;
+    background-color: #fff;
+  }
+
+  #inputVartest,
+  #targetVartest {
+    width: 47%;
+    height: 400px;
+    margin-left: 2%;
+    background-color: #fff;
+    overflow:auto;
+  }
+
+  .tag {
+    margin-top: 15px;
+    margin-left: 12px;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .table {
+    margin: 0 8px 0 8px;
+  }
+
+  #result {
+    height: 300px;
+    margin-top: 20px;
+    margin-right: 2%;
+    margin-left: 2%;
+    background-color: #fff;
+    overflow: auto;
+  }
+
+  #resultTag {
+    padding-top: 15px;
+  }
+
+  #deploy {
+    margin-right: 2%;
+    margin-left: 2%;
+    background-color: #fff;
+  }
+
+  .deployheader {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .deployheader #addService {
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-right: 0;
+    margin-bottom: 15px;
+    margin-left: auto;
+  }
+
+  .deployheader #addTask {
+    justify-content: flex-end;
+    margin-top: 15px;
+    margin-right: 50px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+  }
+
+  #test {
+    background-color: white;
+  }
+
+</style>
