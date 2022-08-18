@@ -61,10 +61,20 @@
           <a-tab-pane id="overview" key="2" title="测试">
             <div id="var">
               <div id="inputVar">
-                <p class="tag" style="margin-left: 2%">请求</p>
+                <p class="tag" style="margin-left: 2%">请求
+                  <a @click='genCode' style="text-align:right; color: #165dff; text-decoration:none; font-weight:normal; margin-left: 5%;" href="#">生成代码</a>
+                </p>
+                <!-- 显示curl代码的悬浮窗 -->
+                <a-modal v-model:visible="visible" @ok="handleOk" hide-cancel>
+                  <template #title>
+                    生成的curl代码
+                  </template>
+                  <div style="white-space: pre-line;">{{showCode}}</div>
+                </a-modal>
                 <a-divider />
                 <p style="margin-left: 2%">* 函数名</p>
                 <a-input
+                  v-model="testFuncName"
                   :style="{
                     'width': '94%',
                     'margin': '2%',
@@ -78,7 +88,7 @@
                 />
                 <p style="margin-left: 10px">* 请求正文</p>
                 <a-textarea
-                  v-model="output"
+                  v-model="testRequire"
                   placeholder="Please enter something"
                   allow-clear
                   style="
@@ -94,15 +104,15 @@
                   "
                 />
                 <div style="position: relative; left: 65%">
-                  <a-button type="outline" style="margin: 10px">清除</a-button>
-                  <a-button type="primary" style="margin: 10px">提交</a-button>
+                  <a-button type="outline" style="margin: 10px" @click="clear">清除</a-button>
+                  <a-button type="primary" style="margin: 10px" @click="dataSubmit">提交</a-button>
                 </div>
               </div>
               <div id="targetVar">
                 <p class="tag">响应</p>
                 <a-divider />
                 <a-textarea
-                  v-model="output"
+                  v-model="testResponse"
                   placeholder="Please enter something"
                   allow-clear
                   style="
@@ -116,6 +126,7 @@
                     margin-left: 2%;
                     margin-top: 20px;
                   "
+                  disabled
                 />
               </div>
             </div>
@@ -153,7 +164,6 @@
           value: '-'
       }
   ],
-
     );
   const inputColumns=[
       {
@@ -175,6 +185,13 @@
   ];
   const inputData = ref()
   const targetData = ref()
+  // 测试页面的变量
+  const testFuncName = ref()
+  const testRequire = ref()
+  const testResponse = ref()
+  const visible = ref(false)
+  const showCode = ref()
+
   const deployColumns=[
       {
           title:'名称',
@@ -303,6 +320,25 @@
       operation: '默认'
     },
   ]);
+
+   const clear = () => {
+    testFuncName.value = '';
+    testRequire.value = '';
+  };
+
+  const dataSubmit = () => {
+    alert('提交成功');
+  }
+
+  const genCode = () => {
+    const urlCode = 'https://192.168.64.3:30931/api/vt/svc/pmml/'.concat(modelName.value , '/' , testFuncName.value);
+    showCode.value = 'curl -k -X POST'.concat('\n' ,urlCode , '\n', testRequire.value)
+    visible.value = true;
+  }
+  const handleOk = () => {
+    visible.value = false;
+  }
+
 </script>
 
 <style scoped>
