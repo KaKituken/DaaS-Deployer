@@ -84,6 +84,43 @@ Flask
   }
   ```
 
+#### 获得当前所有模型信息
+
+- GET: `/model-info`
+
+- Response:
+
+  ```json
+  {
+      "data": {
+          "模型列表modelList": [] , // 通过model.name, model.type, model.createTime 获得信息
+      }
+  }
+  ```
+
+#### 对模型的操作
+
+- POST: `/operate-model`
+
+- Param:
+
+  ```json
+  {
+      "模型名称modelName": "",
+      "操作类型operation": "",	// "delete"
+  }
+  ```
+
+- Response:
+
+  ```json
+  {
+      "data": {
+          "操作是否成功status": ,	// True/False
+      }
+  }
+  ```
+
 ### 获得模型概述
 
 - POST: `/model-descript`
@@ -151,28 +188,23 @@ Flask
 
 ### 部署实时预测Web服务
 
-- POST:`/model-deploy-service`
-
-- Param:
-
-  ```json
-  {
-      "modelName": 
-  }
-  ```
+- GET:`/model-deploy-service`
 
 - Response:（模型版本问一下）
 
   ```json
   {
       "data": {
-      	"restfulUrl": ,
-      	"serverVersion":[	// 可以规定一下
-      
-      	]
+      	"restfulUrl": , // 后端会返回https://host:endpoint/api/v1/scv/pmml/，最后需要前端实时拼接一下服务名称
   	}
   }
   ```
+
+<img src="img/service.png" alt="截屏2022-08-13 22.30.52" style="zoom:50%;" />
+
+画圈圈的部分需要前端v-bind一下。
+
+python的版本就直接写死3.6, 3.7, 3.8, 3.9吧
 
 提交时
 
@@ -182,10 +214,11 @@ Flask
 
   ```json
   {
-      "modelName": ,
+      "当前的模型名称modelName": ,
+      "生成的服务名称serviceName": ,
       "serverVersion": ,
-      "cpuReserve": ,
-      "memoryReserve": ,
+      "cpuReserve": , // 没有选的话给一个null
+      "memoryReserve": ,  // 同上
       "replicas": ,
   }
   ```
@@ -195,44 +228,260 @@ Flask
   ```json
   {
       "data": {
-      	"restfulUrl": ,
-  	}
+          "操作是否成功status": ,	// True/False
+      }
   }
   ```
 
-### 部署job
+#### "部署"下打开某个service
 
-- POST: `/model-deploy-job`
-- 待讨论
-
-### 生成curl代码
-
-前端来写吧，用上面的restfulUrl即可
-
-### 提交Web服务
-
-点击提交按钮，添加一个提交文件的按钮。（看看能不能根据后缀名改一下param中的type）
-
-有两种返回：快速返回只接受json格式的输入（图片，视频也以json输入）同时不返回任务id；
-
-等待返回发送一个文件包，先返回任务id。
-
-如果格式是json，默认调用快速返回，如果是其他数据（如csv），传入文件名，文件统一放某一文件夹下（后端确定）
-
-- POST: `restful url`
+- POST`service-info`
 
 - Param:
 
   ```json
   {
-      "type":	,// json or txt or csv...
-      "args": ""
+      "serviceName": ,
   }
   ```
 
 - Response:
 
-  快速返回：`{data{result}}`
+  ```json
+  {
+      "data": {
+      	"restfulUrl": ,
+          "当前的模型名称modelName": ,
+          "serviceVersion": ,
+          "createTime": ,
+          "cpuReserve": ,	// 没有返回None
+          "memoryReserve": ,	// 没有返回None
+          "副本信息列表pod_list": ,	// 通过pod.name, pod.status拿到每个副本的名称和状态
+  	}
+  }
+  ```
 
-  等待返回: `{data{id}}`
+#### 指标暂时先空一下
+
+#### 对副本的操作
+
+- POST: `/operate-pod`
+
+- Param:
+
+  ```json
+  {
+      "副本名称podName": ,
+      "操作类型operationType": ,
+  }
+  ```
+
+- Response
+
+  ```json
+  {
+      "data": {
+      	"操作是否成功status": ,
+  	}
+  }
+  ```
+
+  
+
+### 部署job
+
+目前的想法：在部署页面下点击“添加job”，跳转到添加数据集
+
+#### 切换到“数据集”页面
+
+- GET: `/dataset-info`
+
+- Response:
+
+  ```json
+  {
+      "data": {
+          "数据集信息列表datasetList": [],  // 通过dataset.name, dataset.type, dataset.size, dataset.source, dataset.create_time 拿到信息
+      }
+  }
+  ```
+
+#### 操作数据集
+
+- POST: `/operate-dataset`
+
+- Param:
+
+  ```json
+  {
+      "操作对象dataset": ,
+      "操作类型operation": ,	//"delete", "download"
+  }
+  ```
+
+- Response:
+
+  ```json
+  {
+      "data": {
+      	"操作是否成功status": // True/False
+  	}
+  }
+  ```
+
+问题：下载怎么搞？把文件传到前端吗？
+
+#### 添加数据集
+
+- POST：`/add-dataset`
+
+- Param:
+
+  ```json
+  {
+      file: ...,
+      form{
+          dataSource: "local"/"remote",
+      	fileName: ""
+  	}
+  }
+  ```
+
+- Response: 
+
+  ```json
+  {
+      "data": {
+          "操作是否成功status": // True/False
+      }
+  }
+  ```
+
+#### 切换到“批量预测”界面
+
+- GET: `/dataset-info`
+
+- Response:
+
+  ``` json
+  {
+      "data": {
+          "数据集信息列表datasetList": [],  // 通过dataset.name, dataset.type, dataset.size, dataset.source, dataset.create_time 拿到信息
+      }
+  }
+  ```
+
+#### 生成批预测脚本
+
+- POST: `/generate-script`
+
+- Param:
+
+  ```json
+  {
+      "输入数据集名称inputDataset": ,
+      "输出数据集名称outputDataset": ,
+  }
+  ```
+
+- Response:
+
+  ```json
+  {
+      "data": {
+          "生成的代码code": "...",
+      }
+  }
+  ```
+
+#### 创建任务
+
+点击“高级设置”后的信息保存在前端（所以可能需要默认值），点击“立即执行”后传到后端
+
+- POST: `/model-deploy-job`
+
+- Param:
+
+  ```json
+  {
+      "文件名fileName": ,
+      "扩展名ext": ,
+      "任务名称jobName": ,
+      "任务描述jobDescription": ,
+      "任务运行环境environment": ,	
+      "环境变量variables": ,	// 可以先空着
+      "命令参数args": ,	// 可以先空着
+      "调度dispatch": ,	// "demand", "schedule"
+      "运行名称runName": 
+  }
+  ```
+
+- Response: 
+
+  ```json
+  {
+      "data": {
+          "操作是否成功status": // True/False
+      }
+  }
+  ```
+
+#### 在“部署”中点击打开某个任务
+
+- POST`/job-info`
+
+- Param:
+
+  ```json
+  {
+      "jobName": ,
+  }
+  ```
+
+- Response
+
+  ```json
+  {
+      "data": {
+          "任务名称jobName": ,
+          "url": ,
+          "创建时间createTime": ,
+          "任务运行环境environment": ,
+          "调度dispatch": ,
+          "运行的列表runList": , //通过run.id, run.name, run.createTime, run.duration, run.status获得信息
+      }
+  }
+  ```
+
+`run.status: {"success", "failed", "paused", "running"}`
+
+#### 修改run的状态
+
+- POST: `/operate-run`
+
+- Param:
+
+  ```json
+  {
+      "副本名称runName": ,
+      "操作类型operationType": ,	// "stop", "pause", "continue"
+  }
+  ```
+
+- Response
+
+  ```json
+  {
+      "data": {
+      	"操作是否成功status": ,	// True/False
+          "目前run的状态runStatus": // 见上
+  	}
+  }
+  ```
+
+### 生成curl代码
+
+前端来写吧，用上面的restfulUrl即可
+
+
 

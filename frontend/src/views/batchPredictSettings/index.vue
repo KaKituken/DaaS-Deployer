@@ -8,12 +8,12 @@
           <a-breadcrumb-item
             ><a :href="modelUrl">{{ modelName }}</a></a-breadcrumb-item
           >
-          <a-breadcrumb-item>添加服务</a-breadcrumb-item>
+          <a-breadcrumb-item>批量预测高级设置</a-breadcrumb-item>
           <template #separator>
             <icon-right />
           </template>
         </a-breadcrumb>
-        <div class="title">部署 {{ modelName }} 为一项网络服务</div>
+        <div class="title">{{ modelName }} 批量预测高级设置</div>
       </a-layout-header>
       <a-layout-content>
         <div class="content">
@@ -25,76 +25,60 @@
               id="form"
             >
               <a-form-item
-                field="name"
-                label="名称"
+                field="filename"
+                label="文件名"
                 :rules="[{ required: true }]"
               >
-                <a-input v-model="form.name" placeholder="请输入名称" />
+                <a-input v-model="form.fileName" placeholder="请输入文件名" />
               </a-form-item>
-              <a-form-item field="serverURL" label="URL">
-                <a-input v-model="serverURL" disabled />
-              </a-form-item>
-              <a-form-item
-                field="modelVersion"
-                label="模型版本"
-                :rules="[{ required: true }]"
-              >
-                <a-select
-                  v-model="form.modelVersion"
-                  placeholder="Please select..."
-                >
-                  <a-option v-for="(item, index) in modelVersion" :key="index">
-                    {{ item }}
-                  </a-option>
+              <a-form-item field="ext" label="扩展名">
+                <a-select v-model="form.ext">
+                    <a-option v-for="(item, index) in extList" :key="index">
+                        {{ item }}
+                    </a-option>
                 </a-select>
               </a-form-item>
-              <a-form-item field="cpu" label="预留cpu">
-                <a-slider
-                  v-model="form.cpu"
-                  :default-value="0"
-                  min="0"
-                  max="8"
-                  :style="{ width: '200px' }"
-                />
-                <a-input-number
-                  v-model="form.cpu"
-                  :default-value="0"
-                  min="0"
-                  max="8"
-                  precision="0"
-                  placeholder="0~8"
-                  :style="{ width: '85px', margin: '0 0 0 50px' }"
-                />
-              </a-form-item>
-              <a-form-item field="memory" label="预留内存(G)">
-                <a-slider
-                  v-model="form.memory"
-                  :default-value="0"
-                  min="0.0"
-                  max="32.0"
-                  step="0.1"
-                  :style="{ width: '200px' }"
-                />
-                <a-input-number
-                  v-model="form.memory"
-                  :default-value="0"
-                  min="0.0"
-                  max="32.0"
-                  step="0.1"
-                  precision="1"
-                  placeholder="0~32.0"
-                  :style="{ width: '85px', margin: '0 0 0 50px' }"
-                />
-              </a-form-item>
               <a-form-item
-                field="copyNum"
-                label="副本"
+                field="jobName"
+                label="任务名称"
                 :rules="[{ required: true }]"
               >
-                <a-input-number v-model="form.copyNum" :default-value="1" />
+                <a-input v-model="form.jobName" />
+              </a-form-item>
+              <a-form-item 
+                field="jobDescription" 
+                label="任务描述"
+                :rules="[{ required: true }]"
+              >
+                <a-textarea placeholder="在这里进行任务描述..." allow-clear></a-textarea>
+              </a-form-item>
+              <a-form-item field="environment" label="任务运行环境">
+                <a-select v-model="form.environment">
+                    <a-option v-for="(item, index) in environmentList" :key="index">
+                        {{ item }}
+                    </a-option>
+                </a-select>                
+              </a-form-item>
+              <a-form-item
+                field="variables"
+                label="环境变量"
+              >
+                <a-input v-model="form.variables"/>
+              </a-form-item>
+              <a-form-item field="args" label="命令参数">
+                <a-input v-model="form.args"></a-input>
+              </a-form-item>
+              <a-form-item field="dispatch" label="调度" :rules="[{ required: true }]">
+                <a-radio-group>
+                    <a-radio value="demand">按需</a-radio>
+                    <a-radio value="schedule">按调度</a-radio>
+                </a-radio-group>
+              </a-form-item>
+              <a-form-item field="runName" label="运行名称" :rules="[{ required: true }]">
+                <a-input v-model="form.runName"></a-input>
               </a-form-item>
               <a-form-item>
-                <a-button type="primary" html-type="submit">添加模型</a-button>
+                <a-button type="primary" html-type="submit">保存</a-button>
               </a-form-item>
             </a-form>
           </a-space>
@@ -112,18 +96,23 @@
   import type { modelDeploy, addService } from '../../api/addService';
 
   const route = useRoute();
-  const serverURL = ref();
   const modelName = ref('modelName');
   modelName.value = route.params.modelname as string;
   const modelUrl = ref(`/detail/${modelName.value}`);
+  const extList = ref();
+  const environmentList = ref();
   const form = reactive({
-    name: '',
-    modelVersion: '',
-    cpu: '',
-    memory: '',
-    copyNum: '',
+    fileName: '',
+    ext:'',
+    jobName:'',
+    jobDescription:'',
+    environment: '',
+    variables: '',
+    args: '',
+    dispatch: '',
+    runName:''
   });
-  const modelVersion = ref();
+
   const param = {
     modelName: modelName.value,
   };
@@ -132,8 +121,7 @@
       'http://82.156.5.94:5000/model-deploy-service',
       param
     );
-    serverURL.value = res.data.restfulUrl;
-    modelVersion.value = res.data.serverVersion;
+
   });
 
   const handleSubmit = async () => {
@@ -178,13 +166,13 @@
 
   .title {
     font-size: 22px;
-    margin: 20px 0 0 19%;
+    margin: 20px 0 0 16%;
     font-weight: bold;
   }
 
   .content {
     width: 94%;
-    height: 500px;
+    height: 600px;
     margin-top: 3%;
     margin-left: 3%;
     margin-right: 3%;
