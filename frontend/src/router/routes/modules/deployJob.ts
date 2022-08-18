@@ -9,11 +9,11 @@ const MODELOVERVIEW: AppRouteRecordRaw = {
     locale: 'menu.deployJob',
     requiresAuth: false,
     icon: 'icon-dashboard',
-    order: 2,
+    order: 3,
   },
   children: [
     {
-      path: '/deployJob',
+      path: '/deployJob/:jobName',
       name: 'deployJob',
       component: () => import('@/views/deployJob/index.vue'),
       meta: {

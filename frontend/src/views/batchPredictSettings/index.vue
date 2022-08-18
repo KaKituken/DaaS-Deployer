@@ -52,11 +52,12 @@
               >
                 <a-textarea
                   placeholder="在这里进行任务描述..."
+                  v-model = form.jobDescription
                   allow-clear
                 ></a-textarea>
               </a-form-item>
               <a-form-item field="environment" label="任务运行环境">
-                <a-select v-model="form.environment">
+                <a-select v-model="form.serverVersion">
                   <a-option
                     v-for="(item, index) in environmentList"
                     :key="index"
@@ -76,7 +77,7 @@
                 label="调度"
                 :rules="[{ required: true }]"
               >
-                <a-radio-group>
+                <a-radio-group v-model="form.dispatch">
                   <a-radio value="demand">按需</a-radio>
                   <a-radio value="schedule">按调度</a-radio>
                 </a-radio-group>
@@ -103,21 +104,24 @@
 <script lang="ts" setup>
   import { ref, onMounted, reactive } from 'vue';
   import axios from 'axios';
-  import { useRoute } from 'vue-router';
-  import type { modelDeploy, addService } from '../../api/addService';
+  import { useRoute, useRouter } from 'vue-router';
+  import type { modelDeploy, addService, settings, status} from '../../api/addService';
 
   const route = useRoute();
+  const router = useRouter();
+
   const modelName = ref('modelName');
   modelName.value = route.params.modelname as string;
   const modelUrl = ref(`/detail/${modelName.value}`);
-  const extList = ref();
+  const extList = ref([".py"]);
   const environmentList = ref();
   const form = reactive({
+    modelName:modelName.value,
     fileName: '',
     ext: '',
     jobName: '',
     jobDescription: '',
-    environment: '',
+    serverVersion: '',
     variables: '',
     args: '',
     dispatch: '',
@@ -128,17 +132,33 @@
     modelName: modelName.value,
   };
   onMounted(async () => {
-    const res = await axios.post<modelDeploy>(
-      'http://82.156.5.94:5000/model-deploy-service',
-      param
+    const res1 = await axios.get<modelDeploy>(
+      'http://82.156.5.94:5000/env-version',
     );
+    environmentList.value = res1.data.version;
+
+    const res2 = await axios.post<settings>('http://82.156.5.94:5000/save-settings',param)
+    form.fileName = res2.data.fileName;
+    form.ext = res2.data.ext;
+    form.jobName = res2.data.jobName;
+    form.jobDescription = res2.data.jobDescription;
+    form.serverVersion = res2.data.serverVersion;
+    form.variables = res2.data.variables;
+    form.args = res2.data.args;
+    form.dispatch = res2.data.dispatch;
+    form.runName = res2.data.runName;
   });
 
   const handleSubmit = async () => {
-    const res = await axios.post<addService>(
-      'http://82.156.5.94:5000/model-deploy-service',
+    const res = await axios.post<status>(
+      'http://82.156.5.94:5000/save-settings',
       form
     );
+    if (res.data.status === true) {
+        router.push({
+            path: `/detail/${modelName.value}`,
+        });
+    }
   };
 </script>
 

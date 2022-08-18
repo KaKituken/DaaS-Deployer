@@ -2,6 +2,7 @@ export interface modelDescript {
   modelName: string;
   modelType: string;
   modelEngine: string;
+  createTime : string;
   descript: string;
   algorithm: string;
 }

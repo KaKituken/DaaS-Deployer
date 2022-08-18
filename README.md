@@ -410,7 +410,7 @@ python的版本就直接写死3.6, 3.7, 3.8, 3.9吧
       "任务描述jobDescription": ,
       "任务运行环境environment": ,	
       "环境变量variables": ,	// 可以先空着
-      "命令参数args": ,	// 可以先空着
+      "命令 参数args": ,	// 可以先空着
       "调度dispatch": ,	// "demand", "schedule"
       "运行名称runName": 
   }

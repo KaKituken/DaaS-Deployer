@@ -29,7 +29,7 @@
                 label="名称"
                 :rules="[{ required: true }]"
               >
-                <a-input v-model="form.name" placeholder="请输入名称" />
+                <a-input v-model="form.serviceName" placeholder="请输入名称" />
               </a-form-item>
               <a-form-item field="serverURL" label="URL">
                 <a-input v-model="serverURL" disabled />
@@ -40,7 +40,7 @@
                 :rules="[{ required: true }]"
               >
                 <a-select
-                  v-model="form.modelVersion"
+                  v-model="form.serverVersion"
                   placeholder="Please select..."
                 >
                   <a-option v-for="(item, index) in modelVersion" :key="index">
@@ -50,14 +50,14 @@
               </a-form-item>
               <a-form-item field="cpu" label="预留cpu">
                 <a-slider
-                  v-model="form.cpu"
+                  v-model="form.cpuReserve"
                   :default-value="0"
                   min="0"
                   max="8"
                   :style="{ width: '200px' }"
                 />
                 <a-input-number
-                  v-model="form.cpu"
+                  v-model="form.cpuReserve"
                   :default-value="0"
                   min="0"
                   max="8"
@@ -68,7 +68,7 @@
               </a-form-item>
               <a-form-item field="memory" label="预留内存(G)">
                 <a-slider
-                  v-model="form.memory"
+                  v-model="form.memoryReserve"
                   :default-value="0"
                   min="0.0"
                   max="32.0"
@@ -76,7 +76,7 @@
                   :style="{ width: '200px' }"
                 />
                 <a-input-number
-                  v-model="form.memory"
+                  v-model="form.memoryReserve"
                   :default-value="0"
                   min="0.0"
                   max="32.0"
@@ -91,7 +91,7 @@
                 label="副本"
                 :rules="[{ required: true }]"
               >
-                <a-input-number v-model="form.copyNum" :default-value="1" />
+                <a-input-number v-model="form.replicas" :default-value="1" />
               </a-form-item>
               <a-form-item>
                 <a-button type="primary" html-type="submit">添加模型</a-button>
@@ -109,7 +109,7 @@
   import { ref, onMounted, reactive } from 'vue';
   import axios from 'axios';
   import { useRoute } from 'vue-router';
-  import type { modelDeploy, addService } from '../../api/addService';
+  import type { addService, modelDeploy } from '../../api/addService';
 
   const route = useRoute();
   const serverURL = ref();
@@ -117,26 +117,23 @@
   modelName.value = route.params.modelname as string;
   const modelUrl = ref(`/detail/${modelName.value}`);
   const form = reactive({
-    name: '',
-    modelVersion: '',
-    cpu: '',
-    memory: '',
-    copyNum: '',
+    modelName : modelName.value,
+    serviceName: '',
+    serverVersion: '',
+    cpuReserve: '',
+    memoryReserve: '',
+    replicas: '',
   });
   const modelVersion = ref();
-  const param = {
-    modelName: modelName.value,
-  };
   onMounted(async () => {
-    const res = await axios.post<modelDeploy>(
-      'http://82.156.5.94:5000/model-deploy-service',
-      param
-    );
-    serverURL.value = res.data.restfulUrl;
-    modelVersion.value = res.data.serverVersion;
-  });
+    const res1 = await axios.get<modelDeploy>('http://82.156.5.94:5000/env-version');
+    modelVersion.value = res1.data.version;
 
+    const res2 = await axios.get<addService>('http://82.156.5.94:5000/model-deploy-service')
+    serverURL.value = res2.data.restfulUrl;
+  });
   const handleSubmit = async () => {
+
     const res = await axios.post<addService>(
       'http://82.156.5.94:5000/model-deploy-service',
       form

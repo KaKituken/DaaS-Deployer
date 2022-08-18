@@ -144,7 +144,7 @@
                       :rules="[{ required: true }]"
                     >
                       <a-select v-model="predForm.inputDataset">
-                        <a-option v-for="(item, index) in Dataset" :key="index">
+                        <a-option v-for="(item, index) in datasetList" :key="index">
                           {{ item.name }}
                         </a-option>
                       </a-select>
@@ -154,7 +154,7 @@
                       label="输出数据集"
                       :rules="[{ required: true }]"
                     >
-                      <a-input v-model="predForm.outputDataset"></a-input>
+                      <a-input v-model="predForm.outputDataset" />
                     </a-form-item>
                     <a-form-item>
                       <a-button type="primary" html-type="submit"
@@ -176,7 +176,7 @@
                   />
                   <a-button
                     type="primary"
-                    onclick="runBatchPredFunc()"
+                    @click="runBatchPredFunc()"
                     style="float: right; margin-top: 10px"
                     >立即执行</a-button
                   >
@@ -264,10 +264,15 @@
       dataIndex: 'optype',
     },
     {
+      title: '维数',
+      dataIndex: 'shape',
+    },
+    {
       title: '取值',
       dataIndex: 'valueRange',
     },
   ];
+
   const inputData = ref();
   const targetData = ref();
   const nameValueList = ref();
@@ -302,13 +307,15 @@
 
   const datasetList = ref();
   const predForm = reactive({
+    modelName: modelName.value,
+    modelType: data[1].value,
     inputDataset: '',
     outputDataset: '',
   });
   const predScript = ref();
   const batchPredSettingsUrl = ref(`/batchPredictSettings/${modelName.value}`);
-  function runBatchPredFunc() {
-    alert('to do...');
+  const runBatchPredFunc = async () => {
+    await axios.post('http://82.156.5.94:5000/model-deploy-job',predForm)
   }
 
   const BatchPredFunc = async () => {
@@ -325,6 +332,7 @@
       param
     );
     modelDescription.value = res1.data.descript;
+    data[0].value = res1.data.createTime;
     data[1].value = res1.data.modelType;
     data[2].value = res1.data.algorithm;
     data[3].value = res1.data.modelEngine;
@@ -334,8 +342,7 @@
       param
     );
 
-    // 这里先不从后端获取数据构造inputData
-    // inputData.value = res2.data.inputVariables.concat(res2.data.inputVariables);
+    console.log(res2.data);
     inputData.value = res2.data.inputVariables;
     targetData.value = res2.data.outputVariables;
     // 根据获取的inputData构造nameValueList用于绑定 不定数量的输入框
@@ -350,7 +357,7 @@
       return arr
     })();
 
-    const res3 = await axios.get<DatasetList>('http://82.156.5.94:5000');
+    const res3 = await axios.post<DatasetList>('http://82.156.5.94:5000/dataset-info',param);
     datasetList.value = res3.data.datasetList;
   });
 
