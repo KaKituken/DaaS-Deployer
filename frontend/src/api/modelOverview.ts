@@ -17,19 +17,19 @@ export interface modelVariable {
   outputVariables: Array<JSON>;
 }
 
-export interface DatasetInfo{
-   name: string;
-   type: string;
-   size: number;
-   source: string;
-   create_time: string;
+export interface DatasetInfo {
+  name: string;
+  type: string;
+  size: number;
+  source: string;
+  create_time: string;
 }
 
 export interface DatasetList {
   datasetList: Array<DatasetInfo>;
 }
 
-export interface PredictScript{
+export interface PredictScript {
   code: string;
 }
 
@@ -37,3 +37,4 @@ export interface userVarialbeValue {
   name: string;
   value: number;
 }
+
