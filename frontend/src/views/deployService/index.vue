@@ -6,13 +6,13 @@
           <a-breadcrumb style="margin-left: 15px">
             <a-breadcrumb-item>主页</a-breadcrumb-item>
             <a-breadcrumb-item>模型</a-breadcrumb-item>
-            <a-breadcrumb-item>{{ modelName }}</a-breadcrumb-item>
+            <a-breadcrumb-item>{{ serviceName }}</a-breadcrumb-item>
             <template #separator>
               <icon-right />
             </template>
           </a-breadcrumb>
           <div style="height: 200px; margin-left: 10px">
-            <p style="font-weight: bold; font-size: 22px">{{ modelName }}</p>
+            <p style="font-weight: bold; font-size: 22px">{{ serviceName }}</p>
             <p style="width: 600px"
               ><span style="color: gray">端点: </span
               ><span style="colro: black; font-weight: bold">POST </span
@@ -138,12 +138,23 @@
   </div>
 </template>
 
-<script type="ts" setup>
+<script type="ts" lang="ts" setup>
   import { ref,onMounted,reactive} from 'vue'
   import axios from 'axios'
+  import { useRoute } from 'vue-router';
+  import useRequest from '@/hooks/request';
+  import type {
+    requireDataResponse,
+    copyResponseData
+  } from '../../api/deployService';
 
-  const modelName = ref('xgb-iris')
-  const postmsg = ref('https://192.168.64.3:30931/api/vt/svc/pmml/xgb-iris-svc/predict')
+  const route = useRoute();
+  const serviceName = ref('serviceName');
+  const modelName = ref('modelName');
+  serviceName.value = route.params.serviceName as string;  // 工作名称
+  modelName.value = route.params.modelName as string;  // 模型名称
+
+  const postmsg = ref('')
   const basicData = reactive([{
           label: '类别',
           value: '网络服务',
@@ -216,7 +227,7 @@
   ];
   const deployData = reactive([]);
 
-  onMounted(()=>{
+  onMounted(async ()=>{
       axios.get('/api/modelOverview/info')
       .then(response=>{
 
@@ -227,6 +238,20 @@
           inputData.value = response.data.inputData;
           targetData.value = response.data.targetData;
       })
+
+      axios.get('http://82.156.5.94:5000/model-deploy-service')
+      .then(response=>{
+        // 把链接拼接出来
+        // postmsg.value = response.data.restfulUrl.concat(serviceName.value);
+        postmsg.value = response.data.restfulUrl.concat(serviceName.value, '/predict');
+      })
+
+      // 获取副本
+      const param = {
+        'serviceName': serviceName.value
+      }
+      const res1 = await axios.post<copyResponseData>('http://82.156.5.94:5000/service-info', param);
+      console.log(res1.data);
   });
 
   // 概述界面表格相关：
@@ -326,13 +351,23 @@
     testRequire.value = '';
   };
 
-  const dataSubmit = () => {
-    alert('提交成功');
+  const dataSubmit = async () => {
+    const userRequestData = JSON.parse(testRequire.value);
+    console.log(userRequestData)
+    const res1 = await axios.post<requireDataResponse>(postmsg.value, userRequestData);
+    let returnData = JSON.stringify(res1.data);
+    returnData = returnData.replace(/{([^{}]*)}/g, "{\n$1\n    }");  // 在{}对前面加缩进，后面加换行
+    returnData = returnData.replace(/(\[)([a-zA-Z0-9'"])/g, "$1\n$2");  // 在[后面加换行
+    returnData = returnData.replace(/([a-zA-Z0-9'"])(\])/g, "$1\n$2");  // 在]后面加换行
+    returnData = returnData.replace(/,/g, ",\n");  // 在,后面加换行
+    testResponse.value = returnData;
   }
 
   const genCode = () => {
-    const urlCode = 'https://192.168.64.3:30931/api/vt/svc/pmml/'.concat(modelName.value , '/' , testFuncName.value);
-    showCode.value = 'curl -k -X POST'.concat('\n' ,urlCode , '\n', testRequire.value)
+    const urlCode = postmsg.value;
+    // showCode.value = 'curl --location --request POST'.concat('\\\n' ,"'",urlCode , "'",'\\\n');
+    showCode.value = 'curl --location --request POST '.concat("'",urlCode , "'");
+    showCode.value = showCode.value.concat(" --header 'Content-Type: application/json' --data-raw '",testRequire.value, "'");
     visible.value = true;
   }
   const handleOk = () => {

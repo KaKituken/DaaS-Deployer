@@ -13,7 +13,7 @@ const MODELOVERVIEW: AppRouteRecordRaw = {
   },
   children: [
     {
-      path: '/deployJob/:jobName',
+      path: '/deployJob/:modelName/:jobName',
       name: 'deployJob',
       component: () => import('@/views/deployJob/index.vue'),
       meta: {

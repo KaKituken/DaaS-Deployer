@@ -7,13 +7,13 @@
           <a-breadcrumb style="margin-left: 15px">
             <a-breadcrumb-item>主页</a-breadcrumb-item>
             <a-breadcrumb-item>模型</a-breadcrumb-item>
-            <a-breadcrumb-item>{{ modelName }}</a-breadcrumb-item>
+            <a-breadcrumb-item>{{ jobName }}</a-breadcrumb-item>
             <template #separator>
               <icon-right />
             </template>
           </a-breadcrumb>
           <div style="height: 200px; margin-left: 10px">
-            <p style="font-weight: bold; font-size: 22px">{{ modelName }}</p>
+            <p style="font-weight: bold; font-size: 22px">{{ jobName }}</p>
             <p style="width: 600px"
               ><span style="color: gray">端点: </span
               ><span style="colro: black; font-weight: bold">POST </span
@@ -54,7 +54,9 @@
               </div>
             </div>
             <div id="result">
-              <p id="resultTag" class="tag">运行</p>
+              <p id="resultTag" class="tag">运行
+                 <a-button type="outline" style="margin: 10px; margin-left:80%;" @click="operateNow">+ 立即执行</a-button>
+              </p>
               <a-divider />
               <div class="table">
                   <a-table :columns="userRunColumns" :data="userRunData" />
@@ -77,6 +79,7 @@
                 <a-divider />
                 <p style="margin-left: 2%">* 操作</p>
                 <a-select v-model="userOperate" defaultValue="" style="width:94%; margin:2%; border-radius:5px; background-color:white; border-style:solid; border-color:gray;" placeholder="开始">
+                  <!-- 操作选项 -->
                   <a-option>开始</a-option>
                   <a-option>结束</a-option>
                 </a-select>
@@ -142,12 +145,22 @@
   </div>
 </template>
 
-<script type="ts" setup>
+<script type="ts" lang="ts" setup>
   import { ref,onMounted,reactive} from 'vue'
   import axios from 'axios'
+  import { useRoute } from 'vue-router';
 
-  const modelName = ref('xgbiris-1566999569759')
-  const postmsg = ref('https://192.168.64.3:30931/api/vt/svc/pmml/xgb-iris-svc/predict')
+  import type {
+    jobResponseData
+  } from '../../api/deployJob';
+
+  const route = useRoute();
+  const jobName = ref('jobName');
+  const modelName = ref('modelName');
+  jobName.value = route.params.jobName as string;  // 工作名称
+  modelName.value = route.params.modelName as string;  // 模型名称
+  const postmsg = ref('');
+  
   const basicData = reactive([{
           label: '类别',
           value: '网络服务',
@@ -240,7 +253,7 @@
   const showCode = ref();  // 显示的curl代码
   const visible = ref(false);  // 是否显示悬浮窗
 
-  onMounted(()=>{
+  onMounted(async ()=>{
       axios.get('/api/modelOverview/info')
       .then(response=>{
 
@@ -251,6 +264,21 @@
           inputData.value = response.data.inputData;
           targetData.value = response.data.targetData;
       })
+
+     /*  axios.get('http://82.156.5.94:5000/model-deploy-service')
+      .then(response=>{
+        // 把链接拼接出来
+        postmsg.value = response.data.restfulUrl.concat(jobName.value);
+      })
+ */
+      // 申请数据
+      const param = {
+        'jobName': jobName.value
+      };
+      const res1 = await axios.post<jobResponseData>('http://82.156.5.94:5000/job-info', param);
+      console.log(res1.data);
+      postmsg.value = res1.data.url.concat(jobName.value);  // 获取url
+      
   });
 
   // 概述界面表格相关：
@@ -353,6 +381,15 @@
 
   const dataSubmit = () => {
     alert('提交成功');
+    /* const userRequestData = JSON.parse(testRequire.value);
+    console.log(userRequestData)
+    const res1 = await axios.post<requireDataResponse>(postmsg.value, userRequestData);
+    let returnData = JSON.stringify(res1.data);
+    returnData = returnData.replace(/{([^{}]*)}/g, "{\n$1\n    }");  // 在{}对前面加缩进，后面加换行
+    returnData = returnData.replace(/(\[)([a-zA-Z0-9'"])/g, "$1\n$2");  // 在[后面加换行
+    returnData = returnData.replace(/([a-zA-Z0-9'"])(\])/g, "$1\n$2");  // 在]后面加换行
+    returnData = returnData.replace(/,/g, ",\n");  // 在,后面加换行
+    testResponse.value = returnData; */
   }
 
   /* const genCode = () => {
@@ -361,12 +398,16 @@
   } */
 
   const genCode = () => {
-     const urlCode = 'https://192.168.64.3:30931/api/vt/svc/pmml/'.concat(modelName.value);
+     const urlCode = 'https://192.168.64.3:30931/api/vt/svc/pmml/'.concat(jobName.value);
     showCode.value = 'curl -k -X POST'.concat('\n' ,urlCode , '\n', envVariable.value, '\n', commandParam.value);
     visible.value = true;
   }
   const handleOk = () => {
     visible.value = false;
+  }
+
+  const operateNow = () => {
+    alert('立即执行')
   }
 
 

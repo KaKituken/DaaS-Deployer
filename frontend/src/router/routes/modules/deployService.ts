@@ -13,8 +13,8 @@ const MODELOVERVIEW: AppRouteRecordRaw = {
   },
   children: [
     {
-      path: '/deployService/:serviceName',
-      name: 'deployServce',
+      path: '/deployService/:modelName/:serviceName',
+      name: 'deployService',
       component: () => import('@/views/deployService/index.vue'),
       meta: {
         locale: 'menu.deployService',
