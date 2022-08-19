@@ -27,7 +27,7 @@
               <a-form-item
                 field="filename"
                 label="文件名"
-                :rules="[{ required: true }]"
+                :rules="[{ required: true, message: '请输入文件名' }]"
               >
                 <a-input v-model="form.fileName" placeholder="请输入文件名" />
               </a-form-item>
@@ -41,14 +41,14 @@
               <a-form-item
                 field="jobName"
                 label="任务名称"
-                :rules="[{ required: true }]"
+                :rules="[{ required: true, message:'请输入任务名称' }]"
               >
-                <a-input v-model="form.jobName" />
+                <a-input v-model="form.jobName" placeholder= "请输入任务名称"/>
               </a-form-item>
               <a-form-item
                 field="jobDescription"
                 label="任务描述"
-                :rules="[{ required: true }]"
+                :rules="[{ required: true, message:'请输入任务描述' }]"
               >
                 <a-textarea
                   placeholder="在这里进行任务描述..."
@@ -75,7 +75,7 @@
               <a-form-item
                 field="dispatch"
                 label="调度"
-                :rules="[{ required: true }]"
+                :rules="[{ required: true, message: '请选择调度方式' }]"
               >
                 <a-radio-group v-model="form.dispatch">
                   <a-radio value="demand">按需</a-radio>
@@ -85,7 +85,7 @@
               <a-form-item
                 field="runName"
                 label="运行名称"
-                :rules="[{ required: true }]"
+                :rules="[{ required: true, message: '请选择运行名称' }]"
               >
                 <a-input v-model="form.runName"></a-input>
               </a-form-item>
@@ -105,6 +105,7 @@
   import { ref, onMounted, reactive } from 'vue';
   import axios from 'axios';
   import { useRoute, useRouter } from 'vue-router';
+  import { Message } from '@arco-design/web-vue';
   import type { modelDeploy, addService, settings, status} from '../../api/addService';
 
   const route = useRoute();
@@ -155,9 +156,13 @@
       form
     );
     if (res.data.status === true) {
-        router.push({
-            path: `/detail/${modelName.value}`,
-        });
+      Message.success('保存成功')
+      router.push({
+        path: `/detail/${modelName.value}`,
+      });
+    }
+    else{
+      Message.error('保存失败，请重试')
     }
   };
 </script>

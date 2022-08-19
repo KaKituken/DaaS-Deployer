@@ -27,9 +27,9 @@
               <a-form-item
                 field="name"
                 label="名称"
-                :rules="[{ required: true }]"
+                :rules="[{ required: true, message: '请输入服务名称' }]"
               >
-                <a-input v-model="form.serviceName" placeholder="请输入名称" />
+                <a-input v-model="form.serviceName" @input = "nameInput" placeholder="请输入名称" />
               </a-form-item>
               <a-form-item field="serverURL" label="URL">
                 <a-input v-model="serverURL" disabled />
@@ -37,7 +37,7 @@
               <a-form-item
                 field="modelVersion"
                 label="模型版本"
-                :rules="[{ required: true }]"
+                :rules="[{ required: true, message: '请选择模型版本' }]"
               >
                 <a-select
                   v-model="form.serverVersion"
@@ -89,7 +89,7 @@
               <a-form-item
                 field="copyNum"
                 label="副本"
-                :rules="[{ required: true }]"
+                :rules="[{ required: true, message: '请输入副本数量' }]"
               >
                 <a-input-number v-model="form.replicas" :default-value="2" />
               </a-form-item>
@@ -109,12 +109,14 @@
   import { ref, onMounted, reactive } from 'vue';
   import axios from 'axios';
   import { useRoute, useRouter } from 'vue-router';
+  import { Message } from '@arco-design/web-vue';
   import type { addService, modelDeploy, status } from '../../api/addService';
-import { modelDescript } from '../../api/modelOverview';
+  import type { modelDescript } from '../../api/modelOverview';
 
   const route = useRoute();
   const router = useRouter();
   const serverURL = ref();
+  const serverURLpred = ref();
   const modelName = ref('modelName');
   modelName.value = route.params.modelname as string;
   const modelUrl = ref(`/detail/${modelName.value}`);
@@ -133,6 +135,7 @@ import { modelDescript } from '../../api/modelOverview';
     modelVersion.value = res1.data.version;
 
     const res2 = await axios.get<addService>('http://82.156.5.94:5000/model-deploy-service')
+    serverURLpred.value = res2.data.restfulUrl;
     serverURL.value = res2.data.restfulUrl;
 
     const param = {
@@ -141,21 +144,24 @@ import { modelDescript } from '../../api/modelOverview';
     const res3 = await axios.post<modelDescript>('http://82.156.5.94:5000/model-descript',param)
     form.modelType = res3.data.modelType;
   });
+
+  const nameInput = () => {
+    serverURL.value = serverURLpred.value.concat(form.serviceName)
+  }
   const handleSubmit = async () => {
 
     const res = await axios.post<status>(
       'http://82.156.5.94:5000/model-deploy-service',
       form
     );
-    console.log('======submitStatus======')
-    console.log(res.data.status)
     if (res.data.status === true) {
-        router.push({
-            path: `/deployService/${modelName.value}/${form.serviceName}`,
-        });
+      Message.success('添加服务成功')
+      router.push({
+        path: `/deployService/${modelName.value}/${form.serviceName}`,
+      });
     }
     else{
-      alert('add service failed, please try again...')
+      Message.error('添加服务失败，请重试')
     }
   };
 </script>
