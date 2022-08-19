@@ -22,7 +22,7 @@
               :data="data"
               size="small"
               :align="{ label: 'right', value: 'right' }"
-              column="4"
+              :column="4"
               layout="inline-vertical"
             />
           </a-space>
@@ -81,41 +81,119 @@
                     minWidth: '250px',
                     border: '1px solid var(--color-border)',
                   }"
-                  disabled="True"
+                  disabled
                 >
                   <template #first>
                     <a-typography-paragraph>
-                      <div style="background-color: white; margin: 10px; border-radius:10px; ">
-                        <div class="testtitle" style="margin: 10px;">
-                          <span class="tag" style="margin: 10px; text-align:left;">输入</span>
-                          <a @click='changeJson' style="text-align:right; color: #165dff; text-decoration:none;" href="#">JSON</a>
+                      <div
+                        style="
+                          background-color: white;
+                          margin: 10px;
+                          border-radius: 10px;
+                        "
+                      >
+                        <div class="testtitle" style="margin: 10px">
+                          <span
+                            class="tag"
+                            style="margin: 10px; text-align: left"
+                            >输入</span
+                          >
+                          <a
+                            style="
+                              text-align: right;
+                              color: #165dff;
+                              text-decoration: none;
+                            "
+                            href="#"
+                            @click="changeJson"
+                            >JSON</a
+                          >
                         </div>
-                          <a-list v-if="!weatherJson" style="margin: 1%;">
-                            <a-list-item v-for="(item,index) in nameValueList" :key='index'>
-                              &nbsp;&nbsp;&nbsp;{{item['name']}}
-                              <a-input v-model="item.value" :style="{width:'96%', margin:'2%', 'background-color':'white', 'border-style':'solid', 'border-color': 'gray', 'border-radius': '5px'}" placeholder="" allow-clear />  
-                            </a-list-item>
-                          </a-list>
-                          <div style="height: 362px;" v-if="weatherJson">
-                            <a-textarea v-model="userJson" allow-clear style="background-color: white; margin:5%; position: relative; width: 90%; border-style: solid; border-color: gray; height: 80%;"/>
-                          </div>
+                        <a-list v-if="!weatherJson" style="margin: 1%">
+                          <a-list-item
+                            v-for="(item, index) in nameValueList"
+                            :key="index"
+                          >
+                            &nbsp;&nbsp;&nbsp;{{ item['name'] }}
+                            <a-input
+                              v-model="item.value"
+                              :style="{
+                                'width': '96%',
+                                'margin': '2%',
+                                'background-color': 'white',
+                                'border-style': 'solid',
+                                'border-color': 'gray',
+                                'border-radius': '5px',
+                              }"
+                              placeholder=""
+                              allow-clear
+                            />
+                          </a-list-item>
+                        </a-list>
+                        <div v-if="weatherJson" style="height: 362px">
+                          <a-textarea
+                            v-model="userJson"
+                            allow-clear
+                            style="
+                              background-color: white;
+                              margin: 5%;
+                              position: relative;
+                              width: 90%;
+                              border-style: solid;
+                              border-color: gray;
+                              height: 80%;
+                            "
+                          />
+                        </div>
 
-                          <div style="text-align: right">
-                            <a-button type="outline" style="margin: 10px;" @click="clear">清除</a-button>
-                            <a-button type="primary" style="margin: 10px" @click="testSubmit">提交</a-button>
-                          </div>
+                        <div style="text-align: right">
+                          <a-button
+                            type="outline"
+                            style="margin: 10px"
+                            @click="clear"
+                            >清除</a-button
+                          >
+                          <a-button
+                            type="primary"
+                            style="margin: 10px"
+                            @click="testSubmit"
+                            >提交</a-button
+                          >
+                        </div>
                       </div>
                     </a-typography-paragraph>
                   </template>
                   <template #second>
                     <a-typography-paragraph>
-                      <div style="background-color: white; margin: 10px; border-radius: 10px;">
-                        <div class="testtitle" style="margin: 10px;">
-                          <span class="tag" style="margin: 10px; text-align:left;">输出</span>
+                      <div
+                        style="
+                          background-color: white;
+                          margin: 10px;
+                          border-radius: 10px;
+                        "
+                      >
+                        <div class="testtitle" style="margin: 10px">
+                          <span
+                            class="tag"
+                            style="margin: 10px; text-align: left"
+                            >输出</span
+                          >
                         </div>
-                        <a-divider style="position: relative; top: -10px;"/>
-                        <div id="testout" style="height: 362px; margin:1%;">
-                          <a-textarea v-model="testOutput" allow-clear style="background-color: white; margin:2%; width: 95%; border-style: solid; border-color: gray; height: 80%;" disabled/>
+                        <a-divider style="position: relative; top: -10px" />
+                        <div id="testout" style="height: 362px; margin: 1%">
+                          <a-textarea
+                            v-model="testOutput"
+                            allow-clear
+                            style="
+                              background-color: white;
+                              margin: 2%;
+                              width: 95%;
+                              border-style: solid;
+                              border-color: gray;
+                              height: 80%;
+                            "
+                            disabled
+                          />
                         </div>
                       </div>
                     </a-typography-paragraph>
@@ -144,7 +222,10 @@
                       :rules="[{ required: true }]"
                     >
                       <a-select v-model="predForm.inputDataset">
-                        <a-option v-for="(item, index) in datasetList" :key="index">
+                        <a-option
+                          v-for="(item, index) in datasetList"
+                          :key="index"
+                        >
                           {{ item.name }}
                         </a-option>
                       </a-select>
@@ -176,8 +257,8 @@
                   />
                   <a-button
                     type="primary"
-                    @click="runBatchPredFunc()"
                     style="float: right; margin-top: 10px"
+                    @click="runBatchPredFunc()"
                     >立即执行</a-button
                   >
                 </a-card>
@@ -201,7 +282,6 @@
 </template>
 
 <script lang="ts" setup>
-
   import { ref, onMounted, reactive } from 'vue';
   import axios from 'axios';
   import { useRoute } from 'vue-router';
@@ -248,7 +328,7 @@
 
   const testOutput = ref('');
   const weatherJson = ref(false);
-  const userJson = ref('');  // json格式下用户输入
+  const userJson = ref(''); // json格式下用户输入
 
   const inputColumns = [
     {
@@ -315,8 +395,8 @@
   const predScript = ref();
   const batchPredSettingsUrl = ref(`/batchPredictSettings/${modelName.value}`);
   const runBatchPredFunc = async () => {
-    await axios.post('http://82.156.5.94:5000/model-deploy-job',predForm)
-  }
+    await axios.post('http://82.156.5.94:5000/model-deploy-job', predForm);
+  };
 
   const BatchPredFunc = async () => {
     const res4 = await axios.post<PredictScript>(
@@ -346,91 +426,99 @@
     inputData.value = res2.data.inputVariables;
     targetData.value = res2.data.outputVariables;
     // 根据获取的inputData构造nameValueList用于绑定 不定数量的输入框
-    nameValueList.value = (function(){  
+    nameValueList.value = (() => {
       const arr = Array(inputData.value.length);
-      for(let i=0; i<inputData.value.length; i += 1){
+      for (let i = 0; i < inputData.value.length; i += 1) {
         arr[i] = {
           name: inputData.value[i].name,
-          value: ''
-        }
+          value: '',
+        };
       }
-      return arr
+      return arr;
     })();
 
-    const res3 = await axios.post<DatasetList>('http://82.156.5.94:5000/dataset-info',param);
+    const res3 = await axios.post<DatasetList>(
+      'http://82.156.5.94:5000/dataset-info',
+      param
+    );
     datasetList.value = res3.data.datasetList;
   });
 
   const testSubmit = async () => {
     let testInfo = {};
-    if (!weatherJson.value){
+    if (!weatherJson.value) {
       testInfo = {
-        'modelName': modelName.value,
-        'data': {
-          "inputs":nameValueList.value
-        }
+        modelName: modelName.value,
+        data: {
+          inputs: nameValueList.value,
+        },
       };
-    }
-    else{
-      const userData = JSON.parse(userJson.value.replace(/[\r\n\s+]/g, ''));  // 从输入框获取用户输入的json字符串，然后解析
+    } else {
+      const userData = JSON.parse(userJson.value.replace(/[\r\n\s+]/g, '')); // 从输入框获取用户输入的json字符串，然后解析
       // 构造一个提交的数据表单
-      const newNameValueList = (function(){
+      const newNameValueList = (() => {
         const arr = Array(Object.getOwnPropertyNames(userData).length);
-        for (let i=0; i<Object.getOwnPropertyNames(userData).length; i += 1){
+        for (
+          let i = 0;
+          i < Object.getOwnPropertyNames(userData).length;
+          i += 1
+        ) {
           arr[i] = {
             name: nameValueList.value[i].name,
-            value: userData[nameValueList.value[i].name.replace(/ /g, '')]
+            value: userData[nameValueList.value[i].name.replace(/ /g, '')],
             // 注意json解析的时候会自动忽略所有空格，所以需要手动按照去掉空格的属性名从用户输入的json中提取属性值
-          }
-        };
-        return arr
+          };
+        }
+        return arr;
       })();
       // 注意： 用户输入的json的属性名必须加""，目前可以解决json里面的回车字符串，但是不能解决属性名没有""产生的解析错误
       testInfo = {
-        'modelName': modelName.value,
-        'data': {
-           "inputs": newNameValueList
-        }
+        modelName: modelName.value,
+        data: {
+          inputs: newNameValueList,
+        },
       };
     }
 
     console.log(testInfo);
-    
-    const res1 = await axios.post<modelTestInfo>('http://82.156.5.94:5000/model-test',testInfo);
+
+    const res1 = await axios.post<modelTestInfo>(
+      'http://82.156.5.94:5000/model-test',
+      testInfo
+    );
     let returnData = JSON.stringify(res1.data);
-    returnData = returnData.replace(/{([^{}]*)}/g, "{\n$1\n    }");  // 在{}对前面加缩进，后面加换行
-    returnData = returnData.replace(/(\[)([a-zA-Z0-9'"])/g, "$1\n$2");  // 在[后面加换行
-    returnData = returnData.replace(/([a-zA-Z0-9'"])(\])/g, "$1\n$2");  // 在]后面加换行
-    returnData = returnData.replace(/,/g, ",\n");  // 在,后面加换行
+    returnData = returnData.replace(/{([^{}]*)}/g, '{\n$1\n    }'); // 在{}对前面加缩进，后面加换行
+    returnData = returnData.replace(/(\[)([a-zA-Z0-9'"])/g, '$1\n$2'); // 在[后面加换行
+    returnData = returnData.replace(/([a-zA-Z0-9'"])(\])/g, '$1\n$2'); // 在]后面加换行
+    returnData = returnData.replace(/,/g, ',\n'); // 在,后面加换行
     testOutput.value = returnData;
   };
 
   const clear = () => {
-    nameValueList.value = (function(){
+    nameValueList.value = (() => {
       const arr = Array(inputData.value.length);
-      for(let i=0; i<inputData.value.length; i += 1){
+      for (let i = 0; i < inputData.value.length; i += 1) {
         arr[i] = {
           name: inputData.value[i].name,
-          value: ''
-        }
+          value: '',
+        };
       }
-      return arr
+      return arr;
     })();
 
-    if (!weatherJson.value){  // 输入框清空
-      for(let i=0; i<nameValueList.value.length; i += 1){
+    if (!weatherJson.value) {
+      // 输入框清空
+      for (let i = 0; i < nameValueList.value.length; i += 1) {
         nameValueList.value[i].value = '';
       }
+    } else {
+      userJson.value = ''; // 文本框清空
     }
-    else{
-      userJson.value = '';  // 文本框清空
-    }
-  }
+  };
 
   const changeJson = () => {
     weatherJson.value = !weatherJson.value;
-  }
-
+  };
 </script>
 
 <style scoped>

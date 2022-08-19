@@ -1,5 +1,10 @@
 <template>
   <a-card>
+    <a-breadcrumb style="margin-left: 15px">
+      <a-breadcrumb-item>主页</a-breadcrumb-item>
+      <a-breadcrumb-item><a href="\list\model">模型列表</a></a-breadcrumb-item>
+      <a-breadcrumb-item>导入模型</a-breadcrumb-item>
+    </a-breadcrumb>
     <a-form
       :model="form"
       auto-label-width
@@ -11,7 +16,7 @@
         label="名称"
         :rules="[{ required: true, message: '请输入模型名称' }]"
       >
-        <a-input v-model="form.name" placeholder="请输入名称" />
+        <a-input v-model="form.name" placeholder="请输入模型名称" />
       </a-form-item>
       <a-form-item field="descript" label="描述">
         <a-textarea
@@ -73,7 +78,7 @@
     if (res.status) {
       Message.success('添加成功');
       router.push({
-        path: '/list',
+        path: '/list/model',
       });
     } else {
       Message.error('错误：重名模型');
