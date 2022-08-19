@@ -5,7 +5,8 @@
         <div>
           <a-breadcrumb style="margin-left: 15px">
             <a-breadcrumb-item>主页</a-breadcrumb-item>
-            <a-breadcrumb-item>模型</a-breadcrumb-item>
+            <a-breadcrumb-item><a href="\list">模型</a></a-breadcrumb-item>
+            <a-breadcrumb-item><a :href="modelUrl">{{ modelName }}</a></a-breadcrumb-item>
             <a-breadcrumb-item>{{ serviceName }}</a-breadcrumb-item>
             <template #separator>
               <icon-right />
@@ -18,7 +19,6 @@
               ><span style="colro: black; font-weight: bold">POST </span
               ><span style="color: purple">{{ postmsg }}</span></p
             >
-            <p style="color: grey">部署令牌:</p>
           </div>
         </div>
         <div id="detailInfo">
@@ -53,7 +53,11 @@
               </div>
               <a-divider style="margin-top: 0" />
               <div class="table">
-                <a-table :columns="copyColumns" :data="copyData" />
+                <a-table :columns="copyColumns" :data="copyData" >
+                  <template #operation ="{ record }">
+                    <a-button @click="onclickColumn(record)">删除</a-button>
+                  </template>
+                </a-table>
               </div>
               <a-divider />
             </div>
@@ -138,21 +142,25 @@
   </div>
 </template>
 
-<script type="ts" lang="ts" setup>
+<script lang="ts" setup>
   import { ref,onMounted,reactive} from 'vue'
   import axios from 'axios'
-  import { useRoute } from 'vue-router';
-  import useRequest from '@/hooks/request';
+  import { useRoute, useRouter } from 'vue-router';
+  import { Sleep } from '../../api/deployService';
   import type {
     requireDataResponse,
-    copyResponseData
+    copyResponseData,
   } from '../../api/deployService';
+  import { status } from '../../api/addService';
 
   const route = useRoute();
+  const router = useRouter();
   const serviceName = ref('serviceName');
   const modelName = ref('modelName');
   serviceName.value = route.params.serviceName as string;  // 工作名称
   modelName.value = route.params.modelName as string;  // 模型名称
+
+  const modelUrl = ref(`/detail/${modelName.value}`);
 
   const postmsg = ref('')
   const basicData = reactive([{
@@ -163,7 +171,7 @@
           value: '默认实时预测',
       }, {
           label: '对象',
-          value: 'xgb-iris'
+          value: modelName.value
       }, {
           label: '创建时间',
           value: '2019-7-9',
@@ -175,84 +183,14 @@
           value: '-'
       }
   ],
-    );
-  const inputColumns=[
-      {
-          title:'字段',
-          dataIndex:'field',
-      },
-      {
-          title:"类型",
-          dataIndex:'type',
-      },
-      {
-          title:"测量",
-          dataIndex:'measure',
-      },
-      {
-          title:"取值",
-          dataIndex:'value',
-      }
-  ];
-  const inputData = ref()
-  const targetData = ref()
+  );
+
   // 测试页面的变量
   const testFuncName = ref()
   const testRequire = ref()
   const testResponse = ref()
   const visible = ref(false)
   const showCode = ref()
-
-  const deployColumns=[
-      {
-          title:'名称',
-          dataIndex:'name',
-      },
-      {
-          title:"类型",
-          dataIndex:'type',
-      },
-      {
-          title:"开始时间",
-          dataIndex:'startTime',
-      },
-      {
-          title:"状态",
-          dataIndex:'status',
-      },
-      {
-          title:"操作",
-          dataIndex:'operation',
-      }
-  ];
-  const deployData = reactive([]);
-
-  onMounted(async ()=>{
-      axios.get('/api/modelOverview/info')
-      .then(response=>{
-
-      })
-
-      axios.get('/api/modelOverview/var')
-      .then(response=>{
-          inputData.value = response.data.inputData;
-          targetData.value = response.data.targetData;
-      })
-
-      axios.get('http://82.156.5.94:5000/model-deploy-service')
-      .then(response=>{
-        // 把链接拼接出来
-        // postmsg.value = response.data.restfulUrl.concat(serviceName.value);
-        postmsg.value = response.data.restfulUrl.concat(serviceName.value, '/predict');
-      })
-
-      // 获取副本
-      const param = {
-        'serviceName': serviceName.value
-      }
-      const res1 = await axios.post<copyResponseData>('http://82.156.5.94:5000/service-info', param);
-      console.log(res1.data);
-  });
 
   // 概述界面表格相关：
   const indexColumns = [
@@ -275,14 +213,7 @@
       },
     },
     {
-      title: '中间响应时间(ms)',
-      dataIndex: 'midResponseTime',
-      sortable: {
-        sortDirections: ['ascend', 'descend'],
-      },
-    },
-    {
-      title: '最小响应时间',
+      title: '最小响应时间(ms)',
       dataIndex: 'minResponseTime',
       sortable: {
         sortDirections: ['ascend', 'descend'],
@@ -315,7 +246,6 @@
       funcName: 'predict',
       accessTimes: 2,
       avgResponseTime: 205.0,
-      midResponseTime: 205.0,
       minResponseTime: 12.0,
       maxResponseTime: 398.0,
       firstAccessTime: '2019-09-28 17:30:59',
@@ -326,30 +256,80 @@
   const copyColumns = [
     {
       title: '名称',
-      dataIndex: 'copyName',
+      dataIndex: 'name',
     },
     {
       title: '状态',
-      dataIndex: 'copyStatus',
+      dataIndex: 'status',
     },
     {
       title: '操作',
-      dataIndex: 'operation'
+      slotName: 'operation',
     }
   ];
 
-  const copyData = reactive([
-    {
-      copyName: 'd-pmml-xgb-iris-svc-5854487d5b-zbsjn',
-      copyStatus: '运行中',
-      operation: '默认'
-    },
-  ]);
+  const copyData = ref();
 
-   const clear = () => {
+  const clear = () => {
     testFuncName.value = '';
     testRequire.value = '';
   };
+
+  const onclickColumn = async (record: any) => {
+    const params = reactive({
+      podName: record.name,
+      operationType: "delete", 
+    });
+    const res = await axios.post<status>('http://82.156.5.94:5000/operate-pod', params)
+    console.log('======delete pod======')
+    console.log(res.data)
+    if (res.data.status === false){
+      alert('delete pod failed, please try again...')
+    }
+    else{
+      const isPending = ref(true)
+      if(isPending.value){
+        const param = {
+          'serviceName': serviceName.value
+        }
+        const res1 = await axios.post<copyResponseData>('http://82.156.5.94:5000/service-info', param);
+        copyData.value = res1.data.podList;
+        isPending.value = false;
+        for( let i = 0; i < copyData.value.length ; i+=1){
+          if(copyData.value[i].status==="Pending"){
+            isPending.value = true;
+          }
+        }
+        await Sleep(3000);
+      }
+    }
+  };
+
+  onMounted(async ()=>{
+      axios.get('http://82.156.5.94:5000/model-deploy-service')
+      .then(response=>{
+        // 把链接拼接出来
+        // postmsg.value = response.data.restfulUrl.concat(serviceName.value);
+        postmsg.value = response.data.restfulUrl.concat(serviceName.value, '/predict');
+      })
+
+      // 获取副本
+      const param = {
+        'serviceName': serviceName.value
+      }
+      const res1 = await axios.post<copyResponseData>('http://82.156.5.94:5000/service-info', param);
+      basicData[3].value = res1.data.createTime;
+      basicData[4].value = res1.data.cpuReserve;
+      basicData[5].value = res1.data.memoryReserve;
+      indexData[0].funcName = res1.data.function;
+      indexData[0].accessTimes = res1.data.acessTimes;
+      indexData[0].avgResponseTime = res1.data.averageResponseTime.toFixed(2);
+      indexData[0].minResponseTime = res1.data.minResponseTime.toFixed(2);
+      indexData[0].maxResponseTime = res1.data.maxResponseTime.toFixed(2);
+      indexData[0].firstAccessTime = res1.data.firstAccessTime;
+      indexData[0].latestAccessTime = res1.data.lastAccessTime;
+      copyData.value = res1.data.podList;
+  });
 
   const dataSubmit = async () => {
     const userRequestData = JSON.parse(testRequire.value);
@@ -361,6 +341,20 @@
     returnData = returnData.replace(/([a-zA-Z0-9'"])(\])/g, "$1\n$2");  // 在]后面加换行
     returnData = returnData.replace(/,/g, ",\n");  // 在,后面加换行
     testResponse.value = returnData;
+    const param = {
+      'serviceName': serviceName.value
+    }
+    const res2 = await axios.post<copyResponseData>('http://82.156.5.94:5000/service-info', param);
+    basicData[3].value = res2.data.createTime;
+    basicData[4].value = res2.data.cpuReserve;
+    basicData[5].value = res2.data.memoryReserve;   
+    indexData[0].funcName = res2.data.function;
+    indexData[0].accessTimes = res2.data.acessTimes;
+    indexData[0].avgResponseTime = res2.data.averageResponseTime.toFixed(2);
+    indexData[0].minResponseTime = res2.data.minResponseTime.toFixed(2);
+    indexData[0].maxResponseTime = res2.data.maxResponseTime.toFixed(2);
+    indexData[0].firstAccessTime = res2.data.firstAccessTime;
+    indexData[0].latestAccessTime = res2.data.lastAccessTime; 
   }
 
   const genCode = () => {

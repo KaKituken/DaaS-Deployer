@@ -66,8 +66,25 @@
               </div>
               <a-divider style="margin-top: 0" />
               <div class="table">
-                <a-table :columns="deployColumns" :data="deployData" />
+                <a-table :columns="deployColumns" :data="deployData" >
+                  <template #operation="{ record }">
+                    <a-space>
+                      <a-button @click="onclickColumn(record)">详情</a-button>
+                      <a-button @click="onclickDelete(record)">删除</a-button>
+                      <a-button @click="onclickModify(record)">调整</a-button>
+                      <a-button @click="onclickPause(record)">暂停</a-button>
+                      <a-button @click="onclickResume(record)">启动</a-button>
+                    </a-space>
+                  </template>
+                </a-table>
               </div>
+              <a-modal v-model:visible="visible" @ok="handleOk" @cancel="handleCancel">
+                <template #title>
+                  修改副本数量
+                </template>
+                请设置新的副本数量:
+                <a-input-number v-model="newReplicas" />
+              </a-modal>
               <a-divider />
             </div>
           </a-tab-pane>
@@ -284,7 +301,7 @@
 <script lang="ts" setup>
   import { ref, onMounted, reactive } from 'vue';
   import axios from 'axios';
-  import { useRoute } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import type {
     modelDescript,
     modelVariable,
@@ -292,9 +309,12 @@
     DatasetList,
     PredictScript,
     modelTestInfo,
+    deployInfo
   } from '../../api/modelOverview';
+import { status } from '../../api/addService';
 
   const route = useRoute();
+  const router = useRouter();
   const modelName = ref('modelName');
   modelName.value = route.params.modelname as string;
   const addServiceUrl = ref(`/addService/${modelName.value}`);
@@ -376,15 +396,109 @@
     },
     {
       title: '操作',
-      dataIndex: 'operation',
+      slotName: 'operation',
     },
   ];
-  const deployData = reactive([]);
-
   const param = {
     modelName: modelName.value,
   };
 
+  const deployParam = reactive({
+    modelName: modelName.value,
+    modelType: '',
+  })
+
+  const jobList = ref()
+  const serviceList = ref()
+  const deployData = ref()
+
+  const onclickColumn = (record: any) => {
+    router.push({
+      path: `/deploy${record.type}/${modelName.value}/${record.name}`,
+    });
+  };
+
+  const onclickDelete = async (record: any) => {
+    const deleteParam = reactive({
+      serviceName: record.name,
+      type : "delete",
+    })
+    console.log('=====deleteParam=====')
+    console.log(deleteParam)
+    const res = await axios.post<status>('http://82.156.5.94:5000/operate-service', deleteParam)
+    if (res.data.status === false){
+      alert('delete service/job failed, please try again...')
+    }
+    else{
+      const res4 = await axios.post<deployInfo>('http://82.156.5.94:5000/get-deploy-info',deployParam)
+      jobList.value = res4.data.jobList;
+      serviceList.value = res4.data.serviceList;
+      deployData.value = jobList.value.concat(serviceList.value);
+    }
+  }
+  
+  const visible = ref(false)
+  const newReplicas = ref();
+  const serviceName = ref();
+  const onclickModify = async (record: any) => {
+    visible.value = true;
+    serviceName.value = record.name
+  }
+
+  const handleOk = async () => {
+    const modifyParam = reactive({
+      serviceName: serviceName.value,
+      type : "modify",
+      replicas: newReplicas.value
+    })
+    const res = await axios.post<status>('http://82.156.5.94:5000/operate-service',modifyParam)
+    if(res.data.status === false){
+      alert('modify replicas failed, please try again...')
+    }
+    visible.value = false;
+  }
+
+  const handleCancel = () => {
+    visible.value = false;
+  }
+
+  const onclickPause = async (record: any) => {
+    const pauseParam = reactive({
+      serviceName: record.name,
+      type : "pause",
+    })
+    const res = await axios.post<status>('http://82.156.5.94:5000/operate-service', pauseParam)
+    if (res.data.status === false){
+      alert('resume service/job failed, please try again...')
+    }
+    else{
+      const res4 = await axios.post<deployInfo>('http://82.156.5.94:5000/get-deploy-info',deployParam)
+      jobList.value = res4.data.jobList;
+      serviceList.value = res4.data.serviceList;
+      deployData.value = jobList.value.concat(serviceList.value);
+    }
+  }
+
+  const onclickResume = async (record: any) => {
+    const resumeParam = reactive({
+      serviceName: record.name,
+      type : "resume",
+    })
+    console.log('======resumeParam======')
+    console.log(resumeParam)
+    const res = await axios.post<status>('http://82.156.5.94:5000/operate-service', resumeParam)
+    console.log('======resumeRes.data======')
+    console.log(res.data)
+    if (res.data.status === false){
+      alert('resume service/job failed, please try again...')
+    }
+    else{
+      const res4 = await axios.post<deployInfo>('http://82.156.5.94:5000/get-deploy-info',deployParam)
+      jobList.value = res4.data.jobList;
+      serviceList.value = res4.data.serviceList;
+      deployData.value = jobList.value.concat(serviceList.value);
+    }
+  }
   const datasetList = ref();
   const predForm = reactive({
     modelName: modelName.value,
@@ -394,6 +508,7 @@
   });
   const predScript = ref();
   const batchPredSettingsUrl = ref(`/batchPredictSettings/${modelName.value}`);
+  
   const runBatchPredFunc = async () => {
     await axios.post('http://82.156.5.94:5000/model-deploy-job', predForm);
   };
@@ -416,13 +531,14 @@
     data[1].value = res1.data.modelType;
     data[2].value = res1.data.algorithm;
     data[3].value = res1.data.modelEngine;
+    deployParam.modelType = res1.data.modelType;
 
     const res2 = await axios.post<modelVariable>(
       'http://82.156.5.94:5000/model-variable',
       param
     );
 
-    console.log(res2.data);
+    // console.log(res2.data);
     inputData.value = res2.data.inputVariables;
     targetData.value = res2.data.outputVariables;
     // 根据获取的inputData构造nameValueList用于绑定 不定数量的输入框
@@ -442,6 +558,11 @@
       param
     );
     datasetList.value = res3.data.datasetList;
+
+    const res4 = await axios.post<deployInfo>('http://82.156.5.94:5000/get-deploy-info',deployParam)
+    jobList.value = res4.data.jobList;
+    serviceList.value = res4.data.serviceList;
+    deployData.value = jobList.value.concat(serviceList.value);
   });
 
   const testSubmit = async () => {
@@ -492,6 +613,7 @@
     returnData = returnData.replace(/([a-zA-Z0-9'"])(\])/g, '$1\n$2'); // 在]后面加换行
     returnData = returnData.replace(/,/g, ',\n'); // 在,后面加换行
     testOutput.value = returnData;
+
   };
 
   const clear = () => {

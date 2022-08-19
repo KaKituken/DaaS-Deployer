@@ -51,39 +51,39 @@
               <a-form-item field="cpu" label="预留cpu">
                 <a-slider
                   v-model="form.cpuReserve"
-                  :default-value="0"
+                  default-value="0"
                   min="0"
                   max="8"
                   :style="{ width: '200px' }"
                 />
                 <a-input-number
                   v-model="form.cpuReserve"
-                  :default-value="0"
+                  default-value="0"
                   min="0"
                   max="8"
                   precision="0"
                   placeholder="0~8"
-                  :style="{ width: '85px', margin: '0 0 0 50px' }"
+                  :style="{ width: '90px', margin: '0 0 0 50px' }"
                 />
               </a-form-item>
-              <a-form-item field="memory" label="预留内存(G)">
+              <a-form-item field="memory" label="预留内存(M)">
                 <a-slider
                   v-model="form.memoryReserve"
-                  :default-value="0"
-                  min="0.0"
-                  max="32.0"
-                  step="0.1"
+                  default-value="0"
+                  min="0"
+                  max="4096"
+                  step="1"
                   :style="{ width: '200px' }"
                 />
                 <a-input-number
                   v-model="form.memoryReserve"
-                  :default-value="0"
-                  min="0.0"
-                  max="32.0"
-                  step="0.1"
+                  default-value="0"
+                  min="0"
+                  max="4093"
+                  step="1"
                   precision="1"
-                  placeholder="0~32.0"
-                  :style="{ width: '85px', margin: '0 0 0 50px' }"
+                  placeholder="0~4096"
+                  :style="{ width: '90px', margin: '0 0 0 50px' }"
                 />
               </a-form-item>
               <a-form-item
@@ -91,7 +91,7 @@
                 label="副本"
                 :rules="[{ required: true }]"
               >
-                <a-input-number v-model="form.replicas" :default-value="1" />
+                <a-input-number v-model="form.replicas" :default-value="2" />
               </a-form-item>
               <a-form-item>
                 <a-button type="primary" html-type="submit">添加模型</a-button>
@@ -108,21 +108,24 @@
 <script lang="ts" setup>
   import { ref, onMounted, reactive } from 'vue';
   import axios from 'axios';
-  import { useRoute } from 'vue-router';
-  import type { addService, modelDeploy } from '../../api/addService';
+  import { useRoute, useRouter } from 'vue-router';
+  import type { addService, modelDeploy, status } from '../../api/addService';
+import { modelDescript } from '../../api/modelOverview';
 
   const route = useRoute();
+  const router = useRouter();
   const serverURL = ref();
   const modelName = ref('modelName');
   modelName.value = route.params.modelname as string;
   const modelUrl = ref(`/detail/${modelName.value}`);
   const form = reactive({
     modelName : modelName.value,
+    modelType : '',
     serviceName: '',
-    serverVersion: '',
-    cpuReserve: '',
-    memoryReserve: '',
-    replicas: '',
+    serverVersion: 'test',
+    cpuReserve: 0,
+    memoryReserve: 0,
+    replicas: 2,
   });
   const modelVersion = ref();
   onMounted(async () => {
@@ -131,13 +134,29 @@
 
     const res2 = await axios.get<addService>('http://82.156.5.94:5000/model-deploy-service')
     serverURL.value = res2.data.restfulUrl;
+
+    const param = {
+      modelName: modelName.value
+    }
+    const res3 = await axios.post<modelDescript>('http://82.156.5.94:5000/model-descript',param)
+    form.modelType = res3.data.modelType;
   });
   const handleSubmit = async () => {
 
-    const res = await axios.post<addService>(
+    const res = await axios.post<status>(
       'http://82.156.5.94:5000/model-deploy-service',
       form
     );
+    console.log('======submitStatus======')
+    console.log(res.data.status)
+    if (res.data.status === true) {
+        router.push({
+            path: `/deployService/${modelName.value}/${form.serviceName}`,
+        });
+    }
+    else{
+      alert('add service failed, please try again...')
+    }
   };
 </script>
 

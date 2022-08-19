@@ -6,7 +6,8 @@
         <div>
           <a-breadcrumb style="margin-left: 15px">
             <a-breadcrumb-item>主页</a-breadcrumb-item>
-            <a-breadcrumb-item>模型</a-breadcrumb-item>
+            <a-breadcrumb-item><a href="\list">模型</a></a-breadcrumb-item>
+            <a-breadcrumb-item><a :href="modelUrl">{{ modelName }}</a></a-breadcrumb-item>
             <a-breadcrumb-item>{{ jobName }}</a-breadcrumb-item>
             <template #separator>
               <icon-right />
@@ -170,6 +171,8 @@
   jobName.value = route.params.jobName as string;  // 工作名称
   modelName.value = route.params.modelName as string;  // 模型名称
   const postmsg = ref('');
+  
+  const modelUrl = ref(`/detail/${modelName.value}`);
   
   const basicData = reactive([{
           label: '类别',

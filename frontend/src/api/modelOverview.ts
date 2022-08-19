@@ -39,3 +39,7 @@ export interface userVarialbeValue {
   value: number;
 }
 
+export interface deployInfo{
+  jobList: Array<JSON>;
+  serviceList: Array<JSON>;
+}

@@ -17,9 +17,20 @@ export interface requireDataResponse {
 export interface copyResponseData {
   restfulUrl: string;
   modelName: string;
+  function: string;
+  acessTimes: number;
+  averageResponseTime: number;
+  minResponseTime: number;
+  maxResponseTime: number;
+  firstAccessTime: string;
+  lastAccessTime: string;
   createTime: string;
   serviceVersion: string;
   cpuReserve: string;
   memoryReserve: string;
   podList: Array<JSON>;
+}
+
+export const Sleep = (ms: any)=> {
+  return new Promise(resolve=>setTimeout(resolve, ms))
 }
