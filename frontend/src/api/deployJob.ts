@@ -15,3 +15,13 @@ export interface jobResponseData {
     dispatch: string;
     runList: Array<JSON>;
 }
+
+export interface testResponseData {
+  args: string;
+  env: Array<string>;
+  jobName: string;
+  runID: string;
+  runName: string;
+  scheduled: boolean;
+  status: string;
+}

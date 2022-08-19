@@ -77,12 +77,20 @@
                   <div style="white-space: pre-line;">{{showCode}}</div>
                 </a-modal>
                 <a-divider />
-                <p style="margin-left: 2%">* 操作</p>
-                <a-select v-model="userOperate" defaultValue="" style="width:94%; margin:2%; border-radius:5px; background-color:white; border-style:solid; border-color:gray;" placeholder="开始">
-                  <!-- 操作选项 -->
-                  <a-option>开始</a-option>
-                  <a-option>结束</a-option>
-                </a-select>
+                <p style="margin-left: 2%">runName</p>
+                 <a-input
+                  v-model="runName"
+                  :style="{
+                    'width': '94%',
+                    'margin': '2%',
+                    'background-color': 'white',
+                    'border-style': 'solid',
+                    'border-color': 'gray',
+                    'border-radius': '5px',
+                  }"
+                  placeholder="runName"
+                  allow-clear
+                />
                 <p style="margin-left: 2%">环境变量</p>
                 <a-input
                   v-model="envVariable"
@@ -94,7 +102,7 @@
                     'border-color': 'gray',
                     'border-radius': '5px',
                   }"
-                  placeholder="VARIABLE_1=VALUE_1"
+                  placeholder="形如key1=value1;key2=value2"
                   allow-clear
                 />
                 <p style="margin-left: 2%">命令参数</p>
@@ -108,7 +116,7 @@
                     'border-color': 'gray',
                     'border-radius': '5px',
                   }"
-                  placeholder="arg1"
+                  placeholder="请直接输入args的值"
                   allow-clear
                 />
                 <div style="position: relative; left: 65%; top: 10%;">
@@ -134,6 +142,7 @@
                     margin-left: 2%;
                     margin-top: 20px;
                   "
+                  disabled
                 />
               </div>
             </div>
@@ -151,7 +160,8 @@
   import { useRoute } from 'vue-router';
 
   import type {
-    jobResponseData
+    jobResponseData,
+    testResponseData
   } from '../../api/deployJob';
 
   const route = useRoute();
@@ -246,7 +256,7 @@
   const deployData = reactive([]);
 
   // 测试页面获取的数据
-  const userOperate = ref();
+  const runName = ref();
   const envVariable = ref();
   const commandParam = ref();
   const responseData = ref();  // 绑定响应框
@@ -263,14 +273,8 @@
       .then(response=>{
           inputData.value = response.data.inputData;
           targetData.value = response.data.targetData;
-      })
+      });
 
-     /*  axios.get('http://82.156.5.94:5000/model-deploy-service')
-      .then(response=>{
-        // 把链接拼接出来
-        postmsg.value = response.data.restfulUrl.concat(jobName.value);
-      })
- */
       // 申请数据
       const param = {
         'jobName': jobName.value
@@ -374,32 +378,43 @@
   ]);
 
   const clear = () => {
-    userOperate.value = '';
+    runName.value = '';
     envVariable.value = '';
     commandParam.value = '';
   };
 
-  const dataSubmit = () => {
-    alert('提交成功');
-    /* const userRequestData = JSON.parse(testRequire.value);
-    console.log(userRequestData)
-    const res1 = await axios.post<requireDataResponse>(postmsg.value, userRequestData);
+  const dataSubmit = async () => {
+    const jobPostData = {
+      "runName": runName.value,
+      "variables": envVariable.value,
+      "args": commandParam.value
+    };
+    const res1 = await axios.post<testResponseData>(postmsg.value, jobPostData);
+    // console.log(res1.data);
+   
     let returnData = JSON.stringify(res1.data);
     returnData = returnData.replace(/{([^{}]*)}/g, "{\n$1\n    }");  // 在{}对前面加缩进，后面加换行
     returnData = returnData.replace(/(\[)([a-zA-Z0-9'"])/g, "$1\n$2");  // 在[后面加换行
     returnData = returnData.replace(/([a-zA-Z0-9'"])(\])/g, "$1\n$2");  // 在]后面加换行
     returnData = returnData.replace(/,/g, ",\n");  // 在,后面加换行
-    testResponse.value = returnData; */
+    responseData.value = returnData;
   }
 
-  /* const genCode = () => {
-    const urlCode = 'https://192.168.64.3:30931/api/vt/svc/pmml/'.concat(modelName.value);
-    alert('curl -k -X POST \\\n'.concat(urlCode , '\n', envVariable.value, '\n', commandParam.value));
-  } */
-
   const genCode = () => {
-     const urlCode = 'https://192.168.64.3:30931/api/vt/svc/pmml/'.concat(jobName.value);
-    showCode.value = 'curl -k -X POST'.concat('\n' ,urlCode , '\n', envVariable.value, '\n', commandParam.value);
+    // 构造代码里面的对象
+    const codeContent = {
+      "runName": runName.value,
+      "variables": envVariable.value,
+      "args": commandParam.value
+    };
+
+    // 拼接代码
+    const urlCode = postmsg.value;
+    showCode.value = 'curl --location --request POST '.concat("'", urlCode, "'");
+    showCode.value = showCode.value.concat(" --header 'Content-Type:application/json' --data-raw '");
+    showCode.value = showCode.value.concat(JSON.stringify(codeContent), "'");
+    
+    // 显示浮窗
     visible.value = true;
   }
   const handleOk = () => {
