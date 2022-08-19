@@ -18,14 +18,14 @@
         label="名称"
         :rules="[{ required: true, message: '请输入数据集名称' }]"
       >
-        <a-input v-model="form.name" placeholder="请输入数据集名称" />
+        <a-input v-model="form.fileName" placeholder="请输入数据集名称" />
       </a-form-item>
       <a-form-item
         field="type"
         label="类型"
         :rules="[{ required: true, message: '请选择数据集类型' }]"
       >
-        <a-select v-model="form.type" placeholder="请选择数据集类型">
+        <a-select v-model="form.dataSource" placeholder="请选择数据集类型">
           <a-option value="local">local</a-option>
           <a-option value="remote">remote</a-option>
         </a-select>
