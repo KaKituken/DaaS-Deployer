@@ -18,11 +18,11 @@
           <div style="height: 200px; margin-left: 10px">
             <p style="font-weight: bold; font-size: 22px">{{ jobName }}</p>
             <p style="width: 600px"
-              ><span style="color: gray">端点: </span
+              ><span style="color: gray">端点：</span
               ><span style="colro: black; font-weight: bold">POST </span
               ><span style="color: purple">{{ postmsg }}</span></p
             >
-            <p style="color: grey">部署令牌:</p>
+            <p style="color: grey">部署令牌：</p>
           </div>
         </div>
         <div id="detailInfo">
@@ -68,7 +68,24 @@
               </p>
               <a-divider />
               <div class="table">
-                <a-table :columns="userRunColumns" :data="userRunData" />
+                <a-table :columns="userRunColumns" :data="userRunData">
+                  <template #operation="{ record }">
+                    <a-space>
+                      <a-button @click="onclickRun(record, 'continue')"
+                        >继续</a-button
+                      >
+                      <a-button @click="onclickRun(record, 'pause')"
+                        >暂停</a-button
+                      >
+                      <a-button @click="onclickRun(record, 'stop')"
+                        >停止</a-button
+                      >
+                      <a-button @click="onclickRun(record, 'result')"
+                        >结果</a-button
+                      >
+                    </a-space>
+                  </template>
+                </a-table>
               </div>
             </div>
           </a-tab-pane>
@@ -182,9 +199,9 @@
 
 <script type="ts" lang="ts" setup>
   import { ref, onMounted, reactive } from 'vue';
-  import axios from 'axios';
   import { useRoute } from 'vue-router';
-
+  import axios from 'axios';
+  import { Message } from '@arco-design/web-vue';
   import type { jobResponseData, testResponseData } from '../../api/deployJob';
 
   const route = useRoute();
@@ -264,7 +281,7 @@
     },
     {
       title: '操作',
-      dataIndex: 'runOperation',
+      slotName: 'operation',
     },
   ];
   const paramColumns = [
@@ -457,6 +474,35 @@
   const operateNow = () => {
     alert('立即执行');
   };
+
+  const onclickRun = async (record: any, op: string) => {
+    if (op === 'result') {
+      alert('没做');
+      return;
+    }
+    const param = {
+      runName: record.value,
+      op,
+    };
+    try {
+      const res = await axios.post(
+        'http://82.156.5.94:5000/operate-run',
+        param
+      );
+      if (res.data.runStatus) {
+        Message.success('操作成功');
+        userRunData.value.foreach((item: any) => {
+          if (item.runName === record.value) {
+            item.status = res.data.runStatus;
+          }
+        });
+      } else {
+        Message.error('失败');
+      }
+    } catch (error) {
+      Message.error(`网络错误：${error}`);
+    }
+  };
 </script>
 
 <style scoped>
@@ -579,3 +625,6 @@
     background-color: white;
   }
 </style>
+
+function foreach(value: any, arg1: (item: any) => void) { throw new
+Error('Function not implemented.'); }
