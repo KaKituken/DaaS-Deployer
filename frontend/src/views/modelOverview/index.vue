@@ -62,12 +62,15 @@
                     >+ 添加服务</a
                   ></a-button
                 >
-                <a-button id="addTask" type="primary"><a href="/list/dataset" style="text-decoration: none"
-                    >+ 添加任务</a></a-button>
+                <a-button id="addTask" type="primary"
+                  ><a href="/list/dataset" style="text-decoration: none"
+                    >+ 添加任务</a
+                  ></a-button
+                >
               </div>
               <a-divider style="margin-top: 0" />
               <div class="table">
-                <a-table :columns="deployColumns" :data="deployData" >
+                <a-table :columns="deployColumns" :data="deployData">
                   <template #operation="{ record }">
                     <a-space>
                       <a-button @click="onclickColumn(record)">详情</a-button>
@@ -79,10 +82,12 @@
                   </template>
                 </a-table>
               </div>
-              <a-modal v-model:visible="visible" @ok="handleOk" @cancel="handleCancel">
-                <template #title>
-                  修改副本数量
-                </template>
+              <a-modal
+                v-model:visible="visible"
+                @ok="handleOk"
+                @cancel="handleCancel"
+              >
+                <template #title> 修改副本数量 </template>
                 请设置新的副本数量:
                 <a-input-number v-model="newReplicas" />
               </a-modal>
@@ -237,7 +242,7 @@
                       field="inputDataset"
                       label="输入数据集"
                       placeholder="Please select..."
-                      :rules="[{ required: true, message:'请选择输入数据集' }]"
+                      :rules="[{ required: true, message: '请选择输入数据集' }]"
                     >
                       <a-select v-model="predForm.inputDataset">
                         <a-option
@@ -251,9 +256,12 @@
                     <a-form-item
                       field="outputDataset"
                       label="输出数据集"
-                      :rules="[{ required: true, mesaage:'请命名输出数据集' }]"
+                      :rules="[{ required: true, message: '请命名输出数据集' }]"
                     >
-                      <a-input v-model="predForm.outputDataset" placeholder="请命名输出数据集"/>
+                      <a-input
+                        v-model="predForm.outputDataset"
+                        placeholder="请命名输出数据集"
+                      />
                     </a-form-item>
                     <a-form-item>
                       <a-button type="primary" html-type="submit"
@@ -311,7 +319,7 @@
     DatasetList,
     PredictScript,
     modelTestInfo,
-    deployInfo
+    deployInfo,
   } from '../../api/modelOverview';
   import type { status } from '../../api/addService';
 
@@ -408,11 +416,11 @@
   const deployParam = reactive({
     modelName: modelName.value,
     modelType: '',
-  })
+  });
 
-  const jobList = ref()
-  const serviceList = ref()
-  const deployData = ref()
+  const jobList = ref();
+  const serviceList = ref();
+  const deployData = ref();
 
   const onclickColumn = (record: any) => {
     router.push({
@@ -423,84 +431,101 @@
   const onclickDelete = async (record: any) => {
     const deleteParam = reactive({
       serviceName: record.name,
-      type : "delete",
-    })
-    const res = await axios.post<status>('http://82.156.5.94:5000/operate-service', deleteParam)
-    if (res.data.status === false){
-      Message.error('删除失败，请重试')
-    }
-    else{
+      type: 'delete',
+    });
+    const res = await axios.post<status>(
+      'http://82.156.5.94:5000/operate-service',
+      deleteParam
+    );
+    if (res.data.status === false) {
+      Message.error('删除失败，请重试');
+    } else {
       Message.success('删除成功');
-      const res4 = await axios.post<deployInfo>('http://82.156.5.94:5000/get-deploy-info',deployParam)
+      const res4 = await axios.post<deployInfo>(
+        'http://82.156.5.94:5000/get-deploy-info',
+        deployParam
+      );
       jobList.value = res4.data.jobList;
       serviceList.value = res4.data.serviceList;
       deployData.value = jobList.value.concat(serviceList.value);
     }
-  }
-  
-  const visible = ref(false)
+  };
+
+  const visible = ref(false);
   const newReplicas = ref();
   const serviceName = ref();
   const onclickModify = async (record: any) => {
     visible.value = true;
-    serviceName.value = record.name
-  }
+    serviceName.value = record.name;
+  };
 
   const handleOk = async () => {
     const modifyParam = reactive({
       serviceName: serviceName.value,
-      type : "modify",
-      replicas: newReplicas.value
-    })
-    const res = await axios.post<status>('http://82.156.5.94:5000/operate-service',modifyParam)
-    if(res.data.status === false){
-      Message.error('调整失败，请重试')
-    }
-    else{
+      type: 'modify',
+      replicas: newReplicas.value,
+    });
+    const res = await axios.post<status>(
+      'http://82.156.5.94:5000/operate-service',
+      modifyParam
+    );
+    if (res.data.status === false) {
+      Message.error('调整失败，请重试');
+    } else {
       Message.success('调整成功');
     }
     visible.value = false;
-  }
+  };
 
   const handleCancel = () => {
     visible.value = false;
-  }
+  };
 
   const onclickPause = async (record: any) => {
     const pauseParam = reactive({
       serviceName: record.name,
-      type : "pause",
-    })
-    const res = await axios.post<status>('http://82.156.5.94:5000/operate-service', pauseParam)
-    if (res.data.status === false){
-      Message.error('暂停失败，请重试')
-    }
-    else{
+      type: 'pause',
+    });
+    const res = await axios.post<status>(
+      'http://82.156.5.94:5000/operate-service',
+      pauseParam
+    );
+    if (res.data.status === false) {
+      Message.error('暂停失败，请重试');
+    } else {
       Message.success('暂停成功');
-      const res4 = await axios.post<deployInfo>('http://82.156.5.94:5000/get-deploy-info',deployParam)
+      const res4 = await axios.post<deployInfo>(
+        'http://82.156.5.94:5000/get-deploy-info',
+        deployParam
+      );
       jobList.value = res4.data.jobList;
       serviceList.value = res4.data.serviceList;
       deployData.value = jobList.value.concat(serviceList.value);
     }
-  }
+  };
 
   const onclickResume = async (record: any) => {
     const resumeParam = reactive({
       serviceName: record.name,
-      type : "resume",
-    })
-    const res = await axios.post<status>('http://82.156.5.94:5000/operate-service', resumeParam)
-    if (res.data.status === false){
-      Message.error('运行失败，请重试')
-    }
-    else{
+      type: 'resume',
+    });
+    const res = await axios.post<status>(
+      'http://82.156.5.94:5000/operate-service',
+      resumeParam
+    );
+    if (res.data.status === false) {
+      Message.error('运行失败，请重试');
+    } else {
       Message.success('运行成功');
-      const res4 = await axios.post<deployInfo>('http://82.156.5.94:5000/get-deploy-info',deployParam)
+      const res4 = await axios.post<deployInfo>(
+        'http://82.156.5.94:5000/get-deploy-info',
+        deployParam
+      );
       jobList.value = res4.data.jobList;
       serviceList.value = res4.data.serviceList;
       deployData.value = jobList.value.concat(serviceList.value);
     }
-  }
+  };
   const datasetList = ref();
   const predForm = reactive({
     modelName: modelName.value,
@@ -510,14 +535,16 @@
   });
   const predScript = ref();
   const batchPredSettingsUrl = ref(`/batchPredictSettings/${modelName.value}`);
-  
+
   const runBatchPredFunc = async () => {
-    const res = await axios.post<status>('http://82.156.5.94:5000/model-deploy-job', predForm);
-    if(res.data.status === true){
-      Message.success('任务执行成功')
-    }
-    else{
-      Message.error('任务执行失败')
+    const res = await axios.post<status>(
+      'http://82.156.5.94:5000/model-deploy-job',
+      predForm
+    );
+    if (res.data.status === true) {
+      Message.success('任务执行成功');
+    } else {
+      Message.error('任务执行失败');
     }
   };
 
@@ -567,7 +594,10 @@
     );
     datasetList.value = res3.data.datasetList;
 
-    const res4 = await axios.post<deployInfo>('http://82.156.5.94:5000/get-deploy-info',deployParam)
+    const res4 = await axios.post<deployInfo>(
+      'http://82.156.5.94:5000/get-deploy-info',
+      deployParam
+    );
     jobList.value = res4.data.jobList;
     serviceList.value = res4.data.serviceList;
     deployData.value = jobList.value.concat(serviceList.value);
@@ -621,7 +651,6 @@
     returnData = returnData.replace(/([a-zA-Z0-9'"])(\])/g, '$1\n$2'); // 在]后面加换行
     returnData = returnData.replace(/,/g, ',\n'); // 在,后面加换行
     testOutput.value = returnData;
-
   };
 
   const clear = () => {

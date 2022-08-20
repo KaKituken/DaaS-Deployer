@@ -19,10 +19,10 @@
         <div class="content">
           <a-space direction="vertical" size="large">
             <a-form
+              id="form"
               :model="form"
               layout="horizontal"
               @submit="handleSubmit"
-              id="form"
             >
               <a-form-item
                 field="filename"
@@ -41,18 +41,18 @@
               <a-form-item
                 field="jobName"
                 label="任务名称"
-                :rules="[{ required: true, message:'请输入任务名称' }]"
+                :rules="[{ required: true, message: '请输入任务名称' }]"
               >
-                <a-input v-model="form.jobName" placeholder= "请输入任务名称"/>
+                <a-input v-model="form.jobName" placeholder="请输入任务名称" />
               </a-form-item>
               <a-form-item
                 field="jobDescription"
                 label="任务描述"
-                :rules="[{ required: true, message:'请输入任务描述' }]"
+                :rules="[{ required: true, message: '请输入任务描述' }]"
               >
                 <a-textarea
+                  v-model="form.jobDescription"
                   placeholder="在这里进行任务描述..."
-                  v-model = form.jobDescription
                   allow-clear
                 ></a-textarea>
               </a-form-item>
@@ -106,7 +106,12 @@
   import axios from 'axios';
   import { useRoute, useRouter } from 'vue-router';
   import { Message } from '@arco-design/web-vue';
-  import type { modelDeploy, addService, settings, status} from '../../api/addService';
+  import type {
+    modelDeploy,
+    addService,
+    settings,
+    status,
+  } from '../../api/addService';
 
   const route = useRoute();
   const router = useRouter();
@@ -114,10 +119,10 @@
   const modelName = ref('modelName');
   modelName.value = route.params.modelname as string;
   const modelUrl = ref(`/detail/${modelName.value}`);
-  const extList = ref([".py"]);
+  const extList = ref(['.py']);
   const environmentList = ref();
   const form = reactive({
-    modelName:modelName.value,
+    modelName: modelName.value,
     fileName: '',
     ext: '',
     jobName: '',
@@ -134,11 +139,14 @@
   };
   onMounted(async () => {
     const res1 = await axios.get<modelDeploy>(
-      'http://82.156.5.94:5000/env-version',
+      'http://82.156.5.94:5000/env-version'
     );
     environmentList.value = res1.data.version;
 
-    const res2 = await axios.post<settings>('http://82.156.5.94:5000/save-settings',param)
+    const res2 = await axios.post<settings>(
+      'http://82.156.5.94:5000/save-settings',
+      param
+    );
     form.fileName = res2.data.fileName;
     form.ext = res2.data.ext;
     form.jobName = res2.data.jobName;
@@ -156,13 +164,12 @@
       form
     );
     if (res.data.status === true) {
-      Message.success('保存成功')
+      Message.success('保存成功');
       router.push({
         path: `/detail/${modelName.value}`,
       });
-    }
-    else{
-      Message.error('保存失败，请重试')
+    } else {
+      Message.error('保存失败，请重试');
     }
   };
 </script>

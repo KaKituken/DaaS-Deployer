@@ -6,7 +6,9 @@
           <a-breadcrumb style="margin-left: 15px">
             <a-breadcrumb-item>主页</a-breadcrumb-item>
             <a-breadcrumb-item><a href="\list">模型</a></a-breadcrumb-item>
-            <a-breadcrumb-item><a :href="modelUrl">{{ modelName }}</a></a-breadcrumb-item>
+            <a-breadcrumb-item
+              ><a :href="modelUrl">{{ modelName }}</a></a-breadcrumb-item
+            >
             <a-breadcrumb-item>{{ serviceName }}</a-breadcrumb-item>
             <template #separator>
               <icon-right />
@@ -27,7 +29,7 @@
               :data="basicData"
               size="small"
               :align="{ label: 'right', value: 'right' }"
-              column="6"
+              :column="6"
               layout="inline-vertical"
             />
           </a-space>
@@ -53,8 +55,8 @@
               </div>
               <a-divider style="margin-top: 0" />
               <div class="table">
-                <a-table :columns="copyColumns" :data="copyData" >
-                  <template #operation ="{ record }">
+                <a-table :columns="copyColumns" :data="copyData">
+                  <template #operation="{ record }">
                     <a-button @click="onclickColumn(record)">删除</a-button>
                   </template>
                 </a-table>
@@ -65,15 +67,25 @@
           <a-tab-pane id="overview" key="2" title="测试">
             <div id="var">
               <div id="inputVar">
-                <p class="tag" style="margin-left: 2%">请求
-                  <a @click='genCode' style="text-align:right; color: #165dff; text-decoration:none; font-weight:normal; margin-left: 5%;" href="#">生成代码</a>
+                <p class="tag" style="margin-left: 2%"
+                  >请求
+                  <a
+                    style="
+                      text-align: right;
+                      color: #165dff;
+                      text-decoration: none;
+                      font-weight: normal;
+                      margin-left: 5%;
+                    "
+                    href="#"
+                    @click="genCode"
+                    >生成代码</a
+                  >
                 </p>
                 <!-- 显示curl代码的悬浮窗 -->
-                <a-modal v-model:visible="visible" @ok="handleOk" hide-cancel>
-                  <template #title>
-                    生成的curl代码
-                  </template>
-                  <div style="white-space: pre-line;">{{showCode}}</div>
+                <a-modal v-model:visible="visible" hide-cancel @ok="handleOk">
+                  <template #title> 生成的curl代码 </template>
+                  <div style="white-space: pre-line">{{ showCode }}</div>
                 </a-modal>
                 <a-divider />
                 <p style="margin-left: 2%">* 函数名</p>
@@ -108,8 +120,15 @@
                   "
                 />
                 <div style="position: relative; left: 65%">
-                  <a-button type="outline" style="margin: 10px" @click="clear">清除</a-button>
-                  <a-button type="primary" style="margin: 10px" @click="dataSubmit">提交</a-button>
+                  <a-button type="outline" style="margin: 10px" @click="clear"
+                    >清除</a-button
+                  >
+                  <a-button
+                    type="primary"
+                    style="margin: 10px"
+                    @click="dataSubmit"
+                    >提交</a-button
+                  >
                 </div>
               </div>
               <div id="targetVar">
@@ -143,8 +162,8 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref,onMounted,reactive} from 'vue'
-  import axios from 'axios'
+  import { ref, onMounted, reactive } from 'vue';
+  import axios from 'axios';
   import { useRoute, useRouter } from 'vue-router';
   import { Sleep } from '../../api/deployService';
   import type {
@@ -157,40 +176,45 @@
   const router = useRouter();
   const serviceName = ref('serviceName');
   const modelName = ref('modelName');
-  serviceName.value = route.params.serviceName as string;  // 工作名称
-  modelName.value = route.params.modelName as string;  // 模型名称
+  serviceName.value = route.params.serviceName as string; // 工作名称
+  modelName.value = route.params.modelName as string; // 模型名称
 
   const modelUrl = ref(`/detail/${modelName.value}`);
 
-  const postmsg = ref('')
-  const basicData = reactive([{
-          label: '类别',
-          value: '网络服务',
-      }, {
-          label: '类型',
-          value: '默认实时预测',
-      }, {
-          label: '对象',
-          value: modelName.value
-      }, {
-          label: '创建时间',
-          value: '2019-7-9',
-      }, {
-          label: 'CPU核数',
-          value: '-'
-      }, {
-          label: '内存(GB)',
-          value: '-'
-      }
-  ],
-  );
+  const postmsg = ref('');
+  const basicData = reactive([
+    {
+      label: '类别',
+      value: '网络服务',
+    },
+    {
+      label: '类型',
+      value: '默认实时预测',
+    },
+    {
+      label: '对象',
+      value: modelName.value,
+    },
+    {
+      label: '创建时间',
+      value: '2019-7-9',
+    },
+    {
+      label: 'CPU核数',
+      value: '-',
+    },
+    {
+      label: '内存(GB)',
+      value: '-',
+    },
+  ]);
 
   // 测试页面的变量
-  const testFuncName = ref()
-  const testRequire = ref()
-  const testResponse = ref()
-  const visible = ref(false)
-  const showCode = ref()
+  const testFuncName = ref();
+  const testRequire = ref();
+  const testResponse = ref();
+  const visible = ref(false);
+  const showCode = ref();
 
   // 概述界面表格相关：
   const indexColumns = [
@@ -224,7 +248,7 @@
       dataIndex: 'maxResponseTime',
       sortable: {
         sortDirections: ['ascend', 'descend'],
-      }
+      },
     },
     {
       title: '首次访问时间',
@@ -239,7 +263,7 @@
       sortable: {
         sortDirections: ['ascend', 'descend'],
       },
-    }
+    },
   ];
   const indexData = reactive([
     {
@@ -265,7 +289,7 @@
     {
       title: '操作',
       slotName: 'operation',
-    }
+    },
   ];
 
   const copyData = ref();
@@ -278,25 +302,30 @@
   const onclickColumn = async (record: any) => {
     const params = reactive({
       podName: record.name,
-      operationType: "delete", 
+      operationType: 'delete',
     });
-    const res = await axios.post<status>('http://82.156.5.94:5000/operate-pod', params)
-    console.log('======delete pod======')
-    console.log(res.data)
-    if (res.data.status === false){
-      alert('delete pod failed, please try again...')
-    }
-    else{
-      const isPending = ref(true)
-      if(isPending.value){
+    const res = await axios.post<status>(
+      'http://82.156.5.94:5000/operate-pod',
+      params
+    );
+    console.log('======delete pod======');
+    console.log(res.data);
+    if (res.data.status === false) {
+      alert('delete pod failed, please try again...');
+    } else {
+      const isPending = ref(true);
+      if (isPending.value) {
         const param = {
-          'serviceName': serviceName.value
-        }
-        const res1 = await axios.post<copyResponseData>('http://82.156.5.94:5000/service-info', param);
+          serviceName: serviceName.value,
+        };
+        const res1 = await axios.post<copyResponseData>(
+          'http://82.156.5.94:5000/service-info',
+          param
+        );
         copyData.value = res1.data.podList;
         isPending.value = false;
-        for( let i = 0; i < copyData.value.length ; i+=1){
-          if(copyData.value[i].status==="Pending"){
+        for (let i = 0; i < copyData.value.length; i += 1) {
+          if (copyData.value[i].status === 'Pending') {
             isPending.value = true;
           }
         }
@@ -305,69 +334,89 @@
     }
   };
 
-  onMounted(async ()=>{
-      axios.get('http://82.156.5.94:5000/model-deploy-service')
-      .then(response=>{
+  onMounted(async () => {
+    axios
+      .get('http://82.156.5.94:5000/model-deploy-service')
+      .then((response) => {
         // 把链接拼接出来
         // postmsg.value = response.data.restfulUrl.concat(serviceName.value);
-        postmsg.value = response.data.restfulUrl.concat(serviceName.value, '/predict');
-      })
+        postmsg.value = response.data.restfulUrl.concat(
+          serviceName.value,
+          '/predict'
+        );
+      });
 
-      // 获取副本
-      const param = {
-        'serviceName': serviceName.value
-      }
-      const res1 = await axios.post<copyResponseData>('http://82.156.5.94:5000/service-info', param);
-      basicData[3].value = res1.data.createTime;
-      basicData[4].value = res1.data.cpuReserve;
-      basicData[5].value = res1.data.memoryReserve;
-      indexData[0].funcName = res1.data.function;
-      indexData[0].accessTimes = res1.data.acessTimes;
-      indexData[0].avgResponseTime = res1.data.averageResponseTime.toFixed(2);
-      indexData[0].minResponseTime = res1.data.minResponseTime.toFixed(2);
-      indexData[0].maxResponseTime = res1.data.maxResponseTime.toFixed(2);
-      indexData[0].firstAccessTime = res1.data.firstAccessTime;
-      indexData[0].latestAccessTime = res1.data.lastAccessTime;
-      copyData.value = res1.data.podList;
+    // 获取副本
+    const param = {
+      serviceName: serviceName.value,
+    };
+    const res1 = await axios.post<copyResponseData>(
+      'http://82.156.5.94:5000/service-info',
+      param
+    );
+    basicData[3].value = res1.data.createTime;
+    basicData[4].value = res1.data.cpuReserve;
+    basicData[5].value = res1.data.memoryReserve;
+    indexData[0].funcName = res1.data.function;
+    indexData[0].accessTimes = res1.data.acessTimes;
+    indexData[0].avgResponseTime = res1.data.averageResponseTime.toFixed(2);
+    indexData[0].minResponseTime = res1.data.minResponseTime.toFixed(2);
+    indexData[0].maxResponseTime = res1.data.maxResponseTime.toFixed(2);
+    indexData[0].firstAccessTime = res1.data.firstAccessTime;
+    indexData[0].latestAccessTime = res1.data.lastAccessTime;
+    copyData.value = res1.data.podList;
   });
 
   const dataSubmit = async () => {
     const userRequestData = JSON.parse(testRequire.value);
-    console.log(userRequestData)
-    const res1 = await axios.post<requireDataResponse>(postmsg.value, userRequestData);
+    console.log(userRequestData);
+    const res1 = await axios.post<requireDataResponse>(
+      postmsg.value,
+      userRequestData
+    );
     let returnData = JSON.stringify(res1.data);
-    returnData = returnData.replace(/{([^{}]*)}/g, "{\n$1\n    }");  // 在{}对前面加缩进，后面加换行
-    returnData = returnData.replace(/(\[)([a-zA-Z0-9'"])/g, "$1\n$2");  // 在[后面加换行
-    returnData = returnData.replace(/([a-zA-Z0-9'"])(\])/g, "$1\n$2");  // 在]后面加换行
-    returnData = returnData.replace(/,/g, ",\n");  // 在,后面加换行
+    returnData = returnData.replace(/{([^{}]*)}/g, '{\n$1\n    }'); // 在{}对前面加缩进，后面加换行
+    returnData = returnData.replace(/(\[)([a-zA-Z0-9'"])/g, '$1\n$2'); // 在[后面加换行
+    returnData = returnData.replace(/([a-zA-Z0-9'"])(\])/g, '$1\n$2'); // 在]后面加换行
+    returnData = returnData.replace(/,/g, ',\n'); // 在,后面加换行
     testResponse.value = returnData;
     const param = {
-      'serviceName': serviceName.value
-    }
-    const res2 = await axios.post<copyResponseData>('http://82.156.5.94:5000/service-info', param);
+      serviceName: serviceName.value,
+    };
+    const res2 = await axios.post<copyResponseData>(
+      'http://82.156.5.94:5000/service-info',
+      param
+    );
     basicData[3].value = res2.data.createTime;
     basicData[4].value = res2.data.cpuReserve;
-    basicData[5].value = res2.data.memoryReserve;   
+    basicData[5].value = res2.data.memoryReserve;
     indexData[0].funcName = res2.data.function;
     indexData[0].accessTimes = res2.data.acessTimes;
     indexData[0].avgResponseTime = res2.data.averageResponseTime.toFixed(2);
     indexData[0].minResponseTime = res2.data.minResponseTime.toFixed(2);
     indexData[0].maxResponseTime = res2.data.maxResponseTime.toFixed(2);
     indexData[0].firstAccessTime = res2.data.firstAccessTime;
-    indexData[0].latestAccessTime = res2.data.lastAccessTime; 
-  }
+    indexData[0].latestAccessTime = res2.data.lastAccessTime;
+  };
 
   const genCode = () => {
     const urlCode = postmsg.value;
     // showCode.value = 'curl --location --request POST'.concat('\\\n' ,"'",urlCode , "'",'\\\n');
-    showCode.value = 'curl --location --request POST '.concat("'",urlCode , "'");
-    showCode.value = showCode.value.concat(" --header 'Content-Type: application/json' --data-raw '",testRequire.value, "'");
+    showCode.value = 'curl --location --request POST '.concat(
+      "'",
+      urlCode,
+      "'"
+    );
+    showCode.value = showCode.value.concat(
+      " --header 'Content-Type: application/json' --data-raw '",
+      testRequire.value,
+      "'"
+    );
     visible.value = true;
-  }
+  };
   const handleOk = () => {
     visible.value = false;
-  }
-
+  };
 </script>
 
 <style scoped>

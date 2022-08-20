@@ -1,13 +1,15 @@
 <template>
   <div class="layout-demo">
     <a-layout style="min-height: 950px">
-      <a-layout-header style="height: 240px; overflow:visible;">
+      <a-layout-header style="height: 240px; overflow: visible">
         <!-- 上面一行的样式稍作修改以容纳过多的内容 -->
         <div>
           <a-breadcrumb style="margin-left: 15px">
             <a-breadcrumb-item>主页</a-breadcrumb-item>
             <a-breadcrumb-item><a href="\list">模型</a></a-breadcrumb-item>
-            <a-breadcrumb-item><a :href="modelUrl">{{ modelName }}</a></a-breadcrumb-item>
+            <a-breadcrumb-item
+              ><a :href="modelUrl">{{ modelName }}</a></a-breadcrumb-item
+            >
             <a-breadcrumb-item>{{ jobName }}</a-breadcrumb-item>
             <template #separator>
               <icon-right />
@@ -29,7 +31,7 @@
               :data="basicData"
               size="small"
               :align="{ label: 'left', value: 'left' }"
-              column="6"
+              :column="6"
               layout="inline-vertical"
             />
           </a-space>
@@ -38,7 +40,7 @@
       <a-layout-content>
         <a-tabs default-active-key="1" style="width: 100%; height: 100%">
           <a-tab-pane key="1" title="概述">
-             <div id="var">
+            <div id="var">
               <div id="inputVartest">
                 <p class="tag">默认环境变量</p>
                 <a-divider />
@@ -55,31 +57,47 @@
               </div>
             </div>
             <div id="result">
-              <p id="resultTag" class="tag">运行
-                 <a-button type="outline" style="margin: 10px; margin-left:80%;" @click="operateNow">+ 立即执行</a-button>
+              <p id="resultTag" class="tag"
+                >运行
+                <a-button
+                  type="outline"
+                  style="margin: 10px; margin-left: 80%"
+                  @click="operateNow"
+                  >+ 立即执行</a-button
+                >
               </p>
               <a-divider />
               <div class="table">
-                  <a-table :columns="userRunColumns" :data="userRunData" />
+                <a-table :columns="userRunColumns" :data="userRunData" />
               </div>
             </div>
           </a-tab-pane>
           <a-tab-pane id="overview" key="2" title="测试">
             <div id="var">
               <div id="inputVar">
-                <p class="tag" style="margin: 2%">请求
-                <a @click='genCode' style="text-align:right; color: #165dff; text-decoration:none; font-weight:normal; margin-left: 5%;" href="#">生成代码</a>
+                <p class="tag" style="margin: 2%"
+                  >请求
+                  <a
+                    style="
+                      text-align: right;
+                      color: #165dff;
+                      text-decoration: none;
+                      font-weight: normal;
+                      margin-left: 5%;
+                    "
+                    href="#"
+                    @click="genCode"
+                    >生成代码</a
+                  >
                 </p>
                 <!-- 显示curl代码的悬浮窗 -->
-                <a-modal v-model:visible="visible" @ok="handleOk" hide-cancel>
-                  <template #title>
-                    生成的curl代码
-                  </template>
-                  <div style="white-space: pre-line;">{{showCode}}</div>
+                <a-modal v-model:visible="visible" hide-cancel @ok="handleOk">
+                  <template #title> 生成的curl代码 </template>
+                  <div style="white-space: pre-line">{{ showCode }}</div>
                 </a-modal>
                 <a-divider />
                 <p style="margin-left: 2%">runName</p>
-                 <a-input
+                <a-input
                   v-model="runName"
                   :style="{
                     'width': '94%',
@@ -120,9 +138,16 @@
                   placeholder="请直接输入args的值"
                   allow-clear
                 />
-                <div style="position: relative; left: 65%; top: 10%;">
-                  <a-button type="outline" style="margin: 10px" @click="clear">清除</a-button>
-                  <a-button type="primary" style="margin: 10px" @click="dataSubmit">提交</a-button>
+                <div style="position: relative; left: 65%; top: 10%">
+                  <a-button type="outline" style="margin: 10px" @click="clear"
+                    >清除</a-button
+                  >
+                  <a-button
+                    type="primary"
+                    style="margin: 10px"
+                    @click="dataSubmit"
+                    >提交</a-button
+                  >
                 </div>
               </div>
               <div id="targetVar">
@@ -156,136 +181,135 @@
 </template>
 
 <script type="ts" lang="ts" setup>
-  import { ref,onMounted,reactive} from 'vue'
-  import axios from 'axios'
+  import { ref, onMounted, reactive } from 'vue';
+  import axios from 'axios';
   import { useRoute } from 'vue-router';
 
-  import type {
-    jobResponseData,
-    testResponseData
-  } from '../../api/deployJob';
+  import type { jobResponseData, testResponseData } from '../../api/deployJob';
 
   const route = useRoute();
   const jobName = ref('jobName');
   const modelName = ref('modelName');
-  jobName.value = route.params.jobName as string;  // 工作名称
-  modelName.value = route.params.modelName as string;  // 模型名称
+  jobName.value = route.params.jobName as string; // 工作名称
+  modelName.value = route.params.modelName as string; // 模型名称
   const postmsg = ref('');
-  
+
   const modelUrl = ref(`/detail/${modelName.value}`);
-  
-  const basicData = reactive([{
-          label: '类别',
-          value: '网络服务',
-      }, {
-          label: '类型',
-          value: '默认实时预测',
-      }, {
-          label: '对象',
-          value: 'xgb-iris'
-      }, {
-          label: '创建时间',
-          value: '2019-7-9',
-      }, {
-          label: '运行环境',
-          value: 'Python3.7 - Script as a Service'
-      }, {
-          label: '调度',
-          value: 'On demand'
-      },
-      {
-          label: 'CPU核数',
-          value: '-'
-      }, {
-          label: '内存(GB)',
-          value: '-'
-      }
-  ],
 
-    );
+  const basicData = reactive([
+    {
+      label: '类别',
+      value: '网络服务',
+    },
+    {
+      label: '类型',
+      value: '默认实时预测',
+    },
+    {
+      label: '对象',
+      value: 'xgb-iris',
+    },
+    {
+      label: '创建时间',
+      value: '2019-7-9',
+    },
+    {
+      label: '运行环境',
+      value: 'Python3.7 - Script as a Service',
+    },
+    {
+      label: '调度',
+      value: 'On demand',
+    },
+    {
+      label: 'CPU核数',
+      value: '-',
+    },
+    {
+      label: '内存(GB)',
+      value: '-',
+    },
+  ]);
 
-  
-  const envVariableColumns=[
-      {
-          title:'变量',
-          dataIndex:'userVarialbe',
-      },
-      {
-          title:"值",
-          dataIndex:'userNumber',
-      }
+  const envVariableColumns = [
+    {
+      title: '变量',
+      dataIndex: 'userVarialbe',
+    },
+    {
+      title: '值',
+      dataIndex: 'userNumber',
+    },
   ];
-  const userRunColumns=[
+  const userRunColumns = [
     {
       title: 'ID',
-      dataIndex: 'runId'
+      dataIndex: 'runId',
     },
     {
       title: '名称',
-      dataIndex: 'runName'
+      dataIndex: 'name',
     },
     {
       title: '开始时间',
-      dataIndex: 'runBeginTime'
+      dataIndex: 'createTime',
     },
     {
       title: '持续时间(秒)',
-      dataIndex: 'runSpanTime'
+      dataIndex: 'duration',
     },
     {
       title: '状态',
-      dataIndex: 'runStatus'
+      dataIndex: 'status',
     },
     {
       title: '操作',
-      dataIndex: 'runOperation'
-    }
+      dataIndex: 'runOperation',
+    },
   ];
-   const paramColumns=[
-      {
-          title:'顺序',
-          dataIndex:'userSequence',
-      },
-      {
-          title:"参数",
-          dataIndex:'userParam',
-      }
+  const paramColumns = [
+    {
+      title: '顺序',
+      dataIndex: 'userSequence',
+    },
+    {
+      title: '参数',
+      dataIndex: 'userParam',
+    },
   ];
-  const inputData = ref()  // 概述页面左边表格数据
-  const targetData = ref()  // 概述页面右边表格数据
-  const userRunData = ref()  // 概述页面最下面表格数据
+  const inputData = ref(); // 概述页面左边表格数据
+  const targetData = ref(); // 概述页面右边表格数据
+  const userRunData = ref(); // 概述页面最下面表格数据
 
- 
   const deployData = reactive([]);
 
   // 测试页面获取的数据
   const runName = ref();
   const envVariable = ref();
   const commandParam = ref();
-  const responseData = ref();  // 绑定响应框
-  const showCode = ref();  // 显示的curl代码
-  const visible = ref(false);  // 是否显示悬浮窗
+  const responseData = ref(); // 绑定响应框
+  const showCode = ref(); // 显示的curl代码
+  const visible = ref(false); // 是否显示悬浮窗
 
-  onMounted(async ()=>{
-      axios.get('/api/modelOverview/info')
-      .then(response=>{
+  onMounted(async () => {
+    axios.get('/api/modelOverview/info').then((response) => {});
 
-      })
+    axios.get('/api/modelOverview/var').then((response) => {
+      inputData.value = response.data.inputData;
+      targetData.value = response.data.targetData;
+    });
 
-      axios.get('/api/modelOverview/var')
-      .then(response=>{
-          inputData.value = response.data.inputData;
-          targetData.value = response.data.targetData;
-      });
-
-      // 申请数据
-      const param = {
-        'jobName': jobName.value
-      };
-      const res1 = await axios.post<jobResponseData>('http://82.156.5.94:5000/job-info', param);
-      console.log(res1.data);
-      postmsg.value = res1.data.url.concat(jobName.value);  // 获取url
-      
+    // 申请数据
+    const param = {
+      jobName: jobName.value,
+    };
+    const res1 = await axios.post<jobResponseData>(
+      'http://82.156.5.94:5000/job-info',
+      param
+    );
+    console.log(res1.data);
+    userRunData.value = res1.data.runList;
+    postmsg.value = res1.data.url.concat(jobName.value); // 获取url
   });
 
   // 概述界面表格相关：
@@ -327,7 +351,7 @@
       dataIndex: 'maxResponseTime',
       sortable: {
         sortDirections: ['ascend', 'descend'],
-      }
+      },
     },
     {
       title: '首次访问时间',
@@ -342,7 +366,7 @@
       sortable: {
         sortDirections: ['ascend', 'descend'],
       },
-    }
+    },
   ];
   const indexData = reactive([
     {
@@ -368,15 +392,15 @@
     },
     {
       title: '操作',
-      dataIndex: 'operation'
-    }
+      dataIndex: 'operation',
+    },
   ];
 
   const copyData = reactive([
     {
       copyName: 'd-pmml-xgb-iris-svc-5854487d5b-zbsjn',
       copyStatus: '运行中',
-      operation: '默认'
+      operation: '默认',
     },
   ]);
 
@@ -388,48 +412,51 @@
 
   const dataSubmit = async () => {
     const jobPostData = {
-      "runName": runName.value,
-      "variables": envVariable.value,
-      "args": commandParam.value
+      runName: runName.value,
+      variables: envVariable.value,
+      args: commandParam.value,
     };
     const res1 = await axios.post<testResponseData>(postmsg.value, jobPostData);
     // console.log(res1.data);
-   
+
     let returnData = JSON.stringify(res1.data);
-    returnData = returnData.replace(/{([^{}]*)}/g, "{\n$1\n    }");  // 在{}对前面加缩进，后面加换行
-    returnData = returnData.replace(/(\[)([a-zA-Z0-9'"])/g, "$1\n$2");  // 在[后面加换行
-    returnData = returnData.replace(/([a-zA-Z0-9'"])(\])/g, "$1\n$2");  // 在]后面加换行
-    returnData = returnData.replace(/,/g, ",\n");  // 在,后面加换行
+    returnData = returnData.replace(/{([^{}]*)}/g, '{\n$1\n    }'); // 在{}对前面加缩进，后面加换行
+    returnData = returnData.replace(/(\[)([a-zA-Z0-9'"])/g, '$1\n$2'); // 在[后面加换行
+    returnData = returnData.replace(/([a-zA-Z0-9'"])(\])/g, '$1\n$2'); // 在]后面加换行
+    returnData = returnData.replace(/,/g, ',\n'); // 在,后面加换行
     responseData.value = returnData;
-  }
+  };
 
   const genCode = () => {
     // 构造代码里面的对象
     const codeContent = {
-      "runName": runName.value,
-      "variables": envVariable.value,
-      "args": commandParam.value
+      runName: runName.value,
+      variables: envVariable.value,
+      args: commandParam.value,
     };
 
     // 拼接代码
     const urlCode = postmsg.value;
-    showCode.value = 'curl --location --request POST '.concat("'", urlCode, "'");
-    showCode.value = showCode.value.concat(" --header 'Content-Type:application/json' --data-raw '");
+    showCode.value = 'curl --location --request POST '.concat(
+      "'",
+      urlCode,
+      "'"
+    );
+    showCode.value = showCode.value.concat(
+      " --header 'Content-Type:application/json' --data-raw '"
+    );
     showCode.value = showCode.value.concat(JSON.stringify(codeContent), "'");
-    
+
     // 显示浮窗
     visible.value = true;
-  }
+  };
   const handleOk = () => {
     visible.value = false;
-  }
+  };
 
   const operateNow = () => {
-    alert('立即执行')
-  }
-
-
-
+    alert('立即执行');
+  };
 </script>
 
 <style scoped>
@@ -480,7 +507,6 @@
     display: flex;
   }
 
-
   #inputVar,
   #targetVar {
     width: 47%;
@@ -495,7 +521,7 @@
     height: 400px;
     margin-left: 2%;
     background-color: #fff;
-    overflow:auto;
+    overflow: auto;
   }
 
   .tag {
@@ -552,5 +578,4 @@
   #test {
     background-color: white;
   }
-
 </style>

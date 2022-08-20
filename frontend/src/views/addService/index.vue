@@ -19,17 +19,21 @@
         <div class="content">
           <a-space direction="vertical" size="large">
             <a-form
+              id="form"
               :model="form"
               layout="horizontal"
               @submit="handleSubmit"
-              id="form"
             >
               <a-form-item
                 field="name"
                 label="名称"
                 :rules="[{ required: true, message: '请输入服务名称' }]"
               >
-                <a-input v-model="form.serviceName" @input = "nameInput" placeholder="请输入名称" />
+                <a-input
+                  v-model="form.serviceName"
+                  placeholder="请输入名称"
+                  @input="nameInput"
+                />
               </a-form-item>
               <a-form-item field="serverURL" label="URL">
                 <a-input v-model="serverURL" disabled />
@@ -51,17 +55,17 @@
               <a-form-item field="cpu" label="预留cpu">
                 <a-slider
                   v-model="form.cpuReserve"
-                  default-value="0"
-                  min="0"
-                  max="8"
+                  :default-value="0"
+                  :min="0"
+                  :max="8"
                   :style="{ width: '200px' }"
                 />
                 <a-input-number
                   v-model="form.cpuReserve"
-                  default-value="0"
-                  min="0"
-                  max="8"
-                  precision="0"
+                  :default-value="0"
+                  :min="0"
+                  :max="8"
+                  :precision="0"
                   placeholder="0~8"
                   :style="{ width: '90px', margin: '0 0 0 50px' }"
                 />
@@ -69,19 +73,19 @@
               <a-form-item field="memory" label="预留内存(M)">
                 <a-slider
                   v-model="form.memoryReserve"
-                  default-value="0"
-                  min="0"
-                  max="4096"
-                  step="1"
+                  :default-value="0"
+                  :min="0"
+                  :max="4096"
+                  :step="1"
                   :style="{ width: '200px' }"
                 />
                 <a-input-number
                   v-model="form.memoryReserve"
-                  default-value="0"
-                  min="0"
-                  max="4093"
-                  step="1"
-                  precision="1"
+                  :default-value="0"
+                  :min="0"
+                  :max="4093"
+                  :step="1"
+                  :precision="1"
                   placeholder="0~4096"
                   :style="{ width: '90px', margin: '0 0 0 50px' }"
                 />
@@ -121,8 +125,8 @@
   modelName.value = route.params.modelname as string;
   const modelUrl = ref(`/detail/${modelName.value}`);
   const form = reactive({
-    modelName : modelName.value,
-    modelType : '',
+    modelName: modelName.value,
+    modelType: '',
     serviceName: '',
     serverVersion: 'test',
     cpuReserve: 0,
@@ -131,37 +135,42 @@
   });
   const modelVersion = ref();
   onMounted(async () => {
-    const res1 = await axios.get<modelDeploy>('http://82.156.5.94:5000/env-version');
+    const res1 = await axios.get<modelDeploy>(
+      'http://82.156.5.94:5000/env-version'
+    );
     modelVersion.value = res1.data.version;
 
-    const res2 = await axios.get<addService>('http://82.156.5.94:5000/model-deploy-service')
+    const res2 = await axios.get<addService>(
+      'http://82.156.5.94:5000/model-deploy-service'
+    );
     serverURLpred.value = res2.data.restfulUrl;
     serverURL.value = res2.data.restfulUrl;
 
     const param = {
-      modelName: modelName.value
-    }
-    const res3 = await axios.post<modelDescript>('http://82.156.5.94:5000/model-descript',param)
+      modelName: modelName.value,
+    };
+    const res3 = await axios.post<modelDescript>(
+      'http://82.156.5.94:5000/model-descript',
+      param
+    );
     form.modelType = res3.data.modelType;
   });
 
   const nameInput = () => {
-    serverURL.value = serverURLpred.value.concat(form.serviceName)
-  }
+    serverURL.value = serverURLpred.value.concat(form.serviceName);
+  };
   const handleSubmit = async () => {
-
     const res = await axios.post<status>(
       'http://82.156.5.94:5000/model-deploy-service',
       form
     );
     if (res.data.status === true) {
-      Message.success('添加服务成功')
+      Message.success('添加服务成功');
       router.push({
         path: `/deployService/${modelName.value}/${form.serviceName}`,
       });
-    }
-    else{
-      Message.error('添加服务失败，请重试')
+    } else {
+      Message.error('添加服务失败，请重试');
     }
   };
 </script>
