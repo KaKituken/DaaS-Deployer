@@ -18,7 +18,7 @@ const MODELOVERVIEW: AppRouteRecordRaw = {
       component: () => import('@/views/modelOverview/index.vue'),
       meta: {
         locale: 'menu.modelOverview.detail',
-        requiresAuth: true,
+        requiresAuth: false,
         roles: ['*'],
       },
     },

@@ -18,7 +18,7 @@ const MODELOVERVIEW: AppRouteRecordRaw = {
       component: () => import('@/views/batchPredictSettings/index.vue'),
       meta: {
         locale: 'menu.modelPredict.batchPredictSettings',
-        requiresAuth: true,
+        requiresAuth: false,
         roles: ['*'],
       },
     },

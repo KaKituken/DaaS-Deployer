@@ -1,10 +1,8 @@
 import localeMessageBox from '@/components/message-box/locale/zh-CN';
-import localeLogin from '@/views/login/locale/zh-CN';
 
 import localeSettings from './zh-CN/settings';
 
 export default {
-  'menu.dashboard': '仪表盘',
   'menu.modelOverview': '模型管理',
   'menu.modelOverview.detail': '模型概览',
   'menu.import.model': '导入模型',
@@ -19,5 +17,4 @@ export default {
   'navbar.action.locale': '切换为中文',
   ...localeSettings,
   ...localeMessageBox,
-  ...localeLogin,
 };
