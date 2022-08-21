@@ -14,14 +14,14 @@
       @submit="handleSubmit"
     >
       <a-form-item
-        field="name"
+        field="fileName"
         label="名称"
         :rules="[{ required: true, message: '请输入数据集名称' }]"
       >
         <a-input v-model="form.fileName" placeholder="请输入数据集名称" />
       </a-form-item>
       <a-form-item
-        field="type"
+        field="dataSource"
         label="类型"
         :rules="[{ required: true, message: '请选择数据集类型' }]"
       >

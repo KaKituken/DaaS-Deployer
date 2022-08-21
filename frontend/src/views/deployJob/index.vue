@@ -486,6 +486,7 @@
     }
     */
     const param = {
+      jobName: jobName.value,
       runName: record.value,
       op,
     };

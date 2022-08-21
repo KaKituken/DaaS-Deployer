@@ -25,7 +25,7 @@
               @submit="handleSubmit"
             >
               <a-form-item
-                field="name"
+                field="serviceName"
                 label="名称"
                 :rules="[{ required: true, message: '请输入服务名称' }]"
               >
@@ -39,7 +39,7 @@
                 <a-input v-model="serverURL" disabled />
               </a-form-item>
               <a-form-item
-                field="modelVersion"
+                field="serverVersion"
                 label="模型版本"
                 :rules="[{ required: true, message: '请选择模型版本' }]"
               >
@@ -91,7 +91,7 @@
                 />
               </a-form-item>
               <a-form-item
-                field="copyNum"
+                field="replicas"
                 label="副本"
                 :rules="[{ required: true, message: '请输入副本数量' }]"
               >
@@ -121,7 +121,7 @@
   const route = useRoute();
   const router = useRouter();
   const serverURL = ref();
-  const serverURLpred = ref();
+  const serverURLpred = ref('');
   const modelName = ref('modelName');
   modelName.value = route.params.modelname as string;
   const modelUrl = ref(`/detail/${modelName.value}`);

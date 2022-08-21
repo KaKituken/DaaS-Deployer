@@ -25,7 +25,7 @@
               @submit="handleSubmit"
             >
               <a-form-item
-                field="filename"
+                field="fileName"
                 label="文件名"
                 :rules="[{ required: true, message: '请输入文件名' }]"
               >
@@ -56,7 +56,7 @@
                   allow-clear
                 ></a-textarea>
               </a-form-item>
-              <a-form-item field="environment" label="任务运行环境">
+              <a-form-item field="serverVersion" label="任务运行环境">
                 <a-select v-model="form.serverVersion">
                   <a-option
                     v-for="(item, index) in environmentList"
