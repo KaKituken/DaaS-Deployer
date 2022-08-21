@@ -29,7 +29,7 @@
         </div>
       </a-layout-header>
       <a-layout-content>
-        <a-tabs default-active-key="1" style="width: 100%; height: 100%">
+        <a-tabs :default-active-key="activeKey" style="width: 100%; height: 100%">
           <a-tab-pane id="overview" key="1" title="概述">
             <div id="var">
               <div id="inputVar">
@@ -75,9 +75,9 @@
                     <a-space>
                       <a-button @click="onclickColumn(record)">详情</a-button>
                       <a-button @click="onclickDelete(record)">删除</a-button>
-                      <a-button @click="onclickModify(record)">调整</a-button>
-                      <a-button @click="onclickPause(record)">暂停</a-button>
-                      <a-button @click="onclickResume(record)">启动</a-button>
+                      <a-button v-if="record.type == 'Service'" @click="onclickModify(record)">调整</a-button>
+                      <a-button v-if="record.type == 'Service'" @click="onclickPause(record)">暂停</a-button>
+                      <a-button v-if="record.type == 'Service'" @click="onclickResume(record)">启动</a-button>
                     </a-space>
                   </template>
                 </a-table>
@@ -325,6 +325,17 @@
 
   const route = useRoute();
   const router = useRouter();
+
+  const activeKey = ref('1')
+  if(route.params.type === 'deploy'){
+    activeKey.value = '2';
+  }
+  else if (route.params.type === 'test'){
+    activeKey.value = '3';
+  }
+  else if (route.params.type === 'batchPredict') {
+    activeKey.value = '4';
+  }
   const modelName = ref('modelName');
   modelName.value = route.params.modelname as string;
   const addServiceUrl = ref(`/addService/${modelName.value}`);
@@ -431,14 +442,24 @@
   const onclickDelete = async (record: any) => {
     const deleteParam = reactive({
       serviceName: record.name,
+      jobName:record.name,
       type: 'delete',
     });
+    const deleteUrl = ref('')
+    if (record.type === 'Job'){
+      deleteUrl.value = 'http://82.156.5.94:5000/operate-job'
+    }
+    else{
+      deleteUrl.value = 'http://82.156.5.94:5000/operate-service'
+    }
+    // console.log('=====deleteUrl=====')
+    // console.log(deleteUrl.value)
     const res = await axios.post<status>(
-      'http://82.156.5.94:5000/operate-service',
+      deleteUrl.value,
       deleteParam
     );
     if (res.data.status === false) {
-      Message.error('删除失败，请重试');
+      Message.error(`删除失败，请重试\nerror type:`);
     } else {
       Message.success('删除成功');
       const res4 = await axios.post<deployInfo>(
@@ -543,6 +564,13 @@
     );
     if (res.data.status === true) {
       Message.success('任务执行成功');
+      const res4 = await axios.post<deployInfo>(
+        'http://82.156.5.94:5000/get-deploy-info',
+        deployParam
+      );
+      jobList.value = res4.data.jobList;
+      serviceList.value = res4.data.serviceList;
+      deployData.value = jobList.value.concat(serviceList.value);      
     } else {
       Message.error('任务执行失败');
     }

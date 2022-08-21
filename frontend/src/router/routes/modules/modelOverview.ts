@@ -22,6 +22,16 @@ const MODELOVERVIEW: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
+    {
+      path: '/detail/:modelname/:type',
+      name: 'namedDetail',
+      component: () => import('@/views/modelOverview/index.vue'),
+      meta: {
+        locale: 'menu.modelOverview.detail',
+        requiresAuth: false,
+        roles: ['*'],
+      },
+    },
   ],
 };
 

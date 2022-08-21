@@ -171,7 +171,7 @@
         path: `/deployService/${modelName.value}/${form.serviceName}`,
       });
     } else {
-      Message.error('添加服务失败，请重试');
+      Message.error(`添加服务失败，请重试\nerror type:`);
     }
   };
 </script>

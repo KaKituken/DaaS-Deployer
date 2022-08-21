@@ -308,8 +308,8 @@
       'http://82.156.5.94:5000/operate-pod',
       params
     );
-    console.log('======delete pod======');
-    console.log(res.data);
+    // console.log('======delete pod======');
+    // console.log(res.data);
     if (res.data.status === false) {
       alert('delete pod failed, please try again...');
     } else {
@@ -359,12 +359,16 @@
     basicData[5].value = res1.data.memoryReserve;
     indexData[0].funcName = res1.data.function;
     indexData[0].accessTimes = res1.data.acessTimes;
-    indexData[0].avgResponseTime = res1.data.averageResponseTime.toFixed(2);
-    indexData[0].minResponseTime = res1.data.minResponseTime.toFixed(2);
-    indexData[0].maxResponseTime = res1.data.maxResponseTime.toFixed(2);
+    indexData[0].avgResponseTime = res1.data.averageResponseTime;
+    indexData[0].minResponseTime = res1.data.minResponseTime;
+    indexData[0].maxResponseTime = res1.data.maxResponseTime;
     indexData[0].firstAccessTime = res1.data.firstAccessTime;
     indexData[0].latestAccessTime = res1.data.lastAccessTime;
     copyData.value = res1.data.podList;
+    console.log('=====res1.data=====')
+    console.log(res1.data)
+    console.log('=====copyData.value=====')
+    console.log(copyData.value)
   });
 
   const dataSubmit = async () => {
@@ -392,9 +396,9 @@
     basicData[5].value = res2.data.memoryReserve;
     indexData[0].funcName = res2.data.function;
     indexData[0].accessTimes = res2.data.acessTimes;
-    indexData[0].avgResponseTime = res2.data.averageResponseTime.toFixed(2);
-    indexData[0].minResponseTime = res2.data.minResponseTime.toFixed(2);
-    indexData[0].maxResponseTime = res2.data.maxResponseTime.toFixed(2);
+    indexData[0].avgResponseTime = res2.data.averageResponseTime;
+    indexData[0].minResponseTime = res2.data.minResponseTime;
+    indexData[0].maxResponseTime = res2.data.maxResponseTime;
     indexData[0].firstAccessTime = res2.data.firstAccessTime;
     indexData[0].latestAccessTime = res2.data.lastAccessTime;
   };

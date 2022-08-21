@@ -166,7 +166,7 @@
     if (res.data.status === true) {
       Message.success('保存成功');
       router.push({
-        path: `/detail/${modelName.value}`,
+        path: `/detail/${modelName.value}/batchPredict`,
       });
     } else {
       Message.error('保存失败，请重试');
