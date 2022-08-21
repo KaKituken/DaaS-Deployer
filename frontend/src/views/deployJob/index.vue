@@ -200,12 +200,12 @@
   </div>
 </template>
 
-<script type="ts" lang="ts" setup>
+<script lang="ts" setup>
   import { ref, onMounted, reactive } from 'vue';
   import { useRoute } from 'vue-router';
   import axios from 'axios';
   import { Message, Modal } from '@arco-design/web-vue';
-  import type { jobResponseData, testResponseData } from '../../api/deployJob';
+  import type { jobResponseData, testResponseData, runListData } from '../../api/deployJob';
 
   const route = useRoute();
   const jobName = ref('jobName');
@@ -254,7 +254,7 @@
   const envVariableColumns = [
     {
       title: '变量',
-      dataIndex: 'userVarialbe',
+      dataIndex: 'userVarialble',
     },
     {
       title: '值',
@@ -301,7 +301,6 @@
   const targetData = ref(); // 概述页面右边表格数据
   const userRunData = ref(); // 概述页面最下面表格数据
 
-  const deployData = reactive([]);
 
   // 测试页面获取的数据
   const runName = ref();
@@ -314,12 +313,6 @@
   const curTab = ref('1');
 
   onMounted(async () => {
-    axios.get('/api/modelOverview/info').then((response) => {});
-
-    axios.get('/api/modelOverview/var').then((response) => {
-      inputData.value = response.data.inputData;
-      targetData.value = response.data.targetData;
-    });
 
     // 申请数据
     const param = {
@@ -333,98 +326,6 @@
     userRunData.value = res1.data.runList;
     postmsg.value = res1.data.url.concat(jobName.value); // 获取url
   });
-
-  // 概述界面表格相关：
-  const indexColumns = [
-    {
-      title: '函数名',
-      dataIndex: 'funcName',
-    },
-    {
-      title: '访问次数',
-      dataIndex: 'accessTimes',
-      sortable: {
-        sortDirections: ['ascend', 'descend'],
-      },
-    },
-    {
-      title: '平均响应时间(ms)',
-      dataIndex: 'avgResponseTime',
-      sortable: {
-        sortDirections: ['ascend', 'descend'],
-      },
-    },
-    {
-      title: '中间响应时间(ms)',
-      dataIndex: 'midResponseTime',
-      sortable: {
-        sortDirections: ['ascend', 'descend'],
-      },
-    },
-    {
-      title: '最小响应时间',
-      dataIndex: 'minResponseTime',
-      sortable: {
-        sortDirections: ['ascend', 'descend'],
-      },
-    },
-    {
-      title: '最大响应时间(ms)',
-      dataIndex: 'maxResponseTime',
-      sortable: {
-        sortDirections: ['ascend', 'descend'],
-      },
-    },
-    {
-      title: '首次访问时间',
-      dataIndex: 'firstAccessTime',
-      sortable: {
-        sortDirections: ['ascend', 'descend'],
-      },
-    },
-    {
-      title: '最新访问时间',
-      dataIndex: 'latestAccessTime',
-      sortable: {
-        sortDirections: ['ascend', 'descend'],
-      },
-    },
-  ];
-  const indexData = reactive([
-    {
-      funcName: 'predict',
-      accessTimes: 2,
-      avgResponseTime: 205.0,
-      midResponseTime: 205.0,
-      minResponseTime: 12.0,
-      maxResponseTime: 398.0,
-      firstAccessTime: '2019-09-28 17:30:59',
-      latestAccessTime: '2019-09-28 17:31:40',
-    },
-  ]);
-
-  const copyColumns = [
-    {
-      title: '名称',
-      dataIndex: 'copyName',
-    },
-    {
-      title: '状态',
-      dataIndex: 'copyStatus',
-    },
-    {
-      title: '操作',
-      dataIndex: 'operation',
-    },
-  ];
-
-  const copyData = reactive([
-    {
-      copyName: 'd-pmml-xgb-iris-svc-5854487d5b-zbsjn',
-      copyStatus: '运行中',
-      operation: '默认',
-    },
-  ]);
 
   const clear = () => {
     runName.value = '';
