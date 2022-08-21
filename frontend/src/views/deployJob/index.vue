@@ -38,7 +38,7 @@
         </div>
       </a-layout-header>
       <a-layout-content>
-        <a-tabs default-active-key="1" style="width: 100%; height: 100%">
+        <a-tabs :active-key="curTab" style="width: 100%; height: 100%">
           <a-tab-pane key="1" title="概述">
             <div id="var">
               <div id="inputVartest">
@@ -204,7 +204,7 @@
   import { ref, onMounted, reactive } from 'vue';
   import { useRoute } from 'vue-router';
   import axios from 'axios';
-  import { Message } from '@arco-design/web-vue';
+  import { Message, Modal } from '@arco-design/web-vue';
   import type { jobResponseData, testResponseData } from '../../api/deployJob';
 
   const route = useRoute();
@@ -264,7 +264,7 @@
   const userRunColumns = [
     {
       title: 'ID',
-      dataIndex: 'runId',
+      dataIndex: 'id',
     },
     {
       title: '名称',
@@ -310,6 +310,8 @@
   const responseData = ref(); // 绑定响应框
   const showCode = ref(); // 显示的curl代码
   const visible = ref(false); // 是否显示悬浮窗
+
+  const curTab = ref('1');
 
   onMounted(async () => {
     axios.get('/api/modelOverview/info').then((response) => {});
@@ -475,7 +477,7 @@
   };
 
   const operateNow = () => {
-    alert('立即执行');
+    curTab.value = '2';
   };
 
   const onclickRun = async (record: any, op: string) => {
@@ -487,17 +489,30 @@
     */
     const param = {
       jobName: jobName.value,
-      runName: record.value,
-      op,
+      runName: record.name,
+      runId: record.id,
+      type: op,
     };
     try {
       const res = await axios.post(
         'http://82.156.5.94:5000/operate-run',
         param
       );
-      console.log(res.data);
-      if (res.data.runStatus) {
+      // console.log(res.data);
+      if (res.data.status) {
+        if (op === 'result') {
+          Modal.info({
+            content: res.data.res,
+          });
+          return;
+        }
         Message.success('操作成功');
+        const res1 = await axios.post<jobResponseData>(
+          'http://82.156.5.94:5000/job-info',
+          param
+        );
+        userRunData.value = res1.data.runList;
+        /*
         if (op === 'result') {
           console.log(1);
         } else if (op === 'delete') {
@@ -528,6 +543,7 @@
         });
       } else {
         Message.error('失败');
+        */
       }
     } catch (error) {
       Message.error(`网络错误：${error}`);
