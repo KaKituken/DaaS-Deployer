@@ -83,6 +83,9 @@
                       <a-button @click="onclickRun(record, 'result')"
                         >结果</a-button
                       >
+                      <a-button @click="onclickRun(record, 'delete')"
+                        >删除</a-button
+                      >
                     </a-space>
                   </template>
                 </a-table>
@@ -476,10 +479,12 @@
   };
 
   const onclickRun = async (record: any, op: string) => {
+    /*
     if (op === 'result') {
       alert('没做');
       return;
     }
+    */
     const param = {
       runName: record.value,
       op,
@@ -489,11 +494,35 @@
         'http://82.156.5.94:5000/operate-run',
         param
       );
+      console.log(res.data);
       if (res.data.runStatus) {
         Message.success('操作成功');
+        if (op === 'result') {
+          console.log(1);
+        } else if (op === 'delete') {
+          userRunData.value.foreach((item: any) => {
+            try {
+              if (item.runName === record.value) {
+                userRunData.value.splice(userRunData.value.indexOf(item), 1);
+                throw new Error('break');
+              }
+            } catch (e: any) {
+              if (e.message !== 'break') {
+                throw e;
+              }
+            }
+          });
+        }
         userRunData.value.foreach((item: any) => {
-          if (item.runName === record.value) {
-            item.status = res.data.runStatus;
+          try {
+            if (item.runName === record.value) {
+              item.status = res.data.runStatus;
+              throw new Error('break');
+            }
+          } catch (e: any) {
+            if (e.message !== 'break') {
+              throw e;
+            }
           }
         });
       } else {
