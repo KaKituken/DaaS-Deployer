@@ -22,7 +22,6 @@
               ><span style="colro: black; font-weight: bold">POST </span
               ><span style="color: purple">{{ postmsg }}</span></p
             >
-            <p style="color: grey">部署令牌：</p>
           </div>
         </div>
         <div id="detailInfo">
@@ -205,7 +204,7 @@
   import { useRoute } from 'vue-router';
   import axios from 'axios';
   import { Message, Modal } from '@arco-design/web-vue';
-  import type { jobResponseData, testResponseData, runListData } from '../../api/deployJob';
+  import type { jobResponseData, testResponseData, jobVariables } from '../../api/deployJob';
 
   const route = useRoute();
   const jobName = ref('jobName');
@@ -219,34 +218,26 @@
   const basicData = reactive([
     {
       label: '类别',
-      value: '网络服务',
+      value: '任务',
     },
     {
       label: '类型',
-      value: '默认实时预测',
+      value: '批量预测',
     },
     {
       label: '对象',
-      value: 'xgb-iris',
-    },
-    {
-      label: '创建时间',
-      value: '2019-7-9',
-    },
-    {
-      label: '运行环境',
-      value: 'Python3.7 - Script as a Service',
-    },
-    {
-      label: '调度',
-      value: 'On demand',
-    },
-    {
-      label: 'CPU核数',
       value: '-',
     },
     {
-      label: '内存(GB)',
+      label: '创建时间',
+      value: '-',
+    },
+    {
+      label: '运行环境',
+      value: '-',
+    },
+    {
+      label: '调度',
       value: '-',
     },
   ]);
@@ -254,11 +245,11 @@
   const envVariableColumns = [
     {
       title: '变量',
-      dataIndex: 'userVarialble',
+      dataIndex: 'name',
     },
     {
       title: '值',
-      dataIndex: 'userNumber',
+      dataIndex: 'value',
     },
   ];
   const userRunColumns = [
@@ -325,6 +316,23 @@
     console.log(res1.data);
     userRunData.value = res1.data.runList;
     postmsg.value = res1.data.url.concat(jobName.value); // 获取url
+    basicData[2].value = res1.data.modelName;
+    basicData[3].value = res1.data.createTime;
+    basicData[4].value = res1.data.serverVersion;
+    basicData[5].value = res1.data.dispatch;
+
+    const res2 = await axios.post<jobVariables>(
+      'http://82.156.5.94:5000/job-variable',
+      param      
+    )
+    for(let i=0; i<res2.data.args.length ; i+=1){
+      const newTargetData = {
+        userSequence: i,
+        userParam: res2.data.args[i],
+      }
+      targetData.value.push(newTargetData)
+    }
+    inputData.value = res2.data.env;
   });
 
   const clear = () => {

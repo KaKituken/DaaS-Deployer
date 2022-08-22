@@ -32,6 +32,8 @@ export interface DatasetList {
 
 export interface PredictScript {
   code: string;
+  status: boolean;
+  detailed: string;
 }
 
 export interface userVarialbeValue {
@@ -42,4 +44,10 @@ export interface userVarialbeValue {
 export interface deployInfo{
   jobList: Array<JSON>;
   serviceList: Array<JSON>;
+}
+
+export interface runBatch{
+  status: boolean;
+  detailed: string;
+  jobName: string;
 }

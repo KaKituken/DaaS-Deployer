@@ -8,6 +8,7 @@ export interface addService {
 
 export interface status{
   status: boolean;
+  detailed: string;
 }
 export interface settings {
   fileName: string;

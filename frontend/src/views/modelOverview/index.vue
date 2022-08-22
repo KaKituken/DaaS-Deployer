@@ -62,7 +62,7 @@
                     >+ 添加服务</a
                   ></a-button
                 >
-                <a-button id="addTask" type="primary"
+                <a-button id="addTask" type="primary" @click="()=>this.$message.info('请添加数据集')"
                   ><a href="/list/dataset" style="text-decoration: none"
                     >+ 添加任务</a
                   ></a-button
@@ -320,6 +320,7 @@
     PredictScript,
     modelTestInfo,
     deployInfo,
+    runBatch
   } from '../../api/modelOverview';
   import type { status } from '../../api/addService';
 
@@ -558,7 +559,7 @@
   const batchPredSettingsUrl = ref(`/batchPredictSettings/${modelName.value}`);
 
   const runBatchPredFunc = async () => {
-    const res = await axios.post<status>(
+    const res = await axios.post<runBatch>(
       'http://82.156.5.94:5000/model-deploy-job',
       predForm
     );
@@ -570,9 +571,12 @@
       );
       jobList.value = res4.data.jobList;
       serviceList.value = res4.data.serviceList;
-      deployData.value = jobList.value.concat(serviceList.value);      
+      deployData.value = jobList.value.concat(serviceList.value);
+      router.push({
+        path:`/deployJob/${modelName.value}/${res.data.jobName}`
+      });
     } else {
-      Message.error('任务执行失败');
+      Message.error(`任务执行失败, error type: ${res.data.detailed}`);
     }
   };
 
@@ -581,7 +585,13 @@
       'http://82.156.5.94:5000/generate-script',
       predForm
     );
-    predScript.value = res4.data.code;
+    if (res4.data.status === false){
+      Message.error(`生成批预测脚本失败，请重试  error type:${res4.data.detailed}`)
+    }
+    else{
+      Message.success('生成批预测脚本成功')
+      predScript.value = res4.data.code;
+    }
   };
 
   onMounted(async () => {
@@ -600,8 +610,6 @@
       'http://82.156.5.94:5000/model-variable',
       param
     );
-
-    // console.log(res2.data);
     inputData.value = res2.data.inputVariables;
     targetData.value = res2.data.outputVariables;
     // 根据获取的inputData构造nameValueList用于绑定 不定数量的输入框
@@ -669,11 +677,11 @@
 
     console.log(testInfo);
 
-    const res1 = await axios.post<modelTestInfo>(
+    const res5 = await axios.post<modelTestInfo>(
       'http://82.156.5.94:5000/model-test',
       testInfo
     );
-    let returnData = JSON.stringify(res1.data);
+    let returnData = JSON.stringify(res5.data);
     returnData = returnData.replace(/{([^{}]*)}/g, '{\n$1\n    }'); // 在{}对前面加缩进，后面加换行
     returnData = returnData.replace(/(\[)([a-zA-Z0-9'"])/g, '$1\n$2'); // 在[后面加换行
     returnData = returnData.replace(/([a-zA-Z0-9'"])(\])/g, '$1\n$2'); // 在]后面加换行
