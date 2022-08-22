@@ -175,7 +175,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { Message } from '@arco-design/web-vue';
+  import { Message, TableColumnData } from '@arco-design/web-vue';
   import { ref, onMounted, reactive } from 'vue';
   import axios from 'axios';
   import { useRoute } from 'vue-router';
@@ -230,7 +230,7 @@
   const showCode = ref();
 
   // 概述界面表格相关：
-  const indexColumns = [
+  const indexColumns: TableColumnData[] = [
     {
       title: '函数名',
       dataIndex: 'funcName',

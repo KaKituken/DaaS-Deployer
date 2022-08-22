@@ -57,7 +57,7 @@
   import { onMounted, ref } from 'vue';
   import { useRouter, useRoute } from 'vue-router';
   import axios from 'axios';
-  import { Message } from '@arco-design/web-vue';
+  import { Message, TableColumnData } from '@arco-design/web-vue';
   import type { status } from '../../api/addService';
 
   const router = useRouter();
@@ -68,7 +68,7 @@
     activeKey.value = '2';
   }
 
-  const modelColumns = [
+  const modelColumns: TableColumnData[] = [
     {
       title: '名称',
       dataIndex: 'modelName',
@@ -96,7 +96,7 @@
     },
   ];
 
-  const datasetColumns = [
+  const datasetColumns: TableColumnData[] = [
     {
       title: '名称',
       dataIndex: 'name',

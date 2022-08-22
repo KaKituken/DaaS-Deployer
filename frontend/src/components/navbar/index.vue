@@ -55,7 +55,7 @@
           </template>
         </a-dropdown>
       </li>
-      <li>
+      <!--li>
         <a-tooltip
           :content="
             theme === 'light'
@@ -75,7 +75,7 @@
             </template>
           </a-button>
         </a-tooltip>
-      </li>
+      </li-->
       <li>
         <a-tooltip :content="$t('settings.navbar.alerts')">
           <div class="message-box-trigger">
