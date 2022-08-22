@@ -29,7 +29,10 @@
         </div>
       </a-layout-header>
       <a-layout-content>
-        <a-tabs :default-active-key="activeKey" style="width: 100%; height: 100%">
+        <a-tabs
+          :default-active-key="activeKey"
+          style="width: 100%; height: 100%"
+        >
           <a-tab-pane id="overview" key="1" title="概述">
             <div id="var">
               <div id="inputVar">
@@ -57,8 +60,10 @@
                     >+ 添加服务</a
                   ></a-button
                 >
-                <a-button id="addTask" type="primary" @click="()=>this.$message.info('请添加数据集')"
-                  ><a :href="'/detail/'+ modelname +'/batchPredict'" style="text-decoration: none"
+                <a-button id="addTask" type="primary" @click="addDatasetHint"
+                  ><a
+                    :href="'/detail/' + modelname + '/batchPredict'"
+                    style="text-decoration: none"
                     >+ 添加任务</a
                   ></a-button
                 >
@@ -70,9 +75,21 @@
                     <a-space>
                       <a-button @click="onclickColumn(record)">详情</a-button>
                       <a-button @click="onclickDelete(record)">删除</a-button>
-                      <a-button v-if="record.type == 'Service'" @click="onclickModify(record)">调整</a-button>
-                      <a-button v-if="record.type == 'Service'" @click="onclickPause(record)">暂停</a-button>
-                      <a-button v-if="record.type == 'Service'" @click="onclickResume(record)">启动</a-button>
+                      <a-button
+                        v-if="record.type == 'Service'"
+                        @click="onclickModify(record)"
+                        >调整</a-button
+                      >
+                      <a-button
+                        v-if="record.type == 'Service'"
+                        @click="onclickPause(record)"
+                        >暂停</a-button
+                      >
+                      <a-button
+                        v-if="record.type == 'Service'"
+                        @click="onclickResume(record)"
+                        >启动</a-button
+                      >
                     </a-space>
                   </template>
                 </a-table>
@@ -301,31 +318,28 @@
   import type {
     modelDescript,
     modelVariable,
-    DatasetInfo,
     DatasetList,
     PredictScript,
     modelTestInfo,
     deployInfo,
-    runBatch
+    runBatch,
   } from '../../api/modelOverview';
   import type { status } from '../../api/addService';
 
   const route = useRoute();
   const router = useRouter();
 
-  const activeKey = ref('1')
-  if(route.params.type === 'deploy'){
+  const activeKey = ref('1');
+  if (route.params.type === 'deploy') {
     activeKey.value = '2';
-  }
-  else if (route.params.type === 'test'){
+  } else if (route.params.type === 'test') {
     activeKey.value = '3';
-  }
-  else if (route.params.type === 'batchPredict') {
+  } else if (route.params.type === 'batchPredict') {
     activeKey.value = '4';
   }
   const modelName = ref('modelName');
   modelName.value = route.params.modelname as string;
-  const modelname = modelName.value
+  const modelname = modelName.value;
   const addServiceUrl = ref(`/addService/${modelName.value}`);
 
   const modelDescription = ref('this is a simple introduction of the model...');
@@ -347,13 +361,6 @@
       value: '',
     },
   ]);
-
-  const getData = reactive({
-    slength: '',
-    swidth: '',
-    plength: '',
-    pwidth: '',
-  });
 
   const testOutput = ref('');
   const weatherJson = ref(false);
@@ -430,22 +437,18 @@
   const onclickDelete = async (record: any) => {
     const deleteParam = reactive({
       serviceName: record.name,
-      jobName:record.name,
+      jobName: record.name,
       type: 'delete',
     });
-    const deleteUrl = ref('')
-    if (record.type === 'Job'){
-      deleteUrl.value = 'http://82.156.5.94:5000/operate-job'
-    }
-    else{
-      deleteUrl.value = 'http://82.156.5.94:5000/operate-service'
+    const deleteUrl = ref('');
+    if (record.type === 'Job') {
+      deleteUrl.value = 'http://82.156.5.94:5000/operate-job';
+    } else {
+      deleteUrl.value = 'http://82.156.5.94:5000/operate-service';
     }
     // console.log('=====deleteUrl=====')
     // console.log(deleteUrl.value)
-    const res = await axios.post<status>(
-      deleteUrl.value,
-      deleteParam
-    );
+    const res = await axios.post<status>(deleteUrl.value, deleteParam);
     if (res.data.status === false) {
       Message.error(`删除失败，请重试\nerror type:`);
     } else {
@@ -560,7 +563,7 @@
       serviceList.value = res4.data.serviceList;
       deployData.value = jobList.value.concat(serviceList.value);
       router.push({
-        path:`/deployJob/${modelName.value}/${res.data.jobName}`
+        path: `/deployJob/${modelName.value}/${res.data.jobName}`,
       });
     } else {
       Message.error(`任务执行失败, error type: ${res.data.detailed}`);
@@ -572,11 +575,12 @@
       'http://82.156.5.94:5000/generate-script',
       predForm
     );
-    if (res4.data.status === false){
-      Message.error(`生成批预测脚本失败，请重试  error type:${res4.data.detailed}`)
-    }
-    else{
-      Message.success('生成批预测脚本成功')
+    if (res4.data.status === false) {
+      Message.error(
+        `生成批预测脚本失败，请重试  error type:${res4.data.detailed}`
+      );
+    } else {
+      Message.success('生成批预测脚本成功');
       predScript.value = res4.data.code;
     }
   };
@@ -627,6 +631,10 @@
     deployData.value = jobList.value.concat(serviceList.value);
   });
 
+  const addDatasetHint = () => {
+    Message.info('请先添加数据集');
+  };
+
   const testSubmit = async () => {
     let testInfo = {};
     if (!weatherJson.value) {
@@ -637,7 +645,7 @@
         },
       };
     } else {
-      const userData = JSON.parse(userJson.value.replace(/[\r\n\s+]/g, '')); // 从输入框获取用户输入的json字符串，然后解析
+      // const userData = JSON.parse(userJson.value.replace(/[\r\n\s+]/g, '')); // 从输入框获取用户输入的json字符串，然后解析
       // 构造一个提交的数据表单
       // const newNameValueList = (() => {
       //   const arr = Array(Object.getOwnPropertyNames(userData).length);
@@ -657,14 +665,14 @@
       // 注意： 用户输入的json的属性名必须加""，目前可以解决json里面的回车字符串，但是不能解决属性名没有""产生的解析错误
       testInfo = {
         modelName: modelName.value,
-        data: userJson.value
+        data: userJson.value,
         // data: {
         //   inputs: newNameValueList,
         // },
       };
     }
 
-    console.log(testInfo);
+    // console.log(testInfo);
 
     const res5 = await axios.post<modelTestInfo>(
       'http://82.156.5.94:5000/model-test',
