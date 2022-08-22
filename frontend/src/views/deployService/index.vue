@@ -120,7 +120,8 @@
                     margin-top: 20px;
                   "
                 />
-                <div style="position: relative; left: 65%">
+                <input style="margin-left:5%;" type="file" placeholder="请选择模型文件" id="fileUpload"/>
+                <div style="position: relative; left:50%">
                   <a-button type="outline" style="margin: 10px" @click="clear"
                     >清除</a-button
                   >
@@ -130,6 +131,7 @@
                     @click="dataSubmit"
                     >提交</a-button
                   >
+                  <a-button type="primary" style="margin:10px" @click="submitFile">提交文件</a-button>
                 </div>
               </div>
               <div id="targetVar">
@@ -163,6 +165,7 @@
 </template>
 
 <script lang="ts" setup>
+  import { Message } from '@arco-design/web-vue';
   import { ref, onMounted, reactive } from 'vue';
   import axios from 'axios';
   import { useRoute, useRouter } from 'vue-router';
@@ -177,6 +180,7 @@
   const router = useRouter();
   const serviceName = ref('serviceName');
   const modelName = ref('modelName');
+  const fileData = ref('');  // 测试文件
   serviceName.value = route.params.serviceName as string; // 工作名称
   modelName.value = route.params.modelName as string; // 模型名称
 
@@ -423,6 +427,50 @@
   const handleOk = () => {
     visible.value = false;
   };
+
+  const submitFile = async () => {
+    console.log('get file');
+    
+    const formData = new FormData();
+    formData.append('modelName', modelName.value);
+    const file = document.querySelector('#fileUpload') as HTMLInputElement;
+    if (file.files && file.files[0]) {
+      
+      formData.append('file', file.files[0]);
+    
+
+      const res1 = await axios.post<requireDataResponse>(
+        postmsg.value,
+        formData
+      );
+      let returnData = JSON.stringify(res1.data);
+      returnData = returnData.replace(/{([^{}]*)}/g, '{\n$1\n    }'); // 在{}对前面加缩进，后面加换行
+      returnData = returnData.replace(/(\[)([a-zA-Z0-9'"])/g, '$1\n$2'); // 在[后面加换行
+      returnData = returnData.replace(/([a-zA-Z0-9'"])(\])/g, '$1\n$2'); // 在]后面加换行
+      returnData = returnData.replace(/,/g, ',\n'); // 在,后面加换行
+      testResponse.value = returnData;
+      const param = {
+        serviceName: serviceName.value,
+      };
+      const res2 = await axios.post<copyResponseData>(
+        'http://82.156.5.94:5000/service-info',
+        param
+      );
+      basicData[3].value = res2.data.createTime;
+      basicData[4].value = res2.data.cpuReserve;
+      basicData[5].value = res2.data.memoryReserve;
+      indexData[0].funcName = res2.data.function;
+      indexData[0].accessTimes = res2.data.acessTimes;
+      indexData[0].avgResponseTime = res2.data.averageResponseTime;
+      indexData[0].minResponseTime = res2.data.minResponseTime;
+      indexData[0].maxResponseTime = res2.data.maxResponseTime;
+      indexData[0].firstAccessTime = res2.data.firstAccessTime;
+      indexData[0].latestAccessTime = res2.data.lastAccessTime;
+
+    } else {
+      Message.error('请选择请求文件');
+    }
+    };
 </script>
 
 <style scoped>

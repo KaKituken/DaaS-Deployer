@@ -157,7 +157,8 @@
                   placeholder="请直接输入args的值"
                   allow-clear
                 />
-                <div style="position: relative; left: 65%; top: 10%">
+
+                <div style="position: relative; left: 65%; top: 5%">
                   <a-button type="outline" style="margin: 10px" @click="clear"
                     >清除</a-button
                   >
@@ -167,6 +168,7 @@
                     @click="dataSubmit"
                     >提交</a-button
                   >
+                   
                 </div>
               </div>
               <div id="targetVar">
