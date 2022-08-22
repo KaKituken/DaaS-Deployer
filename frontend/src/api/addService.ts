@@ -6,7 +6,7 @@ export interface addService {
   restfulUrl: string;
 }
 
-export interface status{
+export interface status {
   status: boolean;
   detailed: string;
 }

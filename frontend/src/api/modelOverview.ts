@@ -2,16 +2,16 @@ export interface modelDescript {
   modelName: string;
   modelType: string;
   modelEngine: string;
-  createTime : string;
+  createTime: string;
   descript: string;
   algorithm: string;
 }
 
 // 测试模型post的数据类型
-export interface modelTestInfo{
-    result: JSON;
-    stdout: Array<string>;
-    stderr: Array<string>;
+export interface modelTestInfo {
+  result: JSON;
+  stdout: Array<string>;
+  stderr: Array<string>;
 }
 export interface modelVariable {
   inputVariables: Array<JSON>;
@@ -41,12 +41,12 @@ export interface userVarialbeValue {
   value: number;
 }
 
-export interface deployInfo{
+export interface deployInfo {
   jobList: Array<JSON>;
   serviceList: Array<JSON>;
 }
 
-export interface runBatch{
+export interface runBatch {
   status: boolean;
   detailed: string;
   jobName: string;

@@ -38,7 +38,13 @@
           <template #operation="{ record }">
             <a-space>
               <a-button @click="onclickDeleteDataset(record)">删除</a-button>
-              <a-button><a :href="`http://82.156.5.94:5000/download/`+ record.name " style="text-decoration: none">下载</a></a-button>
+              <a-button
+                ><a
+                  :href="`http://82.156.5.94:5000/download/` + record.name"
+                  style="text-decoration: none"
+                  >下载</a
+                ></a-button
+              >
             </a-space>
           </template>
         </a-table>
@@ -53,8 +59,6 @@
   import axios from 'axios';
   import { Message } from '@arco-design/web-vue';
   import type { status } from '../../api/addService';
-  import type {download} from '../../api/modelOverview'
-
 
   const router = useRouter();
   const route = useRoute();
@@ -135,7 +139,7 @@
   ];
   const mData = ref();
   const dData = ref();
-  
+
   const redirectImport = (type: string) => {
     router.push({
       path: `/import/${type}`,
@@ -149,17 +153,16 @@
   const onclickDeleteModel = async (record: any) => {
     const params = {
       modelName: record.modelName,
-      operation: "delete"
-    }
+      operation: 'delete',
+    };
     const res = await axios.post<status>(
       'http://82.156.5.94:5000/operate-model',
       params
-    )
-    if(res.data.status === false){
-      Message.error(`删除模型失败，error type: ${res.data.detailed}`)
-    }
-    else{
-      Message.success('删除模型成功')
+    );
+    if (res.data.status === false) {
+      Message.error(`删除模型失败，error type: ${res.data.detailed}`);
+    } else {
+      Message.success('删除模型成功');
       const modelData = await axios.get('http://82.156.5.94:5000/model-info');
       mData.value = modelData.data.modelList;
     }
@@ -167,21 +170,22 @@
   const onclickDeleteDataset = async (record: any) => {
     const params = {
       dataset: record.name,
-      operation: "delete"
-    }
+      operation: 'delete',
+    };
     const res = await axios.post<status>(
       'http://82.156.5.94:5000/operate-dataset',
       params
-    )
-    if(res.data.status === false){
-      Message.error(`删除数据集失败，error type: ${res.data.detailed}`)
-    }
-    else{
-      Message.success('删除数据集成功')
-      const datasetData = await axios.get('http://82.156.5.94:5000/dataset-info');
+    );
+    if (res.data.status === false) {
+      Message.error(`删除数据集失败，error type: ${res.data.detailed}`);
+    } else {
+      Message.success('删除数据集成功');
+      const datasetData = await axios.get(
+        'http://82.156.5.94:5000/dataset-info'
+      );
       dData.value = datasetData.data.datasetList;
     }
-  }
+  };
 
   onMounted(async () => {
     const modelData = await axios.get('http://82.156.5.94:5000/model-info');

@@ -120,8 +120,13 @@
                     margin-top: 20px;
                   "
                 />
-                <input style="margin-left:5%;" type="file" placeholder="请选择模型文件" id="fileUpload"/>
-                <div style="position: relative; left:50%">
+                <input
+                  id="fileUpload"
+                  style="margin-left: 5%"
+                  type="file"
+                  placeholder="请选择模型文件"
+                />
+                <div style="position: relative; left: 50%">
                   <a-button type="outline" style="margin: 10px" @click="clear"
                     >清除</a-button
                   >
@@ -131,7 +136,12 @@
                     @click="dataSubmit"
                     >提交</a-button
                   >
-                  <a-button type="primary" style="margin:10px" @click="submitFile">提交文件</a-button>
+                  <a-button
+                    type="primary"
+                    style="margin: 10px"
+                    @click="submitFile"
+                    >提交文件</a-button
+                  >
                 </div>
               </div>
               <div id="targetVar">
@@ -168,7 +178,7 @@
   import { Message } from '@arco-design/web-vue';
   import { ref, onMounted, reactive } from 'vue';
   import axios from 'axios';
-  import { useRoute, useRouter } from 'vue-router';
+  import { useRoute } from 'vue-router';
   import { Sleep } from '../../api/deployService';
   import type {
     requireDataResponse,
@@ -177,10 +187,8 @@
   import { status } from '../../api/addService';
 
   const route = useRoute();
-  const router = useRouter();
   const serviceName = ref('serviceName');
   const modelName = ref('modelName');
-  const fileData = ref('');  // 测试文件
   serviceName.value = route.params.serviceName as string; // 工作名称
   modelName.value = route.params.modelName as string; // 模型名称
 
@@ -316,7 +324,7 @@
     // console.log('======delete pod======');
     // console.log(res.data);
     if (res.data.status === false) {
-      alert('delete pod failed, please try again...');
+      Message.error('delete pod failed, please try again...');
     } else {
       const isPending = ref(true);
       if (isPending.value) {
@@ -377,8 +385,8 @@
 
     const submitParam = {
       modelName: modelName.value,
-      data: userRequestData
-    }
+      data: userRequestData,
+    };
 
     const res1 = await axios.post<requireDataResponse>(
       postmsg.value,
@@ -429,15 +437,13 @@
   };
 
   const submitFile = async () => {
-    console.log('get file');
-    
+    // console.log('get file');
+
     const formData = new FormData();
     formData.append('modelName', modelName.value);
     const file = document.querySelector('#fileUpload') as HTMLInputElement;
     if (file.files && file.files[0]) {
-      
       formData.append('file', file.files[0]);
-    
 
       const res1 = await axios.post<requireDataResponse>(
         postmsg.value,
@@ -466,11 +472,10 @@
       indexData[0].maxResponseTime = res2.data.maxResponseTime;
       indexData[0].firstAccessTime = res2.data.firstAccessTime;
       indexData[0].latestAccessTime = res2.data.lastAccessTime;
-
     } else {
       Message.error('请选择请求文件');
     }
-    };
+  };
 </script>
 
 <style scoped>

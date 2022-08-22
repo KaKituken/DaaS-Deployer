@@ -1,11 +1,11 @@
 export interface modelDescript {
-    modelName: string;
-    modelType: string;
-    modelEngine: string;
-    createTime : string;
-    descript: string;
-    algorithm: string;
-  }
+  modelName: string;
+  modelType: string;
+  modelEngine: string;
+  createTime: string;
+  descript: string;
+  algorithm: string;
+}
 
 export interface requireDataResponse {
   result: JSON;
@@ -31,6 +31,6 @@ export interface copyResponseData {
   podList: Array<JSON>;
 }
 
-export const Sleep = (ms: any)=> {
-  return new Promise(resolve=>setTimeout(resolve, ms))
-}
+export const Sleep = (ms: any) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};

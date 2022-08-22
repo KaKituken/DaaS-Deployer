@@ -1,24 +1,23 @@
 export interface modelDescript {
-    modelName: string;
-    modelType: string;
-    modelEngine: string;
-    createTime : string;
-    descript: string;
-    algorithm: string;
-  }
-
-
-export interface jobResponseData {
-    modelName: string;
-    jobName: string;
-    url: string;
-    createTime: string;
-    serverVersion: string;
-    dispatch: string;
-    runList: Array<JSON>;
+  modelName: string;
+  modelType: string;
+  modelEngine: string;
+  createTime: string;
+  descript: string;
+  algorithm: string;
 }
 
-export interface jobVariables{
+export interface jobResponseData {
+  modelName: string;
+  jobName: string;
+  url: string;
+  createTime: string;
+  serverVersion: string;
+  dispatch: string;
+  runList: Array<JSON>;
+}
+
+export interface jobVariables {
   env: Array<JSON>;
   args: Array<JSON>;
 }
