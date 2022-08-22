@@ -85,7 +85,11 @@
                 <!-- 显示curl代码的悬浮窗 -->
                 <a-modal v-model:visible="visible" hide-cancel @ok="handleOk">
                   <template #title> 生成的curl代码 </template>
+                  根据输入框输入数据生成的代码:
                   <div style="white-space: pre-line">{{ showCode }}</div>
+                  <br>
+                  根据上传文件生成的代码:
+                  <div style="white-space: pre-line">{{ showFileCode }}</div>
                 </a-modal>
                 <a-divider />
                 <p style="margin-left: 2%">* 函数名</p>
@@ -220,6 +224,7 @@
   const testResponse = ref();
   const visible = ref(false);
   const showCode = ref();
+  const showFileCode = ref();
 
   // 概述界面表格相关：
   const indexColumns = [
@@ -300,7 +305,7 @@
   const copyData = ref();
 
   const clear = () => {
-    testFuncName.value = '';
+    testFuncName.value = 'predict';
     testRequire.value = '';
   };
 
@@ -411,7 +416,8 @@
 
   const genCode = () => {
     const urlCode = postmsg.value;
-    // showCode.value = 'curl --location --request POST'.concat('\\\n' ,"'",urlCode , "'",'\\\n');
+  // showCode.value = 'curl --location --request POST'.concat('\\\n' ,"'",urlCode , "'",'\\\n');
+    console.log(testRequire.value);
     showCode.value = 'curl --location --request POST '.concat(
       "'",
       urlCode,
@@ -422,6 +428,14 @@
       testRequire.value,
       "'"
     );
+
+    // 根据文件生成代码
+    const file = document.querySelector('#fileUpload') as HTMLInputElement;
+    showFileCode.value = 'curl --location --request POST'.concat("'", urlCode, "'");
+    showFileCode.value = showFileCode.value.concat(" --from 'file=@\"<将上传文件本地路径替换至此>\"'", )
+   
+
+    
     visible.value = true;
   };
   const handleOk = () => {
