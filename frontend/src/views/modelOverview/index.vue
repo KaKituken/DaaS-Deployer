@@ -60,10 +60,7 @@
                     >+ 添加服务</a
                   ></a-button
                 >
-                <a-button
-                  id="addTask"
-                  type="primary"
-                  @click="() => this.$message.info('请添加数据集')"
+                <a-button id="addTask" type="primary" @click="addDatasetHint"
                   ><a
                     :href="'/detail/' + modelname + '/batchPredict'"
                     style="text-decoration: none"
@@ -633,6 +630,10 @@
     serviceList.value = res4.data.serviceList;
     deployData.value = jobList.value.concat(serviceList.value);
   });
+
+  const addDatasetHint = () => {
+    Message.info('请先添加数据集');
+  };
 
   const testSubmit = async () => {
     let testInfo = {};
