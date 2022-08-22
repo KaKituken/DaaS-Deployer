@@ -1,6 +1,6 @@
 <template>
   <div class="layout-demo">
-    <a-layout style="min-height: 850px">
+    <a-layout style="min-height: 650px">
       <a-layout-header>
         <div>
           <a-breadcrumb style="margin-left: 15px">
@@ -47,11 +47,6 @@
                 </div>
               </div>
             </div>
-            <div id="result">
-              <p id="resultTag" class="tag">评估结果</p>
-              <a-divider />
-              <a-empty />
-            </div>
           </a-tab-pane>
           <a-tab-pane key="2" title="部署">
             <div id="deploy">
@@ -63,7 +58,7 @@
                   ></a-button
                 >
                 <a-button id="addTask" type="primary" @click="()=>this.$message.info('请添加数据集')"
-                  ><a href="/list/dataset" style="text-decoration: none"
+                  ><a :href="'/detail/'+ modelname +'/batchPredict'" style="text-decoration: none"
                     >+ 添加任务</a
                   ></a-button
                 >
@@ -291,15 +286,6 @@
               </div>
             </div>
           </a-tab-pane>
-          <a-tab-pane key="5" title="实时预测">
-            Content of Tab Panel 5
-          </a-tab-pane>
-          <a-tab-pane key="6" title="模型评估">
-            Content of Tab Panel 6
-          </a-tab-pane>
-          <a-tab-pane key="7" title="关联脚本">
-            Content of Tab Panel 7
-          </a-tab-pane>
         </a-tabs>
       </a-layout-content>
       <a-layout-footer> </a-layout-footer>
@@ -339,6 +325,7 @@
   }
   const modelName = ref('modelName');
   modelName.value = route.params.modelname as string;
+  const modelname = modelName.value
   const addServiceUrl = ref(`/addService/${modelName.value}`);
 
   const modelDescription = ref('this is a simple introduction of the model...');
@@ -551,7 +538,7 @@
   const datasetList = ref();
   const predForm = reactive({
     modelName: modelName.value,
-    modelType: data[1].value,
+    modelType: '',
     inputDataset: '',
     outputDataset: '',
   });
@@ -605,6 +592,7 @@
     data[2].value = res1.data.algorithm;
     data[3].value = res1.data.modelEngine;
     deployParam.modelType = res1.data.modelType;
+    predForm.modelType = res1.data.modelType;
 
     const res2 = await axios.post<modelVariable>(
       'http://82.156.5.94:5000/model-variable',
@@ -651,27 +639,28 @@
     } else {
       const userData = JSON.parse(userJson.value.replace(/[\r\n\s+]/g, '')); // 从输入框获取用户输入的json字符串，然后解析
       // 构造一个提交的数据表单
-      const newNameValueList = (() => {
-        const arr = Array(Object.getOwnPropertyNames(userData).length);
-        for (
-          let i = 0;
-          i < Object.getOwnPropertyNames(userData).length;
-          i += 1
-        ) {
-          arr[i] = {
-            name: nameValueList.value[i].name,
-            value: userData[nameValueList.value[i].name.replace(/ /g, '')],
-            // 注意json解析的时候会自动忽略所有空格，所以需要手动按照去掉空格的属性名从用户输入的json中提取属性值
-          };
-        }
-        return arr;
-      })();
+      // const newNameValueList = (() => {
+      //   const arr = Array(Object.getOwnPropertyNames(userData).length);
+      //   for (
+      //     let i = 0;
+      //     i < Object.getOwnPropertyNames(userData).length;
+      //     i += 1
+      //   ) {
+      //     arr[i] = {
+      //       name: nameValueList.value[i].name,
+      //       value: userData[nameValueList.value[i].name.replace(/ /g, '')],
+      //       // 注意json解析的时候会自动忽略所有空格，所以需要手动按照去掉空格的属性名从用户输入的json中提取属性值
+      //     };
+      //   }
+      //   return arr;
+      // })();
       // 注意： 用户输入的json的属性名必须加""，目前可以解决json里面的回车字符串，但是不能解决属性名没有""产生的解析错误
       testInfo = {
         modelName: modelName.value,
-        data: {
-          inputs: newNameValueList,
-        },
+        data: userJson.value
+        // data: {
+        //   inputs: newNameValueList,
+        // },
       };
     }
 
@@ -786,18 +775,6 @@
 
   .table {
     margin: 0 8px 0 8px;
-  }
-
-  #result {
-    height: 200px;
-    margin-top: 20px;
-    margin-right: 2%;
-    margin-left: 2%;
-    background-color: #fff;
-  }
-
-  #resultTag {
-    padding-top: 15px;
   }
 
   #deploy {

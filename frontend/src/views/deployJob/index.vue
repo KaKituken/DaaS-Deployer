@@ -37,7 +37,7 @@
         </div>
       </a-layout-header>
       <a-layout-content>
-        <a-tabs :active-key="curTab" style="width: 100%; height: 100%">
+        <a-tabs :default-active-key="activeKey" style="width: 100%; height: 100%">
           <a-tab-pane key="1" title="概述">
             <div id="var">
               <div id="inputVartest">
@@ -201,12 +201,13 @@
 
 <script lang="ts" setup>
   import { ref, onMounted, reactive } from 'vue';
-  import { useRoute } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import axios from 'axios';
   import { Message, Modal } from '@arco-design/web-vue';
   import type { jobResponseData, testResponseData, jobVariables } from '../../api/deployJob';
 
   const route = useRoute();
+  const router = useRouter();
   const jobName = ref('jobName');
   const modelName = ref('modelName');
   jobName.value = route.params.jobName as string; // 工作名称
@@ -215,6 +216,13 @@
 
   const modelUrl = ref(`/detail/${modelName.value}`);
 
+  const activeKey = ref()
+  if(route.params.type === 'overview'){
+    activeKey.value = '1';
+  }
+  else if (route.params.type === 'test'){
+    activeKey.value = '2';
+  }
   const basicData = reactive([
     {
       label: '类别',
@@ -294,9 +302,9 @@
 
 
   // 测试页面获取的数据
-  const runName = ref();
-  const envVariable = ref();
-  const commandParam = ref();
+  const runName = ref('');
+  const envVariable = ref('');
+  const commandParam = ref('');
   const responseData = ref(); // 绑定响应框
   const showCode = ref(); // 显示的curl代码
   const visible = ref(false); // 是否显示悬浮窗
@@ -313,7 +321,6 @@
       'http://82.156.5.94:5000/job-info',
       param
     );
-    console.log(res1.data);
     userRunData.value = res1.data.runList;
     postmsg.value = res1.data.url.concat(jobName.value); // 获取url
     basicData[2].value = res1.data.modelName;
@@ -349,13 +356,22 @@
     };
     const res1 = await axios.post<testResponseData>(postmsg.value, jobPostData);
     // console.log(res1.data);
-
+    
     let returnData = JSON.stringify(res1.data);
     returnData = returnData.replace(/{([^{}]*)}/g, '{\n$1\n    }'); // 在{}对前面加缩进，后面加换行
     returnData = returnData.replace(/(\[)([a-zA-Z0-9'"])/g, '$1\n$2'); // 在[后面加换行
     returnData = returnData.replace(/([a-zA-Z0-9'"])(\])/g, '$1\n$2'); // 在]后面加换行
     returnData = returnData.replace(/,/g, ',\n'); // 在,后面加换行
     responseData.value = returnData;
+
+    const param = {
+      jobName: jobName.value,
+    };
+    const res2 = await axios.post<jobResponseData>(
+      'http://82.156.5.94:5000/job-info',
+      param
+    );
+    userRunData.value = res2.data.runList;
   };
 
   const genCode = () => {
@@ -386,7 +402,10 @@
   };
 
   const operateNow = () => {
-    curTab.value = '2';
+    activeKey.value = '2';
+    router.push({
+      path:`/deployJob/${modelName.value}/${jobName.value}/test`
+    })
   };
 
   const onclickRun = async (record: any, op: string) => {

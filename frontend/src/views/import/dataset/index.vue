@@ -37,7 +37,6 @@
         <a-button type="primary" html-type="submit">添加数据集</a-button>
       </a-form-item>
     </a-form>
-    {{ form }}
   </a-card>
 </template>
 
@@ -75,7 +74,7 @@
         path: '/list/dataset',
       });
     } else {
-      Message.error('错误：重名数据集');
+      Message.error(`导入失败, error type: ${res.detailed}`);
     }
   };
 </script>

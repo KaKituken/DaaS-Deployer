@@ -22,6 +22,16 @@ const MODELOVERVIEW: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
+    {
+      path: '/deployJob/:modelName/:jobName/:type',
+      name: 'deployJobName',
+      component: () => import('@/views/deployJob/index.vue'),
+      meta: {
+        locale: 'menu.deployJob',
+        requiresAuth: false,
+        roles: ['*'],
+      },
+    },
   ],
 };
 

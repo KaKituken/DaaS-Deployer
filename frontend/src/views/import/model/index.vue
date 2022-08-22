@@ -41,7 +41,6 @@
         <a-button type="primary" html-type="submit">添加模型</a-button>
       </a-form-item>
     </a-form>
-    {{ form }}
   </a-card>
 </template>
 

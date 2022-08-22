@@ -101,6 +101,7 @@
                   }"
                   placeholder=""
                   allow-clear
+                  disabled
                 />
                 <p style="margin-left: 10px">* 请求正文</p>
                 <a-textarea
@@ -197,20 +198,20 @@
     },
     {
       label: '创建时间',
-      value: '2019-7-9',
-    },
-    {
-      label: 'CPU核数',
       value: '-',
     },
     {
-      label: '内存(GB)',
+      label: '预留CPU核数',
+      value: '-',
+    },
+    {
+      label: '预留内存(MB)',
       value: '-',
     },
   ]);
 
   // 测试页面的变量
-  const testFuncName = ref();
+  const testFuncName = ref('predict');
   const testRequire = ref();
   const testResponse = ref();
   const visible = ref(false);
@@ -365,18 +366,19 @@
     indexData[0].firstAccessTime = res1.data.firstAccessTime;
     indexData[0].latestAccessTime = res1.data.lastAccessTime;
     copyData.value = res1.data.podList;
-    console.log('=====res1.data=====')
-    console.log(res1.data)
-    console.log('=====copyData.value=====')
-    console.log(copyData.value)
   });
 
   const dataSubmit = async () => {
     const userRequestData = JSON.parse(testRequire.value);
-    console.log(userRequestData);
+
+    const submitParam = {
+      modelName: modelName.value,
+      data: userRequestData
+    }
+
     const res1 = await axios.post<requireDataResponse>(
       postmsg.value,
-      userRequestData
+      submitParam
     );
     let returnData = JSON.stringify(res1.data);
     returnData = returnData.replace(/{([^{}]*)}/g, '{\n$1\n    }'); // 在{}对前面加缩进，后面加换行
