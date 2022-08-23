@@ -127,7 +127,7 @@
     },
     {
       title: '创建时间',
-      dataIndex: 'create_time',
+      dataIndex: 'createTime',
       sortable: {
         sortDirections: ['ascend', 'descend'],
       },
