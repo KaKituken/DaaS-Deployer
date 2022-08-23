@@ -128,7 +128,7 @@
     modelName: modelName.value,
     modelType: '',
     serviceName: '',
-    serverVersion: 'test',
+    serverVersion: '',
     cpuReserve: 0,
     memoryReserve: 0,
     replicas: 2,
