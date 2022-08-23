@@ -2,22 +2,22 @@ import { DEFAULT_LAYOUT } from '@/router/constants';
 import { AppRouteRecordRaw } from '../types';
 
 const MODELOVERVIEW: AppRouteRecordRaw = {
-  path: '/importModel',
-  name: 'importModel',
+  path: '/deployService',
+  name: 'deployService',
   component: DEFAULT_LAYOUT,
   meta: {
-    locale: 'menu.importModel',
+    locale: 'menu.deployService',
     requiresAuth: false,
     icon: 'icon-dashboard',
-    order: 1,
+    order: 2,
   },
   children: [
     {
-      path: '/import',
-      name: 'import',
-      component: () => import('@/views/importModel/index.vue'),
+      path: '/deployService/:modelName/:serviceName',
+      name: 'deployService',
+      component: () => import('@/views/deployService/index.vue'),
       meta: {
-        locale: 'menu.importModel',
+        locale: 'menu.deployService',
         requiresAuth: false,
         roles: ['*'],
       },

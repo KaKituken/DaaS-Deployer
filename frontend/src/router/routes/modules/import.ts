@@ -2,32 +2,32 @@ import { DEFAULT_LAYOUT } from '@/router/constants';
 import { AppRouteRecordRaw } from '../types';
 
 const MODELOVERVIEW: AppRouteRecordRaw = {
-  path: '/modelOverview',
-  name: 'modelOverview',
+  path: '/import',
+  name: 'import',
   component: DEFAULT_LAYOUT,
   meta: {
-    locale: 'menu.modelOverview',
+    locale: 'menu.import',
     requiresAuth: false,
     icon: 'icon-dashboard',
-    order: 0,
+    order: 1,
   },
   children: [
     {
-      path: '/detail/:modelname',
-      name: 'detail',
-      component: () => import('@/views/modelOverview/index.vue'),
+      path: '/import/model',
+      name: 'importModel',
+      component: () => import('@/views/import/model/index.vue'),
       meta: {
-        locale: 'menu.modelOverview.detail',
+        locale: 'menu.import.model',
         requiresAuth: false,
         roles: ['*'],
       },
     },
     {
-      path: '/detail/:modelname/:type',
-      name: 'namedDetail',
-      component: () => import('@/views/modelOverview/index.vue'),
+      path: '/import/dataset',
+      name: 'importDataset',
+      component: () => import('@/views/import/dataset/index.vue'),
       meta: {
-        locale: 'menu.modelOverview.detail',
+        locale: 'menu.import.dataset',
         requiresAuth: false,
         roles: ['*'],
       },

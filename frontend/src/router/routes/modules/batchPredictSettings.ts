@@ -2,22 +2,22 @@ import { DEFAULT_LAYOUT } from '@/router/constants';
 import { AppRouteRecordRaw } from '../types';
 
 const MODELOVERVIEW: AppRouteRecordRaw = {
-  path: '/deploy',
-  name: 'deploy',
+  path: '/modelPredict',
+  name: 'modelPredict',
   component: DEFAULT_LAYOUT,
   meta: {
-    locale: 'menu.deploy',
+    locale: 'menu.modelPredict',
     requiresAuth: false,
     icon: 'icon-dashboard',
-    order: 2,
+    order: 0,
   },
   children: [
     {
-      path: '/deploy',
-      name: 'deploy',
-      component: () => import('@/views/deploy/index.vue'),
+      path: '/batchPredictSettings/:modelname',
+      name: 'batchPredictSettings',
+      component: () => import('@/views/batchPredictSettings/index.vue'),
       meta: {
-        locale: 'menu.deploy',
+        locale: 'menu.modelPredict.batchPredictSettings',
         requiresAuth: false,
         roles: ['*'],
       },

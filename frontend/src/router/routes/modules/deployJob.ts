@@ -2,32 +2,32 @@ import { DEFAULT_LAYOUT } from '@/router/constants';
 import { AppRouteRecordRaw } from '../types';
 
 const MODELOVERVIEW: AppRouteRecordRaw = {
-  path: '/modelOverview',
-  name: 'modelOverview',
+  path: '/deployJob',
+  name: 'deployJob',
   component: DEFAULT_LAYOUT,
   meta: {
-    locale: 'menu.modelOverview',
+    locale: 'menu.deployJob',
     requiresAuth: false,
     icon: 'icon-dashboard',
-    order: 0,
+    order: 3,
   },
   children: [
     {
-      path: '/detail/:modelname',
-      name: 'detail',
-      component: () => import('@/views/modelOverview/index.vue'),
+      path: '/deployJob/:modelName/:jobName',
+      name: 'deployJob',
+      component: () => import('@/views/deployJob/index.vue'),
       meta: {
-        locale: 'menu.modelOverview.detail',
+        locale: 'menu.deployJob',
         requiresAuth: false,
         roles: ['*'],
       },
     },
     {
-      path: '/detail/:modelname/:type',
-      name: 'namedDetail',
-      component: () => import('@/views/modelOverview/index.vue'),
+      path: '/deployJob/:modelName/:jobName/:type',
+      name: 'deployJobName',
+      component: () => import('@/views/deployJob/index.vue'),
       meta: {
-        locale: 'menu.modelOverview.detail',
+        locale: 'menu.deployJob',
         requiresAuth: false,
         roles: ['*'],
       },

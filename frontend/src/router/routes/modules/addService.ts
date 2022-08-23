@@ -18,7 +18,7 @@ const MODELOVERVIEW: AppRouteRecordRaw = {
       component: () => import('@/views/addService/index.vue'),
       meta: {
         locale: 'menu.modelDeploy.addService',
-        requiresAuth: true,
+        requiresAuth: false,
         roles: ['*'],
       },
     },

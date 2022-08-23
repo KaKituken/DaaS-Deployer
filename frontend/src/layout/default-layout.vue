@@ -47,7 +47,7 @@
 <script lang="ts" setup>
   import { ref, computed, watch, provide } from 'vue';
   import { useRouter, useRoute } from 'vue-router';
-  import { useAppStore, useUserStore } from '@/store';
+  import { useAppStore } from '@/store';
   import NavBar from '@/components/navbar/index.vue';
   import Menu from '@/components/menu/index.vue';
   import Footer from '@/components/footer/index.vue';
@@ -57,7 +57,6 @@
   import PageLayout from './page-layout.vue';
 
   const appStore = useAppStore();
-  const userStore = useUserStore();
   const router = useRouter();
   const route = useRoute();
   const permission = usePermission();
@@ -84,13 +83,6 @@
   const setCollapsed = (val: boolean) => {
     appStore.updateSettings({ menuCollapse: val });
   };
-  watch(
-    () => userStore.role,
-    (roleValue) => {
-      if (roleValue && !permission.accessRouter(route))
-        router.push({ name: 'notFound' });
-    }
-  );
   const drawerVisible = ref(false);
   const drawerCancel = () => {
     drawerVisible.value = false;
