@@ -31,6 +31,7 @@ def preprocess_zip(zip, model): # 传入zip压缩包以及model
             pass
     return res
 
+
 def preprocess_csv(csv, model):
     csv_data = pd.read_csv(csv).to_dict(orient = 'records') # 读取csv文件并转化为字典
     print(csv_data)
@@ -46,6 +47,7 @@ def preprocess_csv(csv, model):
         res["inputs"] = inputs_list
     elif model.total['engine'] == 'ONNX Runtime': # 处理onnx格式的输入
         print('onnx csv')
+        
 
 def preprocess_img(image,model):
     img = Image.open(image) # 读取图片 

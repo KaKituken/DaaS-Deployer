@@ -178,6 +178,7 @@ Flask
   ```json
   {
       "modelName": "",
+      "type": "",	// 还需要传一下模型类型: pmml/onnx
       "data": {
           // 见./data/pmml_input_template.json
       }
@@ -256,7 +257,7 @@ python的版本就直接写死3.6, 3.7, 3.8, 3.9吧
           "createTime": ,
           "cpuReserve": ,	// 没有返回None
           "memoryReserve": ,	// 没有返回None
-          "副本信息列表pod_list": ,	// 通过pod.name, pod.status拿到每个副本的名称和状态
+          "副本信息列表podList": ,	// 通过pod.name, pod.status拿到每个副本的名称和状态
   	}
   }
   ```
@@ -301,7 +302,7 @@ python的版本就直接写死3.6, 3.7, 3.8, 3.9吧
   ```json
   {
       "data": {
-          "数据集信息列表datasetList": [],  // 通过dataset.name, dataset.type, dataset.size, dataset.source, dataset.create_time 拿到信息
+          "数据集信息列表datasetList": [],  // 通过dataset.name, dataset.type, dataset.size, dataset.source, dataset.createTime 拿到信息
       }
   }
   ```
@@ -408,7 +409,7 @@ python的版本就直接写死3.6, 3.7, 3.8, 3.9吧
       "扩展名ext": ,
       "任务名称jobName": ,
       "任务描述jobDescription": ,
-      "任务运行环境environment": ,	
+      "任务运行环境environment": ,	// serverVersion
       "环境变量variables": ,	// 可以先空着
       "命令参数args": ,	// 可以先空着
       "调度dispatch": ,	// "demand", "schedule"
@@ -464,7 +465,9 @@ python的版本就直接写死3.6, 3.7, 3.8, 3.9吧
   ```json
   {
       "副本名称runName": ,
-      "操作类型operationType": ,	// "stop", "pause", "continue"
+      "操作类型type": ,	// "stop", "pause", "continue", "delete", "result",
+      "类型dispatch": ,"demand/schedule"
+      "runId": "",	// 如果是获取result要带这个参数
   }
   ```
 
@@ -474,14 +477,17 @@ python的版本就直接写死3.6, 3.7, 3.8, 3.9吧
   {
       "data": {
       	"操作是否成功status": ,	// True/False
-          "目前run的状态runStatus": // 见上
   	}
   }
   ```
 
+### 获取当前
+
 ### 生成curl代码
 
 前端来写吧，用上面的restfulUrl即可
+
+
 
 
 

@@ -2,7 +2,7 @@ from abc import abstractmethod
 from pypmml import Model
 from preprocess_utils import parse_tensor, parse_fields
 from redirection import MyStdout, MyStderr
-from time import time
+from datetime import datetime
 import onnx
 import onnxruntime as rt
 import numpy as np
@@ -25,15 +25,15 @@ class PmmlModel(AbstractModel):
         super().__init__()
         self.model = Model.fromFile(path)
         self.name = name
-        self.create_time = time()
         self.total = {}
         self.total['engine'] = 'PyPMML'
-        self.total['name'] = self.model.modelName   # 这里需要改
+        self.total['name'] = self.name   # 这里需要改
         self.total['type'] = self.model.modelElement
         self.total['function'] = self.model.functionName
         self.total['descript'] = descript
         self.total['input'] = parse_fields(self.model.inputFields)
         self.total['output'] = parse_fields(self.model.outputFields)
+        self.total['create_time'] = datetime.now()  # TODO: 放到服务器上
 
     def getInfo(self) -> dict:
         return self.total
@@ -92,8 +92,10 @@ class OnnxModel(AbstractModel):
         self.total['type'] = 'ONNX'
         self.total['engine'] = 'ONNX Runtime'
         self.total['descript'] = descript
+        self.total['function'] = ""
         self.total['input'] = parse_tensor(graph.input[0])
         self.total['output'] = parse_tensor(graph.output[0])
+        self.total['create_time'] = datetime.now()  # TODO: 放到服务器上
 
     def getInfo(self):
         return self.total
@@ -113,8 +115,8 @@ class OnnxModel(AbstractModel):
         myStderr = MyStderr()
         myStdout = MyStdout()
         res = sess.run(outputs, inputs)
-        stderr = MyStderr.errinfo
-        stdout = MyStdout.outinfo
+        stderr = myStderr.errinfo
+        stdout = myStdout.outinfo
         print("test output redirection")
 
         # 恢复标准输出
