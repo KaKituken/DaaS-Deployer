@@ -315,6 +315,16 @@
   const showCode = ref(); // 显示的curl代码
   const visible = ref(false); // 是否显示悬浮窗
 
+  const initRunData = (data: any) => {
+    data.forEach((item: any) => {
+      if (item.job_list !== null) {
+        item.children = item.job_list;
+        delete item.job_list;
+      }
+    });
+    return data;
+  };
+
   // const curTab = ref('1');
 
   onMounted(async () => {
@@ -326,7 +336,7 @@
       'http://82.156.5.94:5000/job-info',
       param
     );
-    userRunData.value = res1.data.runList;
+    userRunData.value = initRunData(res1.data.runList);
     postmsg.value = res1.data.url.concat(jobName.value); // 获取url
     basicData[2].value = res1.data.modelName;
     basicData[3].value = res1.data.createTime;
@@ -376,7 +386,7 @@
       'http://82.156.5.94:5000/job-info',
       param
     );
-    userRunData.value = res2.data.runList;
+    userRunData.value = initRunData(res2.data.runList);
   };
 
   const genCode = () => {
@@ -444,7 +454,7 @@
           'http://82.156.5.94:5000/job-info',
           param
         );
-        userRunData.value = res1.data.runList;
+        userRunData.value = initRunData(res1.data.runList);
         /*
         if (op === 'result') {
           console.log(1);
