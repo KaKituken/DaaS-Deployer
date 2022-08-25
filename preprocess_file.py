@@ -3,7 +3,8 @@ import zipfile
 import os
 import numpy as np
 from PIL import Image
-import models
+import json
+from models import PmmlModel, OnnxModel
 
 
 IMG = ['jpg', 'png']
@@ -12,42 +13,49 @@ TXT = ['txt', 'json']
 
 def preprocess_zip(zip, model): # 传入zip压缩包以及model
     res = []
+    file_type = zip.split('.')[-1]
+    if file_type == 'csv':
+        preprocess_csv(zip, model)
+    else:
+        z = zipfile.ZipFile(zip)
+        for i in z.namelist():
+            try:
+                data = z.open(i)
+                _, ext = i.split('.')
+                if ext in IMG: # 图片集
+                    image_data = preprocess_img(data, model)
+                    print(image_data)
+                    res.append(image_data)
+                elif ext in TXT: # 文本文件
+                    # return str(type(data))
+                    res.append(preprocess_txt(data, ext))
+            except:
+                # return "failed"
+                pass
+        return res
 
-    z = zipfile.ZipFile(zip, "r")
-    # z = zipfile.ZipFile(os.path.join(os.getcwd(), 'img.zip'))
-    for i in z.namelist():
-        try:
-            data = z.open(i)
-            _, ext = i.split('.')
-            if ext in IMG: # 图片集
-                image_data = preprocess_img(data, model)
-                res.append(image_data)
-            elif ext in TXT: # 文本文件
-                res.append(preprocess_txt(data, ext))
-            else: # csv格式文件
-                csv_data = preprocess_csv(data, model)
-                res.append(csv_data)
-        except:
-            pass
-    return res
 
 def preprocess_csv(csv, model):
     csv_data = pd.read_csv(csv).to_dict(orient = 'records') # 读取csv文件并转化为字典
-    print(csv_data)
-    model_info = model.getInfo()['input']
-    res = {}
+    res = []
     if model.total['engine'] == 'PyPMML': # 处理pmml格式的输入
-        inputs_list = []
-        for k,v in csv_data[0].items():
-            item = {}
-            item['name'] = k
-            item['value'] = v
-            inputs_list.append(item)
-        res["inputs"] = inputs_list
+        for single_input in csv_data:
+            single_res = {}
+            inputs_list = []
+            for k, v in single_input.items():
+                item = {}
+                item['name'] = k
+                item['value'] = v
+                inputs_list.append(item)
+            single_res["inputs"] = inputs_list
+            res.append(single_res)
     elif model.total['engine'] == 'ONNX Runtime': # 处理onnx格式的输入
         print('onnx csv')
+    return res
+        
 
 def preprocess_img(image,model):
+    # print(image)
     img = Image.open(image) # 读取图片 
     img = img.convert('L') # 灰度化
     cols, rows = img.size # 图片大小
@@ -63,22 +71,17 @@ def preprocess_img(image,model):
     if model.total['engine'] == 'PyPMML': # 处理pmml格式的输入
         print('pmml img')
     elif model.total['engine'] == 'ONNX Runtime': # 处理onnx格式的输入
-        print(model_info)
-        res["X"] = [{model_info['name']:[[Value]]}]
+        np_value_reshape = np.reshape(np.array(Value), model_info['shape'])
+        # print(np_value_reshape.tolist())
+        res["X"] = [{model_info['name']:np_value_reshape.tolist()}]
         print(res)
     return res
 
 
-
 def preprocess_txt(txt, ext):
     if ext == 'txt':
-        return 'txt'
-    elif ext == 'json':
-        pass
+        return json.loads(txt.read())
     else:
-        return ""
+        return txt.read()
 
 
-if __name__ == '__main__':
-    model = models.OnnxModel('./data/mnist-8.onnx', 'test_model', "This is a test model")
-    preprocess_zip("", model)
