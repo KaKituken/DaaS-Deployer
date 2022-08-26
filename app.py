@@ -8,7 +8,6 @@ from datetime import datetime
 from manager import Manager
 from models import AbstractModel, PmmlModel, OnnxModel
 from flask import Flask, render_template, request, jsonify, Response, send_file
-from flask_session import Session
 from flask_cors import CORS
 from flask_restful import Resource, Api
 from database.database import init_db, db_session
