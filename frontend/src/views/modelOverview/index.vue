@@ -290,7 +290,7 @@
                   </template>
                   <a-textarea
                     v-model="predScript"
-                    style="width: 96%; height: 270px"
+                    style="width: 96%; height: 270px; color: black"
                     disabled
                   />
                   <a-button

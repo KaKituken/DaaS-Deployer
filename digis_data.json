@@ -1,0 +1,437 @@
+{
+    "engine": "PyPMML",
+    "name": null,
+    "type": "RegressionModel",
+    "function": "classification",
+    "descript": "this is a test model",
+    "input": [
+        {
+            "name": "x2",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x3",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x4",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x5",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x6",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x7",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x8",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x9",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x10",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x11",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x12",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x13",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x14",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x15",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x16",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x17",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x18",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x19",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x20",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x21",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x22",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x23",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x24",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x25",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x26",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x27",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x28",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x29",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x30",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x31",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x32",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x34",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x35",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x36",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x37",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x38",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x39",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x41",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x42",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x43",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x44",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x45",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x46",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x47",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x48",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x49",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x50",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x51",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x52",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x53",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x54",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x55",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x56",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x57",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x58",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x59",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x60",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x61",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x62",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x63",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "x64",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        }
+    ],
+    "output": [
+        {
+            "name": "probability(0)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "probability(1)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "probability(2)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "probability(3)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "probability(4)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "probability(5)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "probability(6)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "probability(7)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "probability(8)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        },
+        {
+            "name": "probability(9)",
+            "optype": "continuous",
+            "dataType": "double",
+            "valueRange": ""
+        }
+    ]
+}

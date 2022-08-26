@@ -19,7 +19,7 @@
             <p style="font-weight: bold; font-size: 22px">{{ jobName }}</p>
             <p style="width: 600px"
               ><span style="color: gray">端点：</span
-              ><span style="colro: black; font-weight: bold">POST </span
+              ><span style="color: black; font-weight: bold">POST </span
               ><span style="color: purple">{{ postmsg }}</span></p
             >
           </div>

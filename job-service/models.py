@@ -28,8 +28,8 @@ class PmmlModel(AbstractModel):
         self.total = {}
         self.total['engine'] = 'PyPMML'
         self.total['name'] = self.name   # 这里需要改
-        self.total['type'] = 'pmml'
-        self.total['function'] = self.model.modelElement + '(' + self.model.functionName + ')'
+        self.total['type'] = self.model.modelElement
+        self.total['function'] = self.model.functionName
         self.total['descript'] = descript
         self.total['input'] = parse_fields(self.model.inputFields)
         self.total['output'] = parse_fields(self.model.outputFields)
@@ -89,12 +89,11 @@ class OnnxModel(AbstractModel):
         self.total = {}
         graph = self.model.graph
         self.total['name'] = name
-        self.total['type'] = 'onnx'
+        self.total['type'] = 'ONNX'
         self.total['engine'] = 'ONNX Runtime'
         self.total['descript'] = descript
-        self.total['function'] = "-"
-        self.total['input'] = [parse_tensor(graph.input[0])]
-        self.total['output'] = [parse_tensor(graph.output[0])]
+        self.total['input'] = parse_tensor(graph.input[0])
+        self.total['output'] = parse_tensor(graph.output[0])
         self.total['create_time'] = datetime.now()  # TODO: 放到服务器上
 
     def getInfo(self):
@@ -115,8 +114,8 @@ class OnnxModel(AbstractModel):
         myStderr = MyStderr()
         myStdout = MyStdout()
         res = sess.run(outputs, inputs)
-        stderr = myStderr.errinfo
-        stdout = myStdout.outinfo
+        stderr = myStderr.errinfo   # TODO：原来的文件也要改一下
+        stdout = myStdout.outinfo   # TODO：原来的文件也要改一下
         print("test output redirection")
 
         # 恢复标准输出

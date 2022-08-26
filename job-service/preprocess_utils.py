@@ -21,12 +21,3 @@ def parse_fields(fields):
         info['valueRange'] = input.valuesAsString
         res.append(info)
     return res
-
-def parse_fields2(fields):
-    res = []
-    for input in fields:
-        info = {}
-        info['name'] = input.name
-        info['value'] = ''
-        res.append(info)
-    return res

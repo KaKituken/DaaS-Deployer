@@ -1,0 +1,9 @@
+Flask
+flask_cors
+Flask_RESTful
+numpy
+onnx
+onnxruntime
+pypmml
+pillow
+pandas

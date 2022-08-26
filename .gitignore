@@ -4,3 +4,4 @@
 __pycache__
 runmodel.py
 .DS_Store
+*.zip

@@ -12,3 +12,10 @@ class Manager():
     
     def getModel(self, name) -> AbstractModel:
         return self.map[name]
+
+    # TODO: 放到本地
+    def deleteModel(self, name) -> bool:
+        if name not in self.map.keys():
+            return False
+        del self.map[name]
+        return True

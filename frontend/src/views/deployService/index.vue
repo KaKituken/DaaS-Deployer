@@ -433,8 +433,10 @@
     );
     showCode.value = showCode.value.concat(
       " --header 'Content-Type: application/json' --data-raw '",
+      "{",
+      '"data":',
       testRequire.value,
-      "'"
+      "}'"
     );
 
     // 根据文件生成代码

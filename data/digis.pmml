@@ -1,0 +1,1345 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PMML xmlns="http://www.dmg.org/PMML-4_4" xmlns:data="http://jpmml.org/jpmml-model/InlineTable" version="4.4">
+	<Header>
+		<Application name="JPMML-SkLearn library" version="1.7.10"/>
+		<Timestamp>2022-08-03T12:31:25Z</Timestamp>
+	</Header>
+	<MiningBuildTask>
+		<Extension name="repr">PMMLPipeline(steps=[('scaler', StandardScaler()),
+       ('logisticRegression', LogisticRegression(C=5, multi_class='multinomial'))])</Extension>
+	</MiningBuildTask>
+	<DataDictionary>
+		<DataField name="y" optype="categorical" dataType="integer">
+			<Value value="0"/>
+			<Value value="1"/>
+			<Value value="2"/>
+			<Value value="3"/>
+			<Value value="4"/>
+			<Value value="5"/>
+			<Value value="6"/>
+			<Value value="7"/>
+			<Value value="8"/>
+			<Value value="9"/>
+		</DataField>
+		<DataField name="x2" optype="continuous" dataType="double"/>
+		<DataField name="x3" optype="continuous" dataType="double"/>
+		<DataField name="x4" optype="continuous" dataType="double"/>
+		<DataField name="x5" optype="continuous" dataType="double"/>
+		<DataField name="x6" optype="continuous" dataType="double"/>
+		<DataField name="x7" optype="continuous" dataType="double"/>
+		<DataField name="x8" optype="continuous" dataType="double"/>
+		<DataField name="x9" optype="continuous" dataType="double"/>
+		<DataField name="x10" optype="continuous" dataType="double"/>
+		<DataField name="x11" optype="continuous" dataType="double"/>
+		<DataField name="x12" optype="continuous" dataType="double"/>
+		<DataField name="x13" optype="continuous" dataType="double"/>
+		<DataField name="x14" optype="continuous" dataType="double"/>
+		<DataField name="x15" optype="continuous" dataType="double"/>
+		<DataField name="x16" optype="continuous" dataType="double"/>
+		<DataField name="x17" optype="continuous" dataType="double"/>
+		<DataField name="x18" optype="continuous" dataType="double"/>
+		<DataField name="x19" optype="continuous" dataType="double"/>
+		<DataField name="x20" optype="continuous" dataType="double"/>
+		<DataField name="x21" optype="continuous" dataType="double"/>
+		<DataField name="x22" optype="continuous" dataType="double"/>
+		<DataField name="x23" optype="continuous" dataType="double"/>
+		<DataField name="x24" optype="continuous" dataType="double"/>
+		<DataField name="x25" optype="continuous" dataType="double"/>
+		<DataField name="x26" optype="continuous" dataType="double"/>
+		<DataField name="x27" optype="continuous" dataType="double"/>
+		<DataField name="x28" optype="continuous" dataType="double"/>
+		<DataField name="x29" optype="continuous" dataType="double"/>
+		<DataField name="x30" optype="continuous" dataType="double"/>
+		<DataField name="x31" optype="continuous" dataType="double"/>
+		<DataField name="x32" optype="continuous" dataType="double"/>
+		<DataField name="x34" optype="continuous" dataType="double"/>
+		<DataField name="x35" optype="continuous" dataType="double"/>
+		<DataField name="x36" optype="continuous" dataType="double"/>
+		<DataField name="x37" optype="continuous" dataType="double"/>
+		<DataField name="x38" optype="continuous" dataType="double"/>
+		<DataField name="x39" optype="continuous" dataType="double"/>
+		<DataField name="x41" optype="continuous" dataType="double"/>
+		<DataField name="x42" optype="continuous" dataType="double"/>
+		<DataField name="x43" optype="continuous" dataType="double"/>
+		<DataField name="x44" optype="continuous" dataType="double"/>
+		<DataField name="x45" optype="continuous" dataType="double"/>
+		<DataField name="x46" optype="continuous" dataType="double"/>
+		<DataField name="x47" optype="continuous" dataType="double"/>
+		<DataField name="x48" optype="continuous" dataType="double"/>
+		<DataField name="x49" optype="continuous" dataType="double"/>
+		<DataField name="x50" optype="continuous" dataType="double"/>
+		<DataField name="x51" optype="continuous" dataType="double"/>
+		<DataField name="x52" optype="continuous" dataType="double"/>
+		<DataField name="x53" optype="continuous" dataType="double"/>
+		<DataField name="x54" optype="continuous" dataType="double"/>
+		<DataField name="x55" optype="continuous" dataType="double"/>
+		<DataField name="x56" optype="continuous" dataType="double"/>
+		<DataField name="x57" optype="continuous" dataType="double"/>
+		<DataField name="x58" optype="continuous" dataType="double"/>
+		<DataField name="x59" optype="continuous" dataType="double"/>
+		<DataField name="x60" optype="continuous" dataType="double"/>
+		<DataField name="x61" optype="continuous" dataType="double"/>
+		<DataField name="x62" optype="continuous" dataType="double"/>
+		<DataField name="x63" optype="continuous" dataType="double"/>
+		<DataField name="x64" optype="continuous" dataType="double"/>
+	</DataDictionary>
+	<RegressionModel functionName="classification" algorithmName="sklearn.linear_model._logistic.LogisticRegression" normalizationMethod="softmax">
+		<MiningSchema>
+			<MiningField name="y" usageType="target"/>
+			<MiningField name="x2"/>
+			<MiningField name="x3"/>
+			<MiningField name="x4"/>
+			<MiningField name="x5"/>
+			<MiningField name="x6"/>
+			<MiningField name="x7"/>
+			<MiningField name="x8"/>
+			<MiningField name="x9"/>
+			<MiningField name="x10"/>
+			<MiningField name="x11"/>
+			<MiningField name="x12"/>
+			<MiningField name="x13"/>
+			<MiningField name="x14"/>
+			<MiningField name="x15"/>
+			<MiningField name="x16"/>
+			<MiningField name="x17"/>
+			<MiningField name="x18"/>
+			<MiningField name="x19"/>
+			<MiningField name="x20"/>
+			<MiningField name="x21"/>
+			<MiningField name="x22"/>
+			<MiningField name="x23"/>
+			<MiningField name="x24"/>
+			<MiningField name="x25"/>
+			<MiningField name="x26"/>
+			<MiningField name="x27"/>
+			<MiningField name="x28"/>
+			<MiningField name="x29"/>
+			<MiningField name="x30"/>
+			<MiningField name="x31"/>
+			<MiningField name="x32"/>
+			<MiningField name="x34"/>
+			<MiningField name="x35"/>
+			<MiningField name="x36"/>
+			<MiningField name="x37"/>
+			<MiningField name="x38"/>
+			<MiningField name="x39"/>
+			<MiningField name="x41"/>
+			<MiningField name="x42"/>
+			<MiningField name="x43"/>
+			<MiningField name="x44"/>
+			<MiningField name="x45"/>
+			<MiningField name="x46"/>
+			<MiningField name="x47"/>
+			<MiningField name="x48"/>
+			<MiningField name="x49"/>
+			<MiningField name="x50"/>
+			<MiningField name="x51"/>
+			<MiningField name="x52"/>
+			<MiningField name="x53"/>
+			<MiningField name="x54"/>
+			<MiningField name="x55"/>
+			<MiningField name="x56"/>
+			<MiningField name="x57"/>
+			<MiningField name="x58"/>
+			<MiningField name="x59"/>
+			<MiningField name="x60"/>
+			<MiningField name="x61"/>
+			<MiningField name="x62"/>
+			<MiningField name="x63"/>
+			<MiningField name="x64"/>
+		</MiningSchema>
+		<Output>
+			<OutputField name="probability(0)" optype="continuous" dataType="double" feature="probability" value="0"/>
+			<OutputField name="probability(1)" optype="continuous" dataType="double" feature="probability" value="1"/>
+			<OutputField name="probability(2)" optype="continuous" dataType="double" feature="probability" value="2"/>
+			<OutputField name="probability(3)" optype="continuous" dataType="double" feature="probability" value="3"/>
+			<OutputField name="probability(4)" optype="continuous" dataType="double" feature="probability" value="4"/>
+			<OutputField name="probability(5)" optype="continuous" dataType="double" feature="probability" value="5"/>
+			<OutputField name="probability(6)" optype="continuous" dataType="double" feature="probability" value="6"/>
+			<OutputField name="probability(7)" optype="continuous" dataType="double" feature="probability" value="7"/>
+			<OutputField name="probability(8)" optype="continuous" dataType="double" feature="probability" value="8"/>
+			<OutputField name="probability(9)" optype="continuous" dataType="double" feature="probability" value="9"/>
+		</Output>
+		<LocalTransformations>
+			<DerivedField name="standardScaler(x2)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x2"/>
+						<Constant dataType="double">0.33015115354017505</Constant>
+					</Apply>
+					<Constant dataType="double">0.9614640417843218</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x3)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x3"/>
+						<Constant dataType="double">5.298329355608592</Constant>
+					</Apply>
+					<Constant dataType="double">4.832362931003282</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x4)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x4"/>
+						<Constant dataType="double">11.799522673031026</Constant>
+					</Apply>
+					<Constant dataType="double">4.2827176438040055</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x5)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x5"/>
+						<Constant dataType="double">11.833731105807479</Constant>
+					</Apply>
+					<Constant dataType="double">4.281860297381952</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x6)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x6"/>
+						<Constant dataType="double">5.8512330946698485</Constant>
+					</Apply>
+					<Constant dataType="double">5.664947602183428</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x7)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x7"/>
+						<Constant dataType="double">1.3540175019888623</Constant>
+					</Apply>
+					<Constant dataType="double">3.3343827558428183</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x8)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x8"/>
+						<Constant dataType="double">0.12251392203659507</Constant>
+					</Apply>
+					<Constant dataType="double">0.9799634919272427</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x9)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x9"/>
+						<Constant dataType="double">0.005568814638027049</Constant>
+					</Apply>
+					<Constant dataType="double">0.09338084779392834</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x10)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x10"/>
+						<Constant dataType="double">2.012728719172633</Constant>
+					</Apply>
+					<Constant dataType="double">3.213411179495515</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x11)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x11"/>
+						<Constant dataType="double">10.381861575178998</Constant>
+					</Apply>
+					<Constant dataType="double">5.471609406922297</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x12)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x12"/>
+						<Constant dataType="double">12.13365155131265</Constant>
+					</Apply>
+					<Constant dataType="double">3.9525372795465024</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x13)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x13"/>
+						<Constant dataType="double">10.382657120127288</Constant>
+					</Apply>
+					<Constant dataType="double">4.818994333304649</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x14)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x14"/>
+						<Constant dataType="double">8.253778838504376</Constant>
+					</Apply>
+					<Constant dataType="double">6.04452088565224</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x15)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x15"/>
+						<Constant dataType="double">1.817024661893397</Constant>
+					</Apply>
+					<Constant dataType="double">3.4947301697863136</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x16)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x16"/>
+						<Constant dataType="double">0.09705648369132856</Constant>
+					</Apply>
+					<Constant dataType="double">0.769423173475041</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x17)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x17"/>
+						<Constant dataType="double">0.0015910898965791568</Constant>
+					</Apply>
+					<Constant dataType="double">0.039856722513526115</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x18)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x18"/>
+						<Constant dataType="double">2.5465393794749405</Constant>
+					</Apply>
+					<Constant dataType="double">3.5667883137829337</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x19)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x19"/>
+						<Constant dataType="double">9.84805091487669</Constant>
+					</Apply>
+					<Constant dataType="double">5.632894193628381</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x20)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x20"/>
+						<Constant dataType="double">7.140015910898966</Constant>
+					</Apply>
+					<Constant dataType="double">5.827496149809081</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x21)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x21"/>
+						<Constant dataType="double">7.116945107398568</Constant>
+					</Apply>
+					<Constant dataType="double">6.219135985160557</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x22)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x22"/>
+						<Constant dataType="double">7.787589498806683</Constant>
+					</Apply>
+					<Constant dataType="double">6.185046663080903</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x23)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x23"/>
+						<Constant dataType="double">1.7462211614956245</Constant>
+					</Apply>
+					<Constant dataType="double">3.1835951506352047</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x24)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x24"/>
+						<Constant dataType="double">0.04852824184566428</Constant>
+					</Apply>
+					<Constant dataType="double">0.429648778179831</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x25)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x25"/>
+						<Constant dataType="double">7.955449482895784E-4</Constant>
+					</Apply>
+					<Constant dataType="double">0.028194184799792132</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x26)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x26"/>
+						<Constant dataType="double">2.466189339697693</Constant>
+					</Apply>
+					<Constant dataType="double">3.131792607740424</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x27)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x27"/>
+						<Constant dataType="double">9.07478122513922</Constant>
+					</Apply>
+					<Constant dataType="double">6.245887784156883</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x28)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x28"/>
+						<Constant dataType="double">8.818615751789975</Constant>
+					</Apply>
+					<Constant dataType="double">5.887613873990279</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x29)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x29"/>
+						<Constant dataType="double">9.853619729514717</Constant>
+					</Apply>
+					<Constant dataType="double">6.209999508724102</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x30)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x30"/>
+						<Constant dataType="double">7.466984884645982</Constant>
+					</Apply>
+					<Constant dataType="double">5.832921672442046</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x31)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x31"/>
+						<Constant dataType="double">2.381066030230708</Constant>
+					</Apply>
+					<Constant dataType="double">3.7161058406013607</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x32)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x32"/>
+						<Constant dataType="double">0.0015910898965791568</Constant>
+					</Apply>
+					<Constant dataType="double">0.03985672251352544</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x34)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x34"/>
+						<Constant dataType="double">2.3627684964200477</Constant>
+					</Apply>
+					<Constant dataType="double">3.5082103456692595</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x35)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x35"/>
+						<Constant dataType="double">7.599840891010342</Constant>
+					</Apply>
+					<Constant dataType="double">6.285043045554237</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x36)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x36"/>
+						<Constant dataType="double">9.048528241845665</Constant>
+					</Apply>
+					<Constant dataType="double">6.23677852310461</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x37)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x37"/>
+						<Constant dataType="double">10.247414478918058</Constant>
+					</Apply>
+					<Constant dataType="double">5.977021372266627</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x38)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x38"/>
+						<Constant dataType="double">8.635640413683372</Constant>
+					</Apply>
+					<Constant dataType="double">5.939440019078254</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x39)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x39"/>
+						<Constant dataType="double">2.9594272076372317</Constant>
+					</Apply>
+					<Constant dataType="double">3.5798573310138004</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x41)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x41"/>
+						<Constant dataType="double">0.010342084327764518</Constant>
+					</Apply>
+					<Constant dataType="double">0.16654463210170725</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x42)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x42"/>
+						<Constant dataType="double">1.6181384248210025</Constant>
+					</Apply>
+					<Constant dataType="double">3.0496692367193203</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x43)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x43"/>
+						<Constant dataType="double">6.9514717581543355</Constant>
+					</Apply>
+					<Constant dataType="double">6.538305207458363</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x44)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x44"/>
+						<Constant dataType="double">7.315831344470962</Constant>
+					</Apply>
+					<Constant dataType="double">6.469167738597215</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x45)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x45"/>
+						<Constant dataType="double">7.77406523468576</Constant>
+					</Apply>
+					<Constant dataType="double">6.240463497784769</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x46)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x46"/>
+						<Constant dataType="double">8.15194908512331</Constant>
+					</Apply>
+					<Constant dataType="double">5.724514808171512</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x47)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x47"/>
+						<Constant dataType="double">3.319013524264121</Constant>
+					</Apply>
+					<Constant dataType="double">4.295848727573083</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x48)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x48"/>
+						<Constant dataType="double">0.030230708035003977</Constant>
+					</Apply>
+					<Constant dataType="double">0.31767256361349244</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x49)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x49"/>
+						<Constant dataType="double">0.010342084327764518</Constant>
+					</Apply>
+					<Constant dataType="double">0.24404694715049596</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x50)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x50"/>
+						<Constant dataType="double">0.7486077963404932</Constant>
+					</Apply>
+					<Constant dataType="double">1.8315193304443507</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x51)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x51"/>
+						<Constant dataType="double">7.606205250596659</Constant>
+					</Apply>
+					<Constant dataType="double">5.676934279650381</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x52)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x52"/>
+						<Constant dataType="double">9.672235481304694</Constant>
+					</Apply>
+					<Constant dataType="double">5.251431673435525</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x53)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x53"/>
+						<Constant dataType="double">9.606205250596659</Constant>
+					</Apply>
+					<Constant dataType="double">5.199295558355825</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x54)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x54"/>
+						<Constant dataType="double">8.704852824184567</Constant>
+					</Apply>
+					<Constant dataType="double">6.059601899236086</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x55)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x55"/>
+						<Constant dataType="double">3.5194908512330945</Constant>
+					</Apply>
+					<Constant dataType="double">4.789421889115345</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x56)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x56"/>
+						<Constant dataType="double">0.18615751789976134</Constant>
+					</Apply>
+					<Constant dataType="double">0.9373531773914523</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x57)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x57"/>
+						<Constant dataType="double">7.955449482895784E-4</Constant>
+					</Apply>
+					<Constant dataType="double">0.028194184799792278</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x58)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x58"/>
+						<Constant dataType="double">0.3118536197295147</Constant>
+					</Apply>
+					<Constant dataType="double">1.0145141530011395</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x59)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x59"/>
+						<Constant dataType="double">5.6579156722354815</Constant>
+					</Apply>
+					<Constant dataType="double">5.166665671393247</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x60)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x60"/>
+						<Constant dataType="double">12.082736674622117</Constant>
+					</Apply>
+					<Constant dataType="double">4.432773310807947</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x61)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x61"/>
+						<Constant dataType="double">11.760540970564836</Constant>
+					</Apply>
+					<Constant dataType="double">4.920281184129513</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x62)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x62"/>
+						<Constant dataType="double">6.572792362768497</Constant>
+					</Apply>
+					<Constant dataType="double">5.858419034770223</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x63)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x63"/>
+						<Constant dataType="double">1.9506762132060462</Constant>
+					</Apply>
+					<Constant dataType="double">3.989539018399292</Constant>
+				</Apply>
+			</DerivedField>
+			<DerivedField name="standardScaler(x64)" optype="continuous" dataType="double">
+				<Apply function="/">
+					<Apply function="-">
+						<FieldRef field="x64"/>
+						<Constant dataType="double">0.3237867939538584</Constant>
+					</Apply>
+					<Constant dataType="double">1.7449139125869644</Constant>
+				</Apply>
+			</DerivedField>
+		</LocalTransformations>
+		<RegressionTable intercept="0.39819765103609206" targetCategory="0">
+			<NumericPredictor name="standardScaler(x2)" coefficient="0.03189744284218235"/>
+			<NumericPredictor name="standardScaler(x3)" coefficient="-0.11777660587149398"/>
+			<NumericPredictor name="standardScaler(x4)" coefficient="0.07158328620886444"/>
+			<NumericPredictor name="standardScaler(x5)" coefficient="0.02572921974205586"/>
+			<NumericPredictor name="standardScaler(x6)" coefficient="-0.5064564742358146"/>
+			<NumericPredictor name="standardScaler(x7)" coefficient="-0.3922022191112037"/>
+			<NumericPredictor name="standardScaler(x8)" coefficient="-0.03247562449736759"/>
+			<NumericPredictor name="standardScaler(x9)" coefficient="-0.00661813345542894"/>
+			<NumericPredictor name="standardScaler(x10)" coefficient="-0.10049776101694602"/>
+			<NumericPredictor name="standardScaler(x11)" coefficient="-0.24859179282978042"/>
+			<NumericPredictor name="standardScaler(x12)" coefficient="0.47401848737339136"/>
+			<NumericPredictor name="standardScaler(x13)" coefficient="0.07719741535297073"/>
+			<NumericPredictor name="standardScaler(x14)" coefficient="0.16512824399191062"/>
+			<NumericPredictor name="standardScaler(x15)" coefficient="-0.19845259859490633"/>
+			<NumericPredictor name="standardScaler(x16)" coefficient="-0.04968354318548359"/>
+			<NumericPredictor name="standardScaler(x17)" coefficient="-1.0216021230742259E-4"/>
+			<NumericPredictor name="standardScaler(x18)" coefficient="0.17662693117011222"/>
+			<NumericPredictor name="standardScaler(x19)" coefficient="0.22942002354278926"/>
+			<NumericPredictor name="standardScaler(x20)" coefficient="-0.08372050676749503"/>
+			<NumericPredictor name="standardScaler(x21)" coefficient="-1.0541387532680013"/>
+			<NumericPredictor name="standardScaler(x22)" coefficient="0.6525272613927265"/>
+			<NumericPredictor name="standardScaler(x23)" coefficient="0.22864719378005935"/>
+			<NumericPredictor name="standardScaler(x24)" coefficient="-0.0691461908646563"/>
+			<NumericPredictor name="standardScaler(x25)" coefficient="-1.2950869583137965E-4"/>
+			<NumericPredictor name="standardScaler(x26)" coefficient="0.3514730688438304"/>
+			<NumericPredictor name="standardScaler(x27)" coefficient="0.37677029168716947"/>
+			<NumericPredictor name="standardScaler(x28)" coefficient="-0.6421328190273221"/>
+			<NumericPredictor name="standardScaler(x29)" coefficient="-1.6480156306001177"/>
+			<NumericPredictor name="standardScaler(x30)" coefficient="0.025508170064428806"/>
+			<NumericPredictor name="standardScaler(x31)" coefficient="0.49823039164241684"/>
+			<NumericPredictor name="standardScaler(x32)" coefficient="-6.870249161112715E-4"/>
+			<NumericPredictor name="standardScaler(x34)" coefficient="0.498932181749481"/>
+			<NumericPredictor name="standardScaler(x35)" coefficient="0.4044418192365749"/>
+			<NumericPredictor name="standardScaler(x36)" coefficient="-0.5980021650559829"/>
+			<NumericPredictor name="standardScaler(x37)" coefficient="-1.2423231475177625"/>
+			<NumericPredictor name="standardScaler(x38)" coefficient="0.13446489897678554"/>
+			<NumericPredictor name="standardScaler(x39)" coefficient="0.3215035031217033"/>
+			<NumericPredictor name="standardScaler(x41)" coefficient="-4.130975875572486E-4"/>
+			<NumericPredictor name="standardScaler(x42)" coefficient="-0.12012282669256408"/>
+			<NumericPredictor name="standardScaler(x43)" coefficient="0.7829735707452729"/>
+			<NumericPredictor name="standardScaler(x44)" coefficient="-0.3877012385792445"/>
+			<NumericPredictor name="standardScaler(x45)" coefficient="-0.383947078614477"/>
+			<NumericPredictor name="standardScaler(x46)" coefficient="0.3642028328009854"/>
+			<NumericPredictor name="standardScaler(x47)" coefficient="0.15823651110395498"/>
+			<NumericPredictor name="standardScaler(x48)" coefficient="-0.002660814824073066"/>
+			<NumericPredictor name="standardScaler(x49)" coefficient="-6.395196008401905E-4"/>
+			<NumericPredictor name="standardScaler(x50)" coefficient="-0.14115322034518055"/>
+			<NumericPredictor name="standardScaler(x51)" coefficient="0.36096752159514667"/>
+			<NumericPredictor name="standardScaler(x52)" coefficient="0.07677394586072481"/>
+			<NumericPredictor name="standardScaler(x53)" coefficient="0.46982590690292636"/>
+			<NumericPredictor name="standardScaler(x54)" coefficient="0.14039053602376655"/>
+			<NumericPredictor name="standardScaler(x55)" coefficient="-0.1307334509654357"/>
+			<NumericPredictor name="standardScaler(x56)" coefficient="-0.1407408165441131"/>
+			<NumericPredictor name="standardScaler(x57)" coefficient="-6.943807624247976E-5"/>
+			<NumericPredictor name="standardScaler(x58)" coefficient="0.008372109556470745"/>
+			<NumericPredictor name="standardScaler(x59)" coefficient="-0.08881617027633425"/>
+			<NumericPredictor name="standardScaler(x60)" coefficient="0.4621138247834732"/>
+			<NumericPredictor name="standardScaler(x61)" coefficient="-0.16997518024013994"/>
+			<NumericPredictor name="standardScaler(x62)" coefficient="-0.07550997653370754"/>
+			<NumericPredictor name="standardScaler(x63)" coefficient="-0.22185055530051773"/>
+			<NumericPredictor name="standardScaler(x64)" coefficient="-0.2459746130026737"/>
+		</RegressionTable>
+		<RegressionTable intercept="-1.3851746097011892" targetCategory="1">
+			<NumericPredictor name="standardScaler(x2)" coefficient="3.166120585521513E-4"/>
+			<NumericPredictor name="standardScaler(x3)" coefficient="-0.06814141735635"/>
+			<NumericPredictor name="standardScaler(x4)" coefficient="0.1622568823752279"/>
+			<NumericPredictor name="standardScaler(x5)" coefficient="-1.98649718291162"/>
+			<NumericPredictor name="standardScaler(x6)" coefficient="1.5101279172245197"/>
+			<NumericPredictor name="standardScaler(x7)" coefficient="0.6172604720109799"/>
+			<NumericPredictor name="standardScaler(x8)" coefficient="-0.11023879898252818"/>
+			<NumericPredictor name="standardScaler(x9)" coefficient="-4.414887000176336E-4"/>
+			<NumericPredictor name="standardScaler(x10)" coefficient="-0.9246868086000991"/>
+			<NumericPredictor name="standardScaler(x11)" coefficient="-1.428307484774862"/>
+			<NumericPredictor name="standardScaler(x12)" coefficient="-0.895837593490446"/>
+			<NumericPredictor name="standardScaler(x13)" coefficient="1.0479680192112197"/>
+			<NumericPredictor name="standardScaler(x14)" coefficient="-0.4214674349692891"/>
+			<NumericPredictor name="standardScaler(x15)" coefficient="-0.7939828318950567"/>
+			<NumericPredictor name="standardScaler(x16)" coefficient="-0.13108895258742723"/>
+			<NumericPredictor name="standardScaler(x17)" coefficient="-0.0011375691997125995"/>
+			<NumericPredictor name="standardScaler(x18)" coefficient="0.6201070895866216"/>
+			<NumericPredictor name="standardScaler(x19)" coefficient="0.22301202532517905"/>
+			<NumericPredictor name="standardScaler(x20)" coefficient="2.4574935619438314"/>
+			<NumericPredictor name="standardScaler(x21)" coefficient="1.5831668808157757"/>
+			<NumericPredictor name="standardScaler(x22)" coefficient="-0.5738840247596977"/>
+			<NumericPredictor name="standardScaler(x23)" coefficient="0.47475613523138427"/>
+			<NumericPredictor name="standardScaler(x24)" coefficient="-0.02783229509599815"/>
+			<NumericPredictor name="standardScaler(x25)" coefficient="-0.10144043154449428"/>
+			<NumericPredictor name="standardScaler(x26)" coefficient="-0.24510601820717878"/>
+			<NumericPredictor name="standardScaler(x27)" coefficient="0.0523833801452141"/>
+			<NumericPredictor name="standardScaler(x28)" coefficient="0.2559601077621489"/>
+			<NumericPredictor name="standardScaler(x29)" coefficient="1.0307734089210363"/>
+			<NumericPredictor name="standardScaler(x30)" coefficient="0.7281909093474735"/>
+			<NumericPredictor name="standardScaler(x31)" coefficient="-0.31139646780138674"/>
+			<NumericPredictor name="standardScaler(x32)" coefficient="-2.1158487555841127E-4"/>
+			<NumericPredictor name="standardScaler(x34)" coefficient="0.36114334290603484"/>
+			<NumericPredictor name="standardScaler(x35)" coefficient="0.5333690012204226"/>
+			<NumericPredictor name="standardScaler(x36)" coefficient="-0.4642310392097292"/>
+			<NumericPredictor name="standardScaler(x37)" coefficient="0.5663045792900441"/>
+			<NumericPredictor name="standardScaler(x38)" coefficient="0.12890692844885196"/>
+			<NumericPredictor name="standardScaler(x39)" coefficient="-0.3465484482573434"/>
+			<NumericPredictor name="standardScaler(x41)" coefficient="-3.8604181548608545E-4"/>
+			<NumericPredictor name="standardScaler(x42)" coefficient="-0.6543367106868335"/>
+			<NumericPredictor name="standardScaler(x43)" coefficient="0.02372462569327958"/>
+			<NumericPredictor name="standardScaler(x44)" coefficient="1.4121008368589454"/>
+			<NumericPredictor name="standardScaler(x45)" coefficient="0.4033186774716594"/>
+			<NumericPredictor name="standardScaler(x46)" coefficient="-0.8407490396722606"/>
+			<NumericPredictor name="standardScaler(x47)" coefficient="-0.6546841760361624"/>
+			<NumericPredictor name="standardScaler(x48)" coefficient="-0.22749742195867984"/>
+			<NumericPredictor name="standardScaler(x49)" coefficient="-4.0403329293434945E-4"/>
+			<NumericPredictor name="standardScaler(x50)" coefficient="-0.3293561529384629"/>
+			<NumericPredictor name="standardScaler(x51)" coefficient="-0.11725306894688235"/>
+			<NumericPredictor name="standardScaler(x52)" coefficient="0.40948513203653414"/>
+			<NumericPredictor name="standardScaler(x53)" coefficient="0.7235644804685133"/>
+			<NumericPredictor name="standardScaler(x54)" coefficient="0.13291650035457683"/>
+			<NumericPredictor name="standardScaler(x55)" coefficient="-0.3566466629583445"/>
+			<NumericPredictor name="standardScaler(x56)" coefficient="0.29525969007064445"/>
+			<NumericPredictor name="standardScaler(x57)" coefficient="-6.822828453016541E-4"/>
+			<NumericPredictor name="standardScaler(x58)" coefficient="-0.07840635950657064"/>
+			<NumericPredictor name="standardScaler(x59)" coefficient="-0.4751025870187003"/>
+			<NumericPredictor name="standardScaler(x60)" coefficient="0.22145411017419525"/>
+			<NumericPredictor name="standardScaler(x61)" coefficient="0.6190644652135093"/>
+			<NumericPredictor name="standardScaler(x62)" coefficient="0.40847893734083823"/>
+			<NumericPredictor name="standardScaler(x63)" coefficient="0.5370566076273676"/>
+			<NumericPredictor name="standardScaler(x64)" coefficient="0.6998378754250345"/>
+		</RegressionTable>
+		<RegressionTable intercept="-0.4603794812558358" targetCategory="2">
+			<NumericPredictor name="standardScaler(x2)" coefficient="0.06001879631163484"/>
+			<NumericPredictor name="standardScaler(x3)" coefficient="0.20208882997838062"/>
+			<NumericPredictor name="standardScaler(x4)" coefficient="0.19554816302761668"/>
+			<NumericPredictor name="standardScaler(x5)" coefficient="-0.027687360893936912"/>
+			<NumericPredictor name="standardScaler(x6)" coefficient="-0.015893199217640427"/>
+			<NumericPredictor name="standardScaler(x7)" coefficient="-0.054398991360999856"/>
+			<NumericPredictor name="standardScaler(x8)" coefficient="-0.005070499915863145"/>
+			<NumericPredictor name="standardScaler(x9)" coefficient="-0.047946757754251036"/>
+			<NumericPredictor name="standardScaler(x10)" coefficient="0.6650512596389091"/>
+			<NumericPredictor name="standardScaler(x11)" coefficient="0.3580656710011264"/>
+			<NumericPredictor name="standardScaler(x12)" coefficient="-0.22291851613276023"/>
+			<NumericPredictor name="standardScaler(x13)" coefficient="0.8671672790080286"/>
+			<NumericPredictor name="standardScaler(x14)" coefficient="-0.18486161073023652"/>
+			<NumericPredictor name="standardScaler(x15)" coefficient="0.04006261951278312"/>
+			<NumericPredictor name="standardScaler(x16)" coefficient="-0.04725566219483475"/>
+			<NumericPredictor name="standardScaler(x17)" coefficient="-0.005129060098485463"/>
+			<NumericPredictor name="standardScaler(x18)" coefficient="-0.032027219862547994"/>
+			<NumericPredictor name="standardScaler(x19)" coefficient="-0.28327313379158586"/>
+			<NumericPredictor name="standardScaler(x20)" coefficient="-0.9039484858010186"/>
+			<NumericPredictor name="standardScaler(x21)" coefficient="0.25307378749115494"/>
+			<NumericPredictor name="standardScaler(x22)" coefficient="0.04477656793197962"/>
+			<NumericPredictor name="standardScaler(x23)" coefficient="0.12035948622767392"/>
+			<NumericPredictor name="standardScaler(x24)" coefficient="-1.2072139291423356E-4"/>
+			<NumericPredictor name="standardScaler(x25)" coefficient="-4.173958154198907E-5"/>
+			<NumericPredictor name="standardScaler(x26)" coefficient="-0.504636625379839"/>
+			<NumericPredictor name="standardScaler(x27)" coefficient="-1.2957949645086269"/>
+			<NumericPredictor name="standardScaler(x28)" coefficient="-1.5084577283284748"/>
+			<NumericPredictor name="standardScaler(x29)" coefficient="-0.21174242861929776"/>
+			<NumericPredictor name="standardScaler(x30)" coefficient="-0.06270944157540273"/>
+			<NumericPredictor name="standardScaler(x31)" coefficient="-0.10092723813378367"/>
+			<NumericPredictor name="standardScaler(x32)" coefficient="-4.178501432561435E-5"/>
+			<NumericPredictor name="standardScaler(x34)" coefficient="-0.433297209448187"/>
+			<NumericPredictor name="standardScaler(x35)" coefficient="-1.0662853372503807"/>
+			<NumericPredictor name="standardScaler(x36)" coefficient="-0.42446336870202506"/>
+			<NumericPredictor name="standardScaler(x37)" coefficient="0.13639704870106803"/>
+			<NumericPredictor name="standardScaler(x38)" coefficient="-0.9431458047317309"/>
+			<NumericPredictor name="standardScaler(x39)" coefficient="-0.7845303014459653"/>
+			<NumericPredictor name="standardScaler(x41)" coefficient="-6.738292043724056E-5"/>
+			<NumericPredictor name="standardScaler(x42)" coefficient="0.1502714070341676"/>
+			<NumericPredictor name="standardScaler(x43)" coefficient="0.24954976567434647"/>
+			<NumericPredictor name="standardScaler(x44)" coefficient="1.263256988753917"/>
+			<NumericPredictor name="standardScaler(x45)" coefficient="-0.8917972976362407"/>
+			<NumericPredictor name="standardScaler(x46)" coefficient="-1.2037499402782446"/>
+			<NumericPredictor name="standardScaler(x47)" coefficient="-0.4868837943540619"/>
+			<NumericPredictor name="standardScaler(x48)" coefficient="0.18466473732331928"/>
+			<NumericPredictor name="standardScaler(x49)" coefficient="0.002616763896458326"/>
+			<NumericPredictor name="standardScaler(x50)" coefficient="0.36847601058009666"/>
+			<NumericPredictor name="standardScaler(x51)" coefficient="0.47571460259217685"/>
+			<NumericPredictor name="standardScaler(x52)" coefficient="1.2151405155251835"/>
+			<NumericPredictor name="standardScaler(x53)" coefficient="0.7247473485179844"/>
+			<NumericPredictor name="standardScaler(x54)" coefficient="1.0252990110948512"/>
+			<NumericPredictor name="standardScaler(x55)" coefficient="0.4117427542889493"/>
+			<NumericPredictor name="standardScaler(x56)" coefficient="0.144938899716013"/>
+			<NumericPredictor name="standardScaler(x57)" coefficient="0.007658666574270749"/>
+			<NumericPredictor name="standardScaler(x58)" coefficient="0.45797096295934225"/>
+			<NumericPredictor name="standardScaler(x59)" coefficient="0.28979796415652465"/>
+			<NumericPredictor name="standardScaler(x60)" coefficient="0.09293397762887871"/>
+			<NumericPredictor name="standardScaler(x61)" coefficient="0.29505739175490886"/>
+			<NumericPredictor name="standardScaler(x62)" coefficient="0.7867569579508852"/>
+			<NumericPredictor name="standardScaler(x63)" coefficient="0.8194364424404993"/>
+			<NumericPredictor name="standardScaler(x64)" coefficient="0.43894439428465015"/>
+		</RegressionTable>
+		<RegressionTable intercept="-0.2632866686041434" targetCategory="3">
+			<NumericPredictor name="standardScaler(x2)" coefficient="0.16580708494038118"/>
+			<NumericPredictor name="standardScaler(x3)" coefficient="-0.6654809975693962"/>
+			<NumericPredictor name="standardScaler(x4)" coefficient="0.3087428190756079"/>
+			<NumericPredictor name="standardScaler(x5)" coefficient="1.2951653322302006"/>
+			<NumericPredictor name="standardScaler(x6)" coefficient="0.06546394507834873"/>
+			<NumericPredictor name="standardScaler(x7)" coefficient="-0.3715607539746589"/>
+			<NumericPredictor name="standardScaler(x8)" coefficient="-0.0021512094960230207"/>
+			<NumericPredictor name="standardScaler(x9)" coefficient="-0.18859330597924043"/>
+			<NumericPredictor name="standardScaler(x10)" coefficient="0.3919781608106981"/>
+			<NumericPredictor name="standardScaler(x11)" coefficient="0.22316741390704598"/>
+			<NumericPredictor name="standardScaler(x12)" coefficient="0.10042204996481975"/>
+			<NumericPredictor name="standardScaler(x13)" coefficient="0.27035307673511594"/>
+			<NumericPredictor name="standardScaler(x14)" coefficient="0.8618356264094374"/>
+			<NumericPredictor name="standardScaler(x15)" coefficient="0.3414115302194956"/>
+			<NumericPredictor name="standardScaler(x16)" coefficient="-0.15867738048253632"/>
+			<NumericPredictor name="standardScaler(x17)" coefficient="-0.05222086326920387"/>
+			<NumericPredictor name="standardScaler(x18)" coefficient="0.12249344941274834"/>
+			<NumericPredictor name="standardScaler(x19)" coefficient="-1.4439517220900124"/>
+			<NumericPredictor name="standardScaler(x20)" coefficient="-1.4707474086837167"/>
+			<NumericPredictor name="standardScaler(x21)" coefficient="0.5269888679080139"/>
+			<NumericPredictor name="standardScaler(x22)" coefficient="-0.9674441417628387"/>
+			<NumericPredictor name="standardScaler(x23)" coefficient="0.2189932163465898"/>
+			<NumericPredictor name="standardScaler(x24)" coefficient="-2.1971027443454258E-5"/>
+			<NumericPredictor name="standardScaler(x25)" coefficient="-2.0876773984265903E-6"/>
+			<NumericPredictor name="standardScaler(x26)" coefficient="-0.6016502769425419"/>
+			<NumericPredictor name="standardScaler(x27)" coefficient="-1.5308510754573108"/>
+			<NumericPredictor name="standardScaler(x28)" coefficient="-0.04313655153823833"/>
+			<NumericPredictor name="standardScaler(x29)" coefficient="0.8155233159532705"/>
+			<NumericPredictor name="standardScaler(x30)" coefficient="-1.3403079076067408"/>
+			<NumericPredictor name="standardScaler(x31)" coefficient="-1.0210770828631965"/>
+			<NumericPredictor name="standardScaler(x32)" coefficient="2.0750117822858726E-6"/>
+			<NumericPredictor name="standardScaler(x34)" coefficient="-0.167056946895297"/>
+			<NumericPredictor name="standardScaler(x35)" coefficient="-0.5611162652396353"/>
+			<NumericPredictor name="standardScaler(x36)" coefficient="0.07323995648769664"/>
+			<NumericPredictor name="standardScaler(x37)" coefficient="0.5295248809355844"/>
+			<NumericPredictor name="standardScaler(x38)" coefficient="-0.2872561921475068"/>
+			<NumericPredictor name="standardScaler(x39)" coefficient="0.01853123199465464"/>
+			<NumericPredictor name="standardScaler(x41)" coefficient="2.9229490781518785E-6"/>
+			<NumericPredictor name="standardScaler(x42)" coefficient="-0.046284848469016315"/>
+			<NumericPredictor name="standardScaler(x43)" coefficient="-1.1847653671028266"/>
+			<NumericPredictor name="standardScaler(x44)" coefficient="-1.7129522519313483"/>
+			<NumericPredictor name="standardScaler(x45)" coefficient="0.20225280435898835"/>
+			<NumericPredictor name="standardScaler(x46)" coefficient="1.414777220383728"/>
+			<NumericPredictor name="standardScaler(x47)" coefficient="0.8375042640868987"/>
+			<NumericPredictor name="standardScaler(x48)" coefficient="-0.12877017813776936"/>
+			<NumericPredictor name="standardScaler(x49)" coefficient="-3.395700670544062E-6"/>
+			<NumericPredictor name="standardScaler(x50)" coefficient="-0.19466902564074934"/>
+			<NumericPredictor name="standardScaler(x51)" coefficient="-0.3317246018479627"/>
+			<NumericPredictor name="standardScaler(x52)" coefficient="-0.6058499488286906"/>
+			<NumericPredictor name="standardScaler(x53)" coefficient="0.17331765009907812"/>
+			<NumericPredictor name="standardScaler(x54)" coefficient="0.29797046725089665"/>
+			<NumericPredictor name="standardScaler(x55)" coefficient="1.2546879621931484"/>
+			<NumericPredictor name="standardScaler(x56)" coefficient="-0.12414159202126814"/>
+			<NumericPredictor name="standardScaler(x57)" coefficient="-1.3960172871245071E-5"/>
+			<NumericPredictor name="standardScaler(x58)" coefficient="0.536054010836092"/>
+			<NumericPredictor name="standardScaler(x59)" coefficient="1.0469248990451252"/>
+			<NumericPredictor name="standardScaler(x60)" coefficient="0.143581191631942"/>
+			<NumericPredictor name="standardScaler(x61)" coefficient="0.14859248116033416"/>
+			<NumericPredictor name="standardScaler(x62)" coefficient="-0.013290234712420204"/>
+			<NumericPredictor name="standardScaler(x63)" coefficient="0.04891934413522719"/>
+			<NumericPredictor name="standardScaler(x64)" coefficient="-0.05720410863402368"/>
+		</RegressionTable>
+		<RegressionTable intercept="-0.4051583934713217" targetCategory="4">
+			<NumericPredictor name="standardScaler(x2)" coefficient="-0.3937317076976199"/>
+			<NumericPredictor name="standardScaler(x3)" coefficient="-0.5445063001767214"/>
+			<NumericPredictor name="standardScaler(x4)" coefficient="-1.3079577960694788"/>
+			<NumericPredictor name="standardScaler(x5)" coefficient="-0.9408552715427634"/>
+			<NumericPredictor name="standardScaler(x6)" coefficient="-1.0295534296488769"/>
+			<NumericPredictor name="standardScaler(x7)" coefficient="-0.714683664620496"/>
+			<NumericPredictor name="standardScaler(x8)" coefficient="0.166371868666806"/>
+			<NumericPredictor name="standardScaler(x9)" coefficient="-1.6328946364518685E-5"/>
+			<NumericPredictor name="standardScaler(x10)" coefficient="0.20370655668406204"/>
+			<NumericPredictor name="standardScaler(x11)" coefficient="-0.49819032829798787"/>
+			<NumericPredictor name="standardScaler(x12)" coefficient="-0.8114521172075545"/>
+			<NumericPredictor name="standardScaler(x13)" coefficient="-0.9464205078342134"/>
+			<NumericPredictor name="standardScaler(x14)" coefficient="-1.012378399961323"/>
+			<NumericPredictor name="standardScaler(x15)" coefficient="-0.3239674293568232"/>
+			<NumericPredictor name="standardScaler(x16)" coefficient="0.12885632479121203"/>
+			<NumericPredictor name="standardScaler(x17)" coefficient="9.689503248363593E-5"/>
+			<NumericPredictor name="standardScaler(x18)" coefficient="0.23499478229932366"/>
+			<NumericPredictor name="standardScaler(x19)" coefficient="0.26226769886666096"/>
+			<NumericPredictor name="standardScaler(x20)" coefficient="-0.00868289517366781"/>
+			<NumericPredictor name="standardScaler(x21)" coefficient="0.07934951771773126"/>
+			<NumericPredictor name="standardScaler(x22)" coefficient="0.3705686036021337"/>
+			<NumericPredictor name="standardScaler(x23)" coefficient="-0.10795118090729534"/>
+			<NumericPredictor name="standardScaler(x24)" coefficient="0.3548521141813228"/>
+			<NumericPredictor name="standardScaler(x25)" coefficient="0.13387856965323938"/>
+			<NumericPredictor name="standardScaler(x26)" coefficient="0.02435510698849407"/>
+			<NumericPredictor name="standardScaler(x27)" coefficient="0.9283300615169956"/>
+			<NumericPredictor name="standardScaler(x28)" coefficient="0.11235427601616575"/>
+			<NumericPredictor name="standardScaler(x29)" coefficient="0.07003021319951529"/>
+			<NumericPredictor name="standardScaler(x30)" coefficient="0.01181163289505728"/>
+			<NumericPredictor name="standardScaler(x31)" coefficient="1.2170631574724124"/>
+			<NumericPredictor name="standardScaler(x32)" coefficient="0.00394286725534773"/>
+			<NumericPredictor name="standardScaler(x34)" coefficient="0.601180962726824"/>
+			<NumericPredictor name="standardScaler(x35)" coefficient="0.15159931284838365"/>
+			<NumericPredictor name="standardScaler(x36)" coefficient="-0.28955550518349504"/>
+			<NumericPredictor name="standardScaler(x37)" coefficient="0.6723982619062333"/>
+			<NumericPredictor name="standardScaler(x38)" coefficient="0.47517213987782436"/>
+			<NumericPredictor name="standardScaler(x39)" coefficient="1.145862379127691"/>
+			<NumericPredictor name="standardScaler(x41)" coefficient="6.334605386476531E-4"/>
+			<NumericPredictor name="standardScaler(x42)" coefficient="1.2924231393785834"/>
+			<NumericPredictor name="standardScaler(x43)" coefficient="-0.05693676128734499"/>
+			<NumericPredictor name="standardScaler(x44)" coefficient="1.7740899983319678"/>
+			<NumericPredictor name="standardScaler(x45)" coefficient="1.1585617739068046"/>
+			<NumericPredictor name="standardScaler(x46)" coefficient="-0.018614184471242762"/>
+			<NumericPredictor name="standardScaler(x47)" coefficient="0.20512575696681126"/>
+			<NumericPredictor name="standardScaler(x48)" coefficient="-0.012684519810279066"/>
+			<NumericPredictor name="standardScaler(x49)" coefficient="-1.8213325737942397E-4"/>
+			<NumericPredictor name="standardScaler(x50)" coefficient="0.4735604044442756"/>
+			<NumericPredictor name="standardScaler(x51)" coefficient="-0.6438295028590334"/>
+			<NumericPredictor name="standardScaler(x52)" coefficient="0.128002047203372"/>
+			<NumericPredictor name="standardScaler(x53)" coefficient="0.3657043126366329"/>
+			<NumericPredictor name="standardScaler(x54)" coefficient="-0.9023557873941778"/>
+			<NumericPredictor name="standardScaler(x55)" coefficient="-0.6802512684111649"/>
+			<NumericPredictor name="standardScaler(x56)" coefficient="-0.03326080049500585"/>
+			<NumericPredictor name="standardScaler(x57)" coefficient="-0.0022497087974831186"/>
+			<NumericPredictor name="standardScaler(x58)" coefficient="-0.19130155210535152"/>
+			<NumericPredictor name="standardScaler(x59)" coefficient="-0.24248716513011803"/>
+			<NumericPredictor name="standardScaler(x60)" coefficient="-0.6924336690133195"/>
+			<NumericPredictor name="standardScaler(x61)" coefficient="-0.5980841550556212"/>
+			<NumericPredictor name="standardScaler(x62)" coefficient="-0.7569048906600763"/>
+			<NumericPredictor name="standardScaler(x63)" coefficient="-0.36817086233180746"/>
+			<NumericPredictor name="standardScaler(x64)" coefficient="-0.012469916785793367"/>
+		</RegressionTable>
+		<RegressionTable intercept="0.349560947127158" targetCategory="5">
+			<NumericPredictor name="standardScaler(x2)" coefficient="0.5176092434124905"/>
+			<NumericPredictor name="standardScaler(x3)" coefficient="1.2821645531402797"/>
+			<NumericPredictor name="standardScaler(x4)" coefficient="-0.5178015860545208"/>
+			<NumericPredictor name="standardScaler(x5)" coefficient="0.30256630205446317"/>
+			<NumericPredictor name="standardScaler(x6)" coefficient="0.5222294887006005"/>
+			<NumericPredictor name="standardScaler(x7)" coefficient="1.3483890566104024"/>
+			<NumericPredictor name="standardScaler(x8)" coefficient="-0.22742640300668399"/>
+			<NumericPredictor name="standardScaler(x9)" coefficient="0.05425033763761308"/>
+			<NumericPredictor name="standardScaler(x10)" coefficient="-0.09750885981980101"/>
+			<NumericPredictor name="standardScaler(x11)" coefficient="0.853470275540129"/>
+			<NumericPredictor name="standardScaler(x12)" coefficient="0.5463401663295608"/>
+			<NumericPredictor name="standardScaler(x13)" coefficient="-0.0946315191346007"/>
+			<NumericPredictor name="standardScaler(x14)" coefficient="-0.5034160146915312"/>
+			<NumericPredictor name="standardScaler(x15)" coefficient="-0.21946696634199428"/>
+			<NumericPredictor name="standardScaler(x16)" coefficient="0.10666609229101813"/>
+			<NumericPredictor name="standardScaler(x17)" coefficient="-0.0043800876764263415"/>
+			<NumericPredictor name="standardScaler(x18)" coefficient="0.1071312417151608"/>
+			<NumericPredictor name="standardScaler(x19)" coefficient="0.5559736759898021"/>
+			<NumericPredictor name="standardScaler(x20)" coefficient="-0.2830108837908338"/>
+			<NumericPredictor name="standardScaler(x21)" coefficient="-1.5072725950554862"/>
+			<NumericPredictor name="standardScaler(x22)" coefficient="-1.7639011926465407"/>
+			<NumericPredictor name="standardScaler(x23)" coefficient="-1.2510174089238852"/>
+			<NumericPredictor name="standardScaler(x24)" coefficient="-0.00376786513230619"/>
+			<NumericPredictor name="standardScaler(x25)" coefficient="-0.02720858628914836"/>
+			<NumericPredictor name="standardScaler(x26)" coefficient="0.6658565569948638"/>
+			<NumericPredictor name="standardScaler(x27)" coefficient="0.9153866041483357"/>
+			<NumericPredictor name="standardScaler(x28)" coefficient="-0.1762978458449407"/>
+			<NumericPredictor name="standardScaler(x29)" coefficient="0.6176626680890995"/>
+			<NumericPredictor name="standardScaler(x30)" coefficient="0.01878134209326301"/>
+			<NumericPredictor name="standardScaler(x31)" coefficient="-0.5859166947258351"/>
+			<NumericPredictor name="standardScaler(x32)" coefficient="2.7885235160364513E-4"/>
+			<NumericPredictor name="standardScaler(x34)" coefficient="-0.11876230830719328"/>
+			<NumericPredictor name="standardScaler(x35)" coefficient="0.3040829152715554"/>
+			<NumericPredictor name="standardScaler(x36)" coefficient="-0.5590609963609694"/>
+			<NumericPredictor name="standardScaler(x37)" coefficient="-0.286342681656552"/>
+			<NumericPredictor name="standardScaler(x38)" coefficient="0.06714653102266752"/>
+			<NumericPredictor name="standardScaler(x39)" coefficient="0.2569943100601191"/>
+			<NumericPredictor name="standardScaler(x41)" coefficient="4.381892904671726E-4"/>
+			<NumericPredictor name="standardScaler(x42)" coefficient="-0.7745184993967972"/>
+			<NumericPredictor name="standardScaler(x43)" coefficient="-0.6116519780979681"/>
+			<NumericPredictor name="standardScaler(x44)" coefficient="-0.8339894526919175"/>
+			<NumericPredictor name="standardScaler(x45)" coefficient="-0.30108580965606196"/>
+			<NumericPredictor name="standardScaler(x46)" coefficient="0.6126463345927502"/>
+			<NumericPredictor name="standardScaler(x47)" coefficient="-0.26762389543804554"/>
+			<NumericPredictor name="standardScaler(x48)" coefficient="-0.002248427578364029"/>
+			<NumericPredictor name="standardScaler(x49)" coefficient="2.9584596573663534E-4"/>
+			<NumericPredictor name="standardScaler(x50)" coefficient="0.11179568281507424"/>
+			<NumericPredictor name="standardScaler(x51)" coefficient="-0.1256201748507433"/>
+			<NumericPredictor name="standardScaler(x52)" coefficient="-0.33082578479740704"/>
+			<NumericPredictor name="standardScaler(x53)" coefficient="-0.11152740815721753"/>
+			<NumericPredictor name="standardScaler(x54)" coefficient="-0.13030380309456377"/>
+			<NumericPredictor name="standardScaler(x55)" coefficient="-0.24012473175938334"/>
+			<NumericPredictor name="standardScaler(x56)" coefficient="-0.03835664698887154"/>
+			<NumericPredictor name="standardScaler(x57)" coefficient="1.8691010442054606E-4"/>
+			<NumericPredictor name="standardScaler(x58)" coefficient="0.18270400306392884"/>
+			<NumericPredictor name="standardScaler(x59)" coefficient="0.9736863985553612"/>
+			<NumericPredictor name="standardScaler(x60)" coefficient="0.9517743613928132"/>
+			<NumericPredictor name="standardScaler(x61)" coefficient="-0.23236466726370045"/>
+			<NumericPredictor name="standardScaler(x62)" coefficient="0.06844723558941865"/>
+			<NumericPredictor name="standardScaler(x63)" coefficient="-0.2113913799423671"/>
+			<NumericPredictor name="standardScaler(x64)" coefficient="-0.23378530311656545"/>
+		</RegressionTable>
+		<RegressionTable intercept="-0.5926359036219554" targetCategory="6">
+			<NumericPredictor name="standardScaler(x2)" coefficient="-0.07450443655732068"/>
+			<NumericPredictor name="standardScaler(x3)" coefficient="-0.46730896278315215"/>
+			<NumericPredictor name="standardScaler(x4)" coefficient="0.02110184630572101"/>
+			<NumericPredictor name="standardScaler(x5)" coefficient="-0.45142687024465833"/>
+			<NumericPredictor name="standardScaler(x6)" coefficient="-0.12399229998270216"/>
+			<NumericPredictor name="standardScaler(x7)" coefficient="-0.2784255281359963"/>
+			<NumericPredictor name="standardScaler(x8)" coefficient="2.497721826289032E-4"/>
+			<NumericPredictor name="standardScaler(x9)" coefficient="9.995542709075741E-5"/>
+			<NumericPredictor name="standardScaler(x10)" coefficient="-0.5201674098393129"/>
+			<NumericPredictor name="standardScaler(x11)" coefficient="-0.3868090946515046"/>
+			<NumericPredictor name="standardScaler(x12)" coefficient="0.2496473802303376"/>
+			<NumericPredictor name="standardScaler(x13)" coefficient="-1.224986635096649"/>
+			<NumericPredictor name="standardScaler(x14)" coefficient="-0.13803341244274958"/>
+			<NumericPredictor name="standardScaler(x15)" coefficient="0.16050466530098084"/>
+			<NumericPredictor name="standardScaler(x16)" coefficient="3.3753277594250955E-4"/>
+			<NumericPredictor name="standardScaler(x17)" coefficient="1.18557365567423E-4"/>
+			<NumericPredictor name="standardScaler(x18)" coefficient="-0.5265782779498946"/>
+			<NumericPredictor name="standardScaler(x19)" coefficient="0.30525959640043526"/>
+			<NumericPredictor name="standardScaler(x20)" coefficient="0.27591888074284754"/>
+			<NumericPredictor name="standardScaler(x21)" coefficient="-0.9258701309662167"/>
+			<NumericPredictor name="standardScaler(x22)" coefficient="-1.4095642111493198"/>
+			<NumericPredictor name="standardScaler(x23)" coefficient="-0.29848770126449503"/>
+			<NumericPredictor name="standardScaler(x24)" coefficient="-0.0015758870782449613"/>
+			<NumericPredictor name="standardScaler(x25)" coefficient="-1.9946066258548652E-4"/>
+			<NumericPredictor name="standardScaler(x26)" coefficient="0.332360689986535"/>
+			<NumericPredictor name="standardScaler(x27)" coefficient="0.06519397141574644"/>
+			<NumericPredictor name="standardScaler(x28)" coefficient="0.4539481890111536"/>
+			<NumericPredictor name="standardScaler(x29)" coefficient="-0.8152313967144974"/>
+			<NumericPredictor name="standardScaler(x30)" coefficient="-0.6152388166603612"/>
+			<NumericPredictor name="standardScaler(x31)" coefficient="-0.4458927042831225"/>
+			<NumericPredictor name="standardScaler(x32)" coefficient="2.410080364439958E-4"/>
+			<NumericPredictor name="standardScaler(x34)" coefficient="0.49456841408195756"/>
+			<NumericPredictor name="standardScaler(x35)" coefficient="0.9090849196859623"/>
+			<NumericPredictor name="standardScaler(x36)" coefficient="0.7080510065931614"/>
+			<NumericPredictor name="standardScaler(x37)" coefficient="-0.2548338017192312"/>
+			<NumericPredictor name="standardScaler(x38)" coefficient="0.06780520733354647"/>
+			<NumericPredictor name="standardScaler(x39)" coefficient="0.17704521974407716"/>
+			<NumericPredictor name="standardScaler(x41)" coefficient="1.4036270000686505E-4"/>
+			<NumericPredictor name="standardScaler(x42)" coefficient="-0.13468129520018998"/>
+			<NumericPredictor name="standardScaler(x43)" coefficient="1.486072461324805"/>
+			<NumericPredictor name="standardScaler(x44)" coefficient="0.33556675172165384"/>
+			<NumericPredictor name="standardScaler(x45)" coefficient="0.4168797661025336"/>
+			<NumericPredictor name="standardScaler(x46)" coefficient="0.6440040676767647"/>
+			<NumericPredictor name="standardScaler(x47)" coefficient="0.3071335109400926"/>
+			<NumericPredictor name="standardScaler(x48)" coefficient="0.2539477888933521"/>
+			<NumericPredictor name="standardScaler(x49)" coefficient="2.27535051980758E-4"/>
+			<NumericPredictor name="standardScaler(x50)" coefficient="-0.294000623713901"/>
+			<NumericPredictor name="standardScaler(x51)" coefficient="0.7286938339372162"/>
+			<NumericPredictor name="standardScaler(x52)" coefficient="0.4182814055335262"/>
+			<NumericPredictor name="standardScaler(x53)" coefficient="-0.2717577137933347"/>
+			<NumericPredictor name="standardScaler(x54)" coefficient="0.7492587540755943"/>
+			<NumericPredictor name="standardScaler(x55)" coefficient="0.1718712287438262"/>
+			<NumericPredictor name="standardScaler(x56)" coefficient="-0.42590017182123885"/>
+			<NumericPredictor name="standardScaler(x57)" coefficient="1.7587139863322913E-4"/>
+			<NumericPredictor name="standardScaler(x58)" coefficient="-0.13283663855525354"/>
+			<NumericPredictor name="standardScaler(x59)" coefficient="-0.5601183558847864"/>
+			<NumericPredictor name="standardScaler(x60)" coefficient="-0.36530000069869856"/>
+			<NumericPredictor name="standardScaler(x61)" coefficient="0.27196210403699306"/>
+			<NumericPredictor name="standardScaler(x62)" coefficient="0.5208678038887097"/>
+			<NumericPredictor name="standardScaler(x63)" coefficient="-0.02015246100374694"/>
+			<NumericPredictor name="standardScaler(x64)" coefficient="-0.3231947914091918"/>
+		</RegressionTable>
+		<RegressionTable intercept="0.13142442285312267" targetCategory="7">
+			<NumericPredictor name="standardScaler(x2)" coefficient="0.2489983382402896"/>
+			<NumericPredictor name="standardScaler(x3)" coefficient="0.15127455545078491"/>
+			<NumericPredictor name="standardScaler(x4)" coefficient="0.23566312963671912"/>
+			<NumericPredictor name="standardScaler(x5)" coefficient="0.48781555975083113"/>
+			<NumericPredictor name="standardScaler(x6)" coefficient="0.18301824013689566"/>
+			<NumericPredictor name="standardScaler(x7)" coefficient="0.4943141852555107"/>
+			<NumericPredictor name="standardScaler(x8)" coefficient="0.34064099322406255"/>
+			<NumericPredictor name="standardScaler(x9)" coefficient="8.559890318593068E-5"/>
+			<NumericPredictor name="standardScaler(x10)" coefficient="0.22256025464262158"/>
+			<NumericPredictor name="standardScaler(x11)" coefficient="0.6739664874189407"/>
+			<NumericPredictor name="standardScaler(x12)" coefficient="0.40857933827483534"/>
+			<NumericPredictor name="standardScaler(x13)" coefficient="1.1830780432274748"/>
+			<NumericPredictor name="standardScaler(x14)" coefficient="-0.1358335640096184"/>
+			<NumericPredictor name="standardScaler(x15)" coefficient="-0.15367482588275708"/>
+			<NumericPredictor name="standardScaler(x16)" coefficient="0.057927178575013644"/>
+			<NumericPredictor name="standardScaler(x17)" coefficient="4.685730624316712E-5"/>
+			<NumericPredictor name="standardScaler(x18)" coefficient="-0.90780727007461"/>
+			<NumericPredictor name="standardScaler(x19)" coefficient="-0.8108559906327076"/>
+			<NumericPredictor name="standardScaler(x20)" coefficient="-0.81661534625669"/>
+			<NumericPredictor name="standardScaler(x21)" coefficient="0.21132895705816626"/>
+			<NumericPredictor name="standardScaler(x22)" coefficient="0.8508370884231582"/>
+			<NumericPredictor name="standardScaler(x23)" coefficient="0.29159464489654197"/>
+			<NumericPredictor name="standardScaler(x24)" coefficient="0.0015970705270475253"/>
+			<NumericPredictor name="standardScaler(x25)" coefficient="-7.956243832058432E-5"/>
+			<NumericPredictor name="standardScaler(x26)" coefficient="-0.27554005992162905"/>
+			<NumericPredictor name="standardScaler(x27)" coefficient="-0.2077778734314839"/>
+			<NumericPredictor name="standardScaler(x28)" coefficient="-1.03155228656598"/>
+			<NumericPredictor name="standardScaler(x29)" coefficient="-0.1657772992761918"/>
+			<NumericPredictor name="standardScaler(x30)" coefficient="0.37576194582401407"/>
+			<NumericPredictor name="standardScaler(x31)" coefficient="0.5013638205681675"/>
+			<NumericPredictor name="standardScaler(x32)" coefficient="-2.3341603902707462E-5"/>
+			<NumericPredictor name="standardScaler(x34)" coefficient="0.11892035802626792"/>
+			<NumericPredictor name="standardScaler(x35)" coefficient="0.011206793224577093"/>
+			<NumericPredictor name="standardScaler(x36)" coefficient="-0.2065837423319601"/>
+			<NumericPredictor name="standardScaler(x37)" coefficient="0.6196304111756038"/>
+			<NumericPredictor name="standardScaler(x38)" coefficient="0.756882962736955"/>
+			<NumericPredictor name="standardScaler(x39)" coefficient="0.7484080220485949"/>
+			<NumericPredictor name="standardScaler(x41)" coefficient="1.0850775970295995E-4"/>
+			<NumericPredictor name="standardScaler(x42)" coefficient="0.09080189574264379"/>
+			<NumericPredictor name="standardScaler(x43)" coefficient="0.012368208559328332"/>
+			<NumericPredictor name="standardScaler(x44)" coefficient="0.2526540432789373"/>
+			<NumericPredictor name="standardScaler(x45)" coefficient="0.4176341655436731"/>
+			<NumericPredictor name="standardScaler(x46)" coefficient="-0.3303276643001724"/>
+			<NumericPredictor name="standardScaler(x47)" coefficient="-0.18911015767951103"/>
+			<NumericPredictor name="standardScaler(x48)" coefficient="-3.4214198790998316E-4"/>
+			<NumericPredictor name="standardScaler(x49)" coefficient="5.7977877712362755E-5"/>
+			<NumericPredictor name="standardScaler(x50)" coefficient="-0.3067196689316124"/>
+			<NumericPredictor name="standardScaler(x51)" coefficient="-0.1552890787478982"/>
+			<NumericPredictor name="standardScaler(x52)" coefficient="0.3281434407769849"/>
+			<NumericPredictor name="standardScaler(x53)" coefficient="-0.8292910186091388"/>
+			<NumericPredictor name="standardScaler(x54)" coefficient="-1.3472786069778149"/>
+			<NumericPredictor name="standardScaler(x55)" coefficient="-0.4968459250453938"/>
+			<NumericPredictor name="standardScaler(x56)" coefficient="-0.006501270855725989"/>
+			<NumericPredictor name="standardScaler(x57)" coefficient="-6.551278686955924E-6"/>
+			<NumericPredictor name="standardScaler(x58)" coefficient="-0.15946447520363297"/>
+			<NumericPredictor name="standardScaler(x59)" coefficient="-0.23080118127966326"/>
+			<NumericPredictor name="standardScaler(x60)" coefficient="-0.785965682521249"/>
+			<NumericPredictor name="standardScaler(x61)" coefficient="-1.0508712815171668"/>
+			<NumericPredictor name="standardScaler(x62)" coefficient="-0.8951552834337927"/>
+			<NumericPredictor name="standardScaler(x63)" coefficient="-0.2753844491301521"/>
+			<NumericPredictor name="standardScaler(x64)" coefficient="-0.01665098283507298"/>
+		</RegressionTable>
+		<RegressionTable intercept="3.222387123550445" targetCategory="8">
+			<NumericPredictor name="standardScaler(x2)" coefficient="-0.07119280719721376"/>
+			<NumericPredictor name="standardScaler(x3)" coefficient="0.3532976514994425"/>
+			<NumericPredictor name="standardScaler(x4)" coefficient="-0.4702863745847964"/>
+			<NumericPredictor name="standardScaler(x5)" coefficient="0.3858198268125304"/>
+			<NumericPredictor name="standardScaler(x6)" coefficient="-0.21912700248255518"/>
+			<NumericPredictor name="standardScaler(x7)" coefficient="-0.8574895942582247"/>
+			<NumericPredictor name="standardScaler(x8)" coefficient="-0.03402961454752356"/>
+			<NumericPredictor name="standardScaler(x9)" coefficient="0.1911871495535419"/>
+			<NumericPredictor name="standardScaler(x10)" coefficient="-0.07855525135004099"/>
+			<NumericPredictor name="standardScaler(x11)" coefficient="0.3374314197908518"/>
+			<NumericPredictor name="standardScaler(x12)" coefficient="0.07843483304164768"/>
+			<NumericPredictor name="standardScaler(x13)" coefficient="-0.7670770273335978"/>
+			<NumericPredictor name="standardScaler(x14)" coefficient="0.6931475870330747"/>
+			<NumericPredictor name="standardScaler(x15)" coefficient="0.5707861195973486"/>
+			<NumericPredictor name="standardScaler(x16)" coefficient="-0.07655588436069313"/>
+			<NumericPredictor name="standardScaler(x17)" coefficient="0.06287130397490538"/>
+			<NumericPredictor name="standardScaler(x18)" coefficient="-0.06930555165209167"/>
+			<NumericPredictor name="standardScaler(x19)" coefficient="0.4878568900954563"/>
+			<NumericPredictor name="standardScaler(x20)" coefficient="0.22533204381599453"/>
+			<NumericPredictor name="standardScaler(x21)" coefficient="0.10181796463000842"/>
+			<NumericPredictor name="standardScaler(x22)" coefficient="0.6034112228729701"/>
+			<NumericPredictor name="standardScaler(x23)" coefficient="0.12511658975762133"/>
+			<NumericPredictor name="standardScaler(x24)" coefficient="-0.04823948465399143"/>
+			<NumericPredictor name="standardScaler(x25)" coefficient="-0.004676390788827514"/>
+			<NumericPredictor name="standardScaler(x26)" coefficient="0.24699195398257592"/>
+			<NumericPredictor name="standardScaler(x27)" coefficient="-0.21338346333299688"/>
+			<NumericPredictor name="standardScaler(x28)" coefficient="1.0446007636113888"/>
+			<NumericPredictor name="standardScaler(x29)" coefficient="-0.4756265292503353"/>
+			<NumericPredictor name="standardScaler(x30)" coefficient="0.15113027179636926"/>
+			<NumericPredictor name="standardScaler(x31)" coefficient="0.30605823565650736"/>
+			<NumericPredictor name="standardScaler(x32)" coefficient="-4.0850233019905846E-4"/>
+			<NumericPredictor name="standardScaler(x34)" coefficient="-0.43619846087928776"/>
+			<NumericPredictor name="standardScaler(x35)" coefficient="-0.3402400615681269"/>
+			<NumericPredictor name="standardScaler(x36)" coefficient="0.9583565121891513"/>
+			<NumericPredictor name="standardScaler(x37)" coefficient="0.06896220253720539"/>
+			<NumericPredictor name="standardScaler(x38)" coefficient="-0.8628672778844529"/>
+			<NumericPredictor name="standardScaler(x39)" coefficient="-1.627196905653357"/>
+			<NumericPredictor name="standardScaler(x41)" coefficient="-2.844509406189688E-4"/>
+			<NumericPredictor name="standardScaler(x42)" coefficient="0.220763335251375"/>
+			<NumericPredictor name="standardScaler(x43)" coefficient="0.9235184448692974"/>
+			<NumericPredictor name="standardScaler(x44)" coefficient="0.5661090925862444"/>
+			<NumericPredictor name="standardScaler(x45)" coefficient="0.5601664658078533"/>
+			<NumericPredictor name="standardScaler(x46)" coefficient="0.09380741369458535"/>
+			<NumericPredictor name="standardScaler(x47)" coefficient="0.4747870220968054"/>
+			<NumericPredictor name="standardScaler(x48)" coefficient="-0.06262974548970611"/>
+			<NumericPredictor name="standardScaler(x49)" coefficient="-0.0018482194904589693"/>
+			<NumericPredictor name="standardScaler(x50)" coefficient="0.0809456845434479"/>
+			<NumericPredictor name="standardScaler(x51)" coefficient="0.4247477029099609"/>
+			<NumericPredictor name="standardScaler(x52)" coefficient="-0.9943887838627712"/>
+			<NumericPredictor name="standardScaler(x53)" coefficient="-0.6743959300209194"/>
+			<NumericPredictor name="standardScaler(x54)" coefficient="0.7205126801860231"/>
+			<NumericPredictor name="standardScaler(x55)" coefficient="0.20363957792077966"/>
+			<NumericPredictor name="standardScaler(x56)" coefficient="-0.3278321824702773"/>
+			<NumericPredictor name="standardScaler(x57)" coefficient="-0.0049109406228429785"/>
+			<NumericPredictor name="standardScaler(x58)" coefficient="-0.2379069859159326"/>
+			<NumericPredictor name="standardScaler(x59)" coefficient="-0.8174546857708866"/>
+			<NumericPredictor name="standardScaler(x60)" coefficient="0.04505112682324728"/>
+			<NumericPredictor name="standardScaler(x61)" coefficient="0.47382930886376545"/>
+			<NumericPredictor name="standardScaler(x62)" coefficient="-0.15526156299033128"/>
+			<NumericPredictor name="standardScaler(x63)" coefficient="0.13396744014934758"/>
+			<NumericPredictor name="standardScaler(x64)" coefficient="-0.2637515757891598"/>
+		</RegressionTable>
+		<RegressionTable intercept="-0.9949350879123414" targetCategory="9">
+			<NumericPredictor name="standardScaler(x2)" coefficient="-0.4852185663533818"/>
+			<NumericPredictor name="standardScaler(x3)" coefficient="-0.12561130631177317"/>
+			<NumericPredictor name="standardScaler(x4)" coefficient="1.3011496300790486"/>
+			<NumericPredictor name="standardScaler(x5)" coefficient="0.9093704450029004"/>
+			<NumericPredictor name="standardScaler(x6)" coefficient="-0.38581718557278444"/>
+			<NumericPredictor name="standardScaler(x7)" coefficient="0.20879703758469495"/>
+			<NumericPredictor name="standardScaler(x8)" coefficient="-0.09587048362750845"/>
+			<NumericPredictor name="standardScaler(x9)" coefficient="-0.002007026686133086"/>
+			<NumericPredictor name="standardScaler(x10)" coefficient="0.23811985884989753"/>
+			<NumericPredictor name="standardScaler(x11)" coefficient="0.11579743289604123"/>
+			<NumericPredictor name="standardScaler(x12)" coefficient="0.07276597161617719"/>
+			<NumericPredictor name="standardScaler(x13)" coefficient="-0.4126481441357569"/>
+			<NumericPredictor name="standardScaler(x14)" coefficient="0.6758789793703222"/>
+			<NumericPredictor name="standardScaler(x15)" coefficient="0.5767797174409272"/>
+			<NumericPredictor name="standardScaler(x16)" coefficient="0.1694742943777867"/>
+			<NumericPredictor name="standardScaler(x17)" coefficient="-1.638732230743386E-4"/>
+			<NumericPredictor name="standardScaler(x18)" coefficient="0.2743648253551625"/>
+			<NumericPredictor name="standardScaler(x19)" coefficient="0.47429093629398356"/>
+			<NumericPredictor name="standardScaler(x20)" coefficient="0.6079810399707408"/>
+			<NumericPredictor name="standardScaler(x21)" coefficient="0.7315555036688398"/>
+			<NumericPredictor name="standardScaler(x22)" coefficient="2.1926728260954267"/>
+			<NumericPredictor name="standardScaler(x23)" coefficient="0.19798902485581646"/>
+			<NumericPredictor name="standardScaler(x24)" coefficient="-0.20574476946280923"/>
+			<NumericPredictor name="standardScaler(x25)" coefficient="-1.0080197509987858E-4"/>
+			<NumericPredictor name="standardScaler(x26)" coefficient="0.005895603654883178"/>
+			<NumericPredictor name="standardScaler(x27)" coefficient="0.9097430678169517"/>
+			<NumericPredictor name="standardScaler(x28)" coefficient="1.534713894904095"/>
+			<NumericPredictor name="standardScaler(x29)" coefficient="0.7824036782975134"/>
+			<NumericPredictor name="standardScaler(x30)" coefficient="0.7070718938219045"/>
+			<NumericPredictor name="standardScaler(x31)" coefficient="-0.057505417532160666"/>
+			<NumericPredictor name="standardScaler(x32)" coefficient="-0.0030925639150959374"/>
+			<NumericPredictor name="standardScaler(x34)" coefficient="-0.9194303339605974"/>
+			<NumericPredictor name="standardScaler(x35)" coefficient="-0.3461430974293306"/>
+			<NumericPredictor name="standardScaler(x36)" coefficient="0.8022493415741566"/>
+			<NumericPredictor name="standardScaler(x37)" coefficient="-0.8097177536521944"/>
+			<NumericPredictor name="standardScaler(x38)" coefficient="0.4628906063670565"/>
+			<NumericPredictor name="standardScaler(x39)" coefficient="0.08993098925982912"/>
+			<NumericPredictor name="standardScaler(x41)" coefficient="-1.7246997382452915E-4"/>
+			<NumericPredictor name="standardScaler(x42)" coefficient="-0.024315596961368795"/>
+			<NumericPredictor name="standardScaler(x43)" coefficient="-1.624852970378184"/>
+			<NumericPredictor name="standardScaler(x44)" coefficient="-2.6691347683291657"/>
+			<NumericPredictor name="standardScaler(x45)" coefficient="-1.5819834672847428"/>
+			<NumericPredictor name="standardScaler(x46)" coefficient="-0.7359970404268937"/>
+			<NumericPredictor name="standardScaler(x47)" coefficient="-0.3844850416867834"/>
+			<NumericPredictor name="standardScaler(x48)" coefficient="-0.0017792764298907465"/>
+			<NumericPredictor name="standardScaler(x49)" coefficient="-1.2082144961806523E-4"/>
+			<NumericPredictor name="standardScaler(x50)" coefficient="0.2311209091869997"/>
+			<NumericPredictor name="standardScaler(x51)" coefficient="-0.6164072337819714"/>
+			<NumericPredictor name="standardScaler(x52)" coefficient="-0.6447619694474499"/>
+			<NumericPredictor name="standardScaler(x53)" coefficient="-0.5701876280445232"/>
+			<NumericPredictor name="standardScaler(x54)" coefficient="-0.6864097515191514"/>
+			<NumericPredictor name="standardScaler(x55)" coefficient="-0.13733948400698026"/>
+			<NumericPredictor name="standardScaler(x56)" coefficient="0.6565348914098459"/>
+			<NumericPredictor name="standardScaler(x57)" coefficient="-8.85662838920401E-5"/>
+			<NumericPredictor name="standardScaler(x58)" coefficient="-0.38518507512909916"/>
+			<NumericPredictor name="standardScaler(x59)" coefficient="0.10437088360348054"/>
+			<NumericPredictor name="standardScaler(x60)" coefficient="-0.07320924020126886"/>
+			<NumericPredictor name="standardScaler(x61)" coefficient="0.24278953304710993"/>
+			<NumericPredictor name="standardScaler(x62)" coefficient="0.11157101356046156"/>
+			<NumericPredictor name="standardScaler(x63)" coefficient="-0.4424301266438711"/>
+			<NumericPredictor name="standardScaler(x64)" coefficient="0.014249021862786464"/>
+		</RegressionTable>
+	</RegressionModel>
+</PMML>

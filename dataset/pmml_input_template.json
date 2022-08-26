@@ -1,0 +1,20 @@
+{
+    "inputs":[
+        {
+            "name": "sepal length (cm)",
+            "value": 1.0
+        },
+        {
+            "name": "sepal width (cm)",
+            "value": 1.2
+        },
+        {
+            "name": "petal length (cm)",
+            "value": 0.5
+        },
+        {
+            "name": "petal width (cm)",
+            "value": 0.2
+        }
+    ]
+}

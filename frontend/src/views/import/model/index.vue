@@ -80,7 +80,7 @@
         path: '/list/model',
       });
     } else {
-      Message.error('错误：重名模型');
+      Message.error(`错误：${res.detailed}`);
     }
   };
 </script>
